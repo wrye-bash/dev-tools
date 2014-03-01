@@ -37,9 +37,16 @@
 
    Requires PyGithub installed: https://github.com/jacquev6/PyGithub
 
-   Requires a username/password or access token to get the information, I have
-   not been able to use the github API without having it first log on.  See
-   the wiki on wrye-bash/meta on setting up a access token (highly recommened).
+   The script uses the 'wrye-bash-automoton' user on GitHub, which is a
+   read-only member of the wrye-bash repository.  A Personal Access Token
+   has been generated and is hard coded in this tool.
+
+   If you need or want to use your own user to pull the information, you
+   must past '-u' on the command line, which will read
+   'generate_second_posts.usr' for your user/password or access token.AMPER
+   It is *highly recommended* to use an access token (requires 2-factor
+   authentication) so you password isn't stored in plain-text on your
+   computer.  See the wiki on wrye-bash/meta on how to set this up.
 
    Generated seconds posts will be output to ./out
    """
@@ -47,6 +54,7 @@
 
 # Imports ====================================================================
 import argparse
+import shutil
 import sys
 import os
 
@@ -60,6 +68,7 @@ TEXT_FILE = u'generate_second_posts_lines.txt'
 
 REPO_NAME = u'wrye-bash'
 ORG_NAME = u'Wrye Bash'
+TOKEN = '31ed03d9b3975325adf40cf9fc5ffacc39fc99f8'
 
 GAMES = {
     # Convert to display names
@@ -72,8 +81,14 @@ GAMES = {
 SKIP_LABELS = {'git', 'goal', 'discussion', 'TODO', 'wont fix', 'works for me',
                'rejected', 'duplicate'} | set(GAMES)
 
+URL_MILESTONE = \
+    'https://github.com/wrye-bash/wrye-bash/issues?milestone=%i&state=open'
+URL_BUGS = 'https://github.com/wrye-bash/wrye-bash/issues?labels=bug'
+URL_ENHANCEMENTS = \
+    'https://github.com/wrye-bash/wrye-bash/issues?labels=enhancement'
+
 COLOR_INTRO = 'orange'
-COLOR_ASSIGNEE = '#FFA500'
+COLOR_ASSIGNEE = '#00FF00'
 COLOR_DONE = 'orange'
 
 
@@ -87,6 +102,11 @@ def parseArgs():
                         type=str,
                         required=True,
                         help='Specify the milestone for filtering Issues.')
+    parser.add_argument('-u', '--user',
+                        dest='user',
+                        action='store_true',
+                        default=False,
+                        help='Force usage of a different user to pull info.')
     gameGroup = parser.add_mutually_exclusive_group()
     gameGroup.add_argument('-g', '--game',
                            dest='game',
@@ -172,16 +192,30 @@ def getRepo(git, orgName, repoName):
                   None, assumes personal repos.
         repoName: name of the repository to get
     """
+    # Try repos in organizations you're in
     if orgName:
         for org in git.get_user().get_orgs():
             if org.name == orgName:
                 for repo in org.get_repos():
                     if repo.name == repoName:
+                        print "Got repository from", orgName, "organization."
                         return repo
+    # Try repos you own
     else:
         for repo in git.get_user().get_repos():
             if repo.name == repoName:
+                print "Got repository from personal account."
                 return repo
+    # Try starred repos
+    for repo in git.get_user().get_starred():
+        if repo.name == repoName:
+            print "Got repository from starred repositories."
+            return repo
+    # Try watched repos
+    for repo in git.get_user().get_watched():
+        if repo.name == repoName:
+            print "Got repository from watched repositories."
+            return repo
     return None
 
 
@@ -276,27 +310,48 @@ def formatIssue(issue, issueType):
     else:
         s = lambda x: color(strike(x), COLOR_DONE)
     if issue.assignee:
-        assignee = ' ' + color(issue.assignee.name, COLOR_ASSIGNEE)
+        assignee = issue.assignee
+        assignee = ' ' + url(assignee.url,
+                             color('(' + assignee.login + ')', COLOR_ASSIGNEE))
     else:
         assignee = ''
-    return li(s(url(issue.html_url, issueType + ' %i' % issue.id) +
+    return li(s(url(issue.html_url, issueType + ' %i' % issue.number) +
                 ': ' + issue.title)
               + assignee)
 
 
+def getSecondPostLine(ins):
+    """Reads lines from ins until a blank line is found, then joins the lines
+       together (without newlines).   It's done this way so the source file is
+       more readable when editing.
+       ins: file-like object in read mode
+       return: the reconstructed text"""
+    lines = []
+    for line in ins:
+        line = line.strip('\r\n')
+        if line:
+            lines.append(line)
+        else:
+            break
+    return ''.join(lines)
+
+
 def writeSecondPost(gameTitle, milestone, issues):
     """Write 'Buglist thread Starter - <gameTitle>.txt'"""
-    os.makedirs(u'out')
-    with open(u'out\\Buglist thread Starter - ' + gameTitle + u'.txt', 'w') as out:
+    if not os.path.exists(u'out'):
+        os.makedirs(u'out')
+    outFile = os.path.join(u'out',
+                           u'Buglist thread Starter - ' + gameTitle + u'.txt')
+    with open(outFile, 'w') as out:
         with open(TEXT_FILE,'r') as ins:
             # Intro paragraph
-            line = ins.readline().strip('\r\n')
+            line = getSecondPostLine(ins)
             out.write(color(line % milestone.title, COLOR_INTRO))
-            out.write(ins.readline())
-            out.write('\n')
+            out.write(getSecondPostLine(ins))
+            out.write('\n\n')
             # Upcoming release
-            line = ins.readline().strip('\r\n')
-            out.write(url('https://github.com/wrye-bash/wrye-bash/issues?milestone=%i&state=open' % milestone.id,
+            line = getSecondPostLine(ins)
+            out.write(url(URL_MILESTONE % milestone.id,
                           line % milestone.title))
             out.write('\n[list]\n')
             for issueList,issueType in ((issues[0],'Bug'),
@@ -306,25 +361,24 @@ def writeSecondPost(gameTitle, milestone, issues):
                     out.write('\n')
             out.write('[/list]\n\n')
             # Other known bugs
-            out.write(url('https://github.com/wrye-bash/wrye-bash/issues?state=open',
-                          'Additional known bugs:\n'))
-            out.write('[spoiler][list]\n')
+            out.write(url(URL_BUGS, getSecondPostLine(ins)))
+            out.write('\n[spoiler][list]\n')
             for issue in issues[2]:
                 out.write(formatIssue(issue, 'Bug'))
                 out.write('\n')
             if not issues[2]:
-                out.write('None')
+                out.write('None\n')
             out.write('[/list][/spoiler]\n\n')
             # Other known feature requests
-            out.write((url('https://github.com/wrye-bash/wrye-bash/issues?state=open',
-                           'Additional requested features:\n')))
-            out.write('[spoiler][list]\n')
+            out.write((url(URL_ENHANCEMENTS, getSecondPostLine(ins))))
+            out.write('\n[spoiler][list]\n')
             for issue in issues[3]:
                 out.write(formatIssue(issue, 'Enhancement'))
                 out.write('\n')
             if not issues[3]:
                 out.write('None')
             out.write('[/list][/spoiler]\n')
+
 
 def main():
     """Start everything off"""
@@ -335,9 +389,13 @@ def main():
     else:
         games = GAMES
     # login
-    user = getUser()
+    if opts.user:
+        user = getUser()
+    else:
+        user = (TOKEN,)
     print "Logging in..."
     git = github.Github(*user)
+    print "User:", git.get_user().name
     print "Getting repository..."
     repo = getRepo(git, ORG_NAME, REPO_NAME)
     if not repo:
@@ -348,6 +406,13 @@ def main():
     if not milestone:
         print 'Could not find milestone:', opts.milestone
         return
+    # Clean output directory
+    if os.path.exists(u'out'):
+        try:
+            shutil.rmtree(u'out')
+        except:
+            pass
+    # Create posts
     for game in games:
         print 'Getting Issues for:', games[game]
         issues = getIssues(repo, milestone, game)
@@ -356,4 +421,7 @@ def main():
     print 'Second post(s) genterated.'
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print "Aborted"
