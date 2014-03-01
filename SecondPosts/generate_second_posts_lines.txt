@@ -1,0 +1,3 @@
+Bug tracking and progress towards %s. 
+Here's a rundown of what the next release will contain, as well as a list of all known bugs and requested enhancements. Links lead to the sourceforge tracker artifacts. If you have information or opinions pertaining to any particular bug or enhancement, please comment at the tracker link. If you have screenshots or sample files, you can attach them (or links to them) to the trackers too. Any information helps! Users who have reported bugs and are updating from svn: please check the following for any closed/fixed bugs (indicated with a [color=#FF8C00]strikethrough[/color]). Confirmation of the fix would be much appreciated.
+Upcoming release %s:
