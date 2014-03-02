@@ -69,7 +69,7 @@
 [/*]
 [/LIST]
 [/spoiler]
-[size=5][color=#3366ff]Download:[/color][/size] [url=http://www.nexusmods.com/skyrim/mods/1840]Skyrim Nexus[/url] and, of course, [url=https://github.com/Wrye-Bashers/wrye-bash/releases]SourceForge[/url].
+[size=5][color=#3366ff]Download:[/color][/size] [url=http://www.nexusmods.com/skyrim/mods/1840]Skyrim Nexus[/url] and, of course, [url=https://github.com/Wrye-Bashers/wrye-bash/releases]GitHub[/url].
  
 [size=5][color=#3366ff]Documentation:[/color][/size]
 [LIST]
