@@ -1,8 +1,8 @@
 [center][color=red][size=6]We only support Wrye Bash 304 or higher.[/size][/color][/center]
 
-[color=orange]Important: Wrye Bash's developers have been MIA for quite some time due to various real life circumstances. As such, development slowed to a crawl with only a few modders that didn't have much experience with Python (in which Bash is written) trying to fix existing bugs.  Starting with version 303 Wrye Bash is the product of these attempted bug fixes on top of what was done before the developers went MIA. As such, it is not a polished release.  
+[color=orange]Important: Wrye Bash's developers have been MIA for quite some time due to various real life circumstances. As such, development slowed to a crawl with only a few modders that didn't have much experience with Python (in which Bash is written) trying to fix existing bugs.  Starting with version 303 Wrye Bash is the product of these attempted bug fixes on top of what was done before the developers went MIA. As such, it is not a polished release.
 
-If you are familiar with the Python programming language, please consider helping with development. Many of Wrye Bash's features are unique to it, and it needs fixes to outstanding bugs at the least to stay usable.  [url=https://sourceforge.net/p/oblivionworks/bugs/]Our bug tracker[/url] lists everything we're aware of at present.[/color]
+If you are familiar with the Python programming language, please consider helping with development. Many of Wrye Bash's features are unique to it, and it needs fixes to outstanding bugs at the least to stay usable.  [url=https://github.com/wrye-bash/wrye-bash/issues]Our bug tracker[/url] lists everything we're aware of at present.[/color]
 
 [size=3][color=#3366ff]What does Wrye Bash do?[/color][/size]
 
@@ -21,14 +21,14 @@ There is much more information in the OP of the Wrye Bash topic at the BethSoft 
 [size=3][color=#3366ff]Documentation[/color][/size]
 
 [LIST]
-[*][url=http://oblivionworks.sourceforge.net/readme/Wrye%20Bash%20General%20Readme.html]General Readme[/url], [url=http://oblivionworks.sourceforge.net/readme/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url], [url=http://oblivionworks.sourceforge.net/readme/Wrye%20Bash%20Technical%20Readme.html]Technical Readme[/url], [url=http://oblivionworks.sourceforge.net/readme/Wrye%20Bash%20Version%20History.html]Version History[/url] (also included in the download as "Wrye Bash General Readme.html" in the Mopy folder)[/*]
+[*][url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Technical%20Readme.html]Technical Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url] (also included in the download as "Wrye Bash General Readme.html" in the Mopy folder)[/*]
 [*]alt3rn1ty's [url=http://www.nexusmods.com/oblivion/mods/35230]Wrye Bash Pictorial Guide[/url] (For Oblivion, new guide for Skyrim pending)[/*]
 [*]Metallicow's BAIN [url=http://www.nexusmods.com/oblivion/mods/38857]Demo Wizard[/url][/*]
 [*]Translated documentation and guides: [url=http://guides.tesfans.org]简体中文[/url][/*]
 [/LIST]
 [size=3][color=#3366ff]Requirements and Installation:[/color][/size]
 
-I suggest looking here for the approproate version [url=http://support.microsoft.com/kb/2019667]Latest Supported Visual C++ Downloads[/url].  The previous link may have more up to date information but here are some direct links [url=http://www.microsoft.com/en-us/download/details.aspx?id=5553]MSVC++ 2005 Redistributable Suite SP1[/url], [url=http://www.microsoft.com/en-us/download/details.aspx?id=10986]MSVC++ 2008 SP1 Redistributable[/url], [url=http://www.microsoft.com/en-us/download/details.aspx?id=23691]MSVC++ 2010 Redistributable Service Pack 1[/url], [url=http://www.microsoft.com/en-us/download/details.aspx?id=30679]MSVC++ 2012 Redistributable Update 3[/url].
+I suggest looking here for the appropriate version [url=http://support.microsoft.com/kb/2019667]Latest Supported Visual C++ Downloads[/url].  The previous link may have more up to date information but here are some direct links [url=http://www.microsoft.com/en-us/download/details.aspx?id=5553]MSVC++ 2005 Redistributable Suite SP1[/url], [url=http://www.microsoft.com/en-us/download/details.aspx?id=10986]MSVC++ 2008 SP1 Redistributable[/url], [url=http://www.microsoft.com/en-us/download/details.aspx?id=23691]MSVC++ 2010 Redistributable Service Pack 1[/url], [url=http://www.microsoft.com/en-us/download/details.aspx?id=30679]MSVC++ 2012 Redistributable Update 3[/url].
 
 [size=2][color=#3366ff]Short version:[/color][/size] 
  
@@ -60,7 +60,7 @@ Then:
 [*]For WBSA (Wrye Bash StandAlone), run by double-clicking on Wrye Bash.exe[/*]
 [/LIST]
 Remember! In Windows Vista and up, don't install Oblivion in the Program Files folder due to User Account Control! See File Permissions.
-See Also [url=http://oblivionworks.sourceforge.net/readme/Wrye%20Bash%20General%20Readme.html#trouble-permissions]File Permissions[/url]
+See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html#trouble-permissions]File Permissions[/url]
 
 [size=3][color=#3366ff]Version history:[/color][/size]
 
