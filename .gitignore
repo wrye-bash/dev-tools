@@ -213,3 +213,14 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+
+#############
+## Repo specific
+#############
+
+# User settings file (has username/password/access token)
+*.usr
+
+# Output from second post script
+SecondPosts/out/
