@@ -224,3 +224,4 @@ pip-log.txt
 
 # Output from second post script
 SecondPosts/out/
+.idea/
