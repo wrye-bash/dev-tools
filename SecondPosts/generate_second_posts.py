@@ -18,7 +18,8 @@
 #  along with Wrye Bash; if not, write to the Free Software Foundation,
 #  Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
-#  Wrye Bash copyright (C) 2005-2009 Wrye, 2010-2014 wrye-bash
+#  Wrye Bash copyright (C) 2005-2009 Wrye, 2010-2014 Wrye Bash Team
+#  https://github.com/wrye-bash
 #
 # =============================================================================
 
@@ -59,32 +60,7 @@ from github_wrapper import *
 
 # Globals ====================================================================
 TEXT_FILE = u'generate_second_posts_lines.txt'
-
-REPO_NAME = u'wrye-bash'
-ORG_NAME = u'Wrye Bash'
-TOKEN = '31ed03d9b3975325adf40cf9fc5ffacc39fc99f8'
-
-GAMES = {
-    # Convert to display names
-    'skyrim': u'Skyrim',
-    'oblivion': u'Oblivion',
-    'fallout': u'Fallout 3',
-    'fnv': u'Fallout - New Vegas',
-    }
-
-SKIP_LABELS = {'git', 'goal', 'discussion', 'TODO', 'wont fix', 'works for me',
-               'rejected', 'duplicate'} | set(GAMES)
-
-URL_MILESTONE = \
-    'https://github.com/wrye-bash/wrye-bash/issues?milestone=%i&state=open'
-URL_BUGS = 'https://github.com/wrye-bash/wrye-bash/issues?labels=bug'
-URL_ENHANCEMENTS = \
-    'https://github.com/wrye-bash/wrye-bash/issues?labels=enhancement'
-
-COLOR_INTRO = 'orange'
-COLOR_ASSIGNEE = '#00FF00'
-COLOR_DONE = 'orange'
-
+from globals import *
 
 # Functions ===================================================================
 def parseArgs():
@@ -117,41 +93,6 @@ def parseArgs():
                            default=False,
                            help='Generate a second post for all games.')
     return parser.parse_args()
-
-
-# writeSecondPost formatting functions ========================================
-def color(text, color=None):
-    if color:
-        return '[color='+color+']' + text + '[/color]'
-    else:
-        return text
-
-def url(url, title):
-    return '[url='+url+']' + title + '[/url]'
-
-def bold(text):
-    return '[b]' + text + '[/b]'
-
-def strike(text):
-    return '[s]' + text + '[/s]'
-
-def li(text):
-    return '[*]' + text
-
-def formatIssue(issue, issueType):
-    if issue.state == 'open':
-        s = lambda x: x
-    else:
-        s = lambda x: color(strike(x), COLOR_DONE)
-    if issue.assignee:
-        assignee = issue.assignee
-        assignee = ' ' + url(assignee.url,
-                             color('(' + assignee.login + ')', COLOR_ASSIGNEE))
-    else:
-        assignee = ''
-    return li(s(url(issue.html_url, issueType + ' %i' % issue.number) +
-                ': ' + issue.title)
-              + assignee)
 
 
 def getSecondPostLine(ins):
@@ -252,7 +193,7 @@ def main():
         issues = getIssues(repo, milestone, game)
         print 'Writing second post...'
         writeSecondPost(games[game], milestone, issues)
-    print 'Second post(s) genterated.'
+    print 'Second post(s) generated.'
 
 if __name__ == '__main__':
     try:

@@ -136,6 +136,7 @@ def getIssues(repo, milestone, gameLabel, skip_labels=()):
         repo: github.Repository object
         milestone: github.Milestone object
         gameLabel: label for the specific game (ie: `skyrim`, `fnv`, etc)
+        skip_labels: set of labels to skip, by default empty
        return:
         (current_bug, current_enh, other_bug, other_enh)
         where:
