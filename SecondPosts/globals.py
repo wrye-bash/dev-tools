@@ -36,7 +36,7 @@ GAMES = {
     'oblivion': u'Oblivion',
     'fallout': u'Fallout 3',
     'fnv': u'Fallout - New Vegas',
-    }
+}
 
 SKIP_LABELS = {'git', 'goal', 'discussion', 'TODO', 'wont fix', 'works for me',
                'rejected', 'duplicate'} | set(GAMES)  # unused but useful
@@ -85,16 +85,16 @@ import os, shutil
 
 OUT_DIR = u'out'
 
-def _cleanOutDir(path = OUT_DIR):
-     # Clean output directory
+def _cleanOutDir(path=OUT_DIR):
+    # Clean output directory
     if os.path.exists(path):
         try:
             shutil.rmtree(path)
         except:
             pass
 
-def _outFile(dir_=OUT_DIR,name="out.txt"):
+def _outFile(dir_=OUT_DIR, name="out.txt"):
     if not os.path.exists(dir_):
         os.makedirs(dir_)
-    outFile = os.path.join(dir_,name)
+    outFile = os.path.join(dir_, name)
     return outFile

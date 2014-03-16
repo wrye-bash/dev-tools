@@ -25,7 +25,6 @@
 """This module wraps github API calls."""
 
 import github
-from github import GithubException
 import os
 
 USER_FILE = u'generate_second_posts.usr'
@@ -87,7 +86,6 @@ def getUser():
         return (key,)
     return (user, password)
 
-
 def getRepo(git, orgName, repoName):
     """Get a githubapi repository object for the specified repository.
         git: github.Github object for the user
@@ -122,7 +120,6 @@ def getRepo(git, orgName, repoName):
             print "Got repository from watched repositories."
             return repo
     return None
-
 
 def getMilestone(repo, milestoneTitle):
     """Returns the github.Milestone object for a specified milestone."""
@@ -191,7 +188,7 @@ def getIssues(repo, milestone, gameLabel, skip_labels=()):
                    [x for x in current_bug if x.state == 'closed'])
     return current_bug, current_enh, other_bug, other_enh
 
-def getClosedIssues(repo, milestone, accepted_labels = {'bug','enhancement'}
+def getClosedIssues(repo, milestone, accepted_labels={'bug', 'enhancement'}
                     # , gameLabel=None, skip_labels=set() # TODO, game, skip
 ):
     """Return a list of closed issues for the given milestone
@@ -211,13 +208,12 @@ def getClosedIssues(repo, milestone, accepted_labels = {'bug','enhancement'}
     bug_or_enhancement = []
     for issue in current:
         labels = set(x.name for x in issue.get_labels())
-        if  accepted_labels & labels:
+        if accepted_labels & labels:
             bug_or_enhancement.append(issue)
     return bug_or_enhancement
 
 def getGithub(*user):
     return github.Github(*user)
-
 
 def getUserName(git):
     try:
