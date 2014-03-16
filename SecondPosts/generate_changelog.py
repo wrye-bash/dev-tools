@@ -24,9 +24,9 @@
 
 """This module generates the changelog reading metadata for a milestone."""
 import argparse
-
-from github_wrapper import *
-from globals import TOKEN, GAMES, ORG_NAME, REPO_NAME
+from datetime import date
+from github_wrapper import getMilestone, getIssues
+from globals import GAMES, _login, _cleanOutDir, _getRepo, _outFile
 
 # Functions ===================================================================
 def parseArgs():
@@ -60,38 +60,54 @@ def parseArgs():
                            help='Show issues for all games.')
     return parser.parse_args()
 
-def _login(opts):
-    """login - . Returns false if failed to login""" # TODO globals.py
-    if opts.user:
-        user = getUser()
-    else:
-        user = (TOKEN,)
-    print "Logging in..."
-    git = getGithub(*user)
-    if not git: return False # TODO: needed ?
-    print "User:", git.get_user().name
-    print "Getting repository..."
-    repo = getRepo(git, ORG_NAME, REPO_NAME)
-    if not repo:
-        print 'Could not find repository:', REPO_NAME
-        return False
-    print "Getting Milestone..."
-    milestone = getMilestone(repo, opts.milestone)
-    if not milestone:
-        print 'Could not find milestone:', opts.milestone
-        return False
-    return True
+TEMPLATE = u'changelog_template.txt'
+from html import h2
 
-def _outDir(path = u'out'):
-     # Clean output directory
-    if os.path.exists(path):
-        try:
-            shutil.rmtree(path)
-        except:
-            pass
+def _title(milestone,authors=('Various community members',)):
+    return h2(milestone.title + ' [' + date.today().strftime(
+        '%Y/%m/%d') + '] [' + authors + ']'
+    )
+
+def writeChangelog(gameTitle, milestone):
+    """Write 'Buglist thread Starter - <gameTitle>.txt'"""
+    outFile = _outFile(name=u'Buglist thread Starter - ' + gameTitle + u'.txt')
+    with open(outFile, 'w') as out:
+        # with open(TEMPLATE,'r') as ins:
+        out.write('\n'.join(_title(milestone)))
+        out.write(getSecondPostLine(ins))
+        out.write('\n\n')
+        # Upcoming release
+        line = getSecondPostLine(ins)
+        out.write(url(URL_MILESTONE % milestone.id,
+                      line % milestone.title))
+        out.write('\n[list]\n')
+        for issueList,issueType in ((issues[0],'Bug'),
+                                    (issues[1],'Enhancement')):
+            for issue in issueList:
+                out.write(formatIssue(issue, issueType))
+                out.write('\n')
+        out.write('[/list]\n\n')
+        # Other known bugs
+        out.write(url(URL_BUGS, getSecondPostLine(ins)))
+        out.write('\n[spoiler][list]\n')
+        for issue in issues[2]:
+            out.write(formatIssue(issue, 'Bug'))
+            out.write('\n')
+        if not issues[2]:
+            out.write('None\n')
+        out.write('[/list][/spoiler]\n\n')
+        # Other known feature requests
+        out.write((url(URL_ENHANCEMENTS, getSecondPostLine(ins))))
+        out.write('\n[spoiler][list]\n')
+        for issue in issues[3]:
+            out.write(formatIssue(issue, 'Enhancement'))
+            out.write('\n')
+        if not issues[3]:
+            out.write('None')
+        out.write('[/list][/spoiler]\n')
+
 
 def main():
-    """Start everything off"""
     opts = parseArgs()
     # Figure out which games to do:
     if opts.game:
@@ -99,16 +115,18 @@ def main():
     else:
         games = GAMES
     # Login
-    if not _login(opts): return
-    # Output directory
-    _outDir()
+    git = _login(opts)
+    if not git: return
+    repo = _getRepo(git)
+    if not repo: return
+    milestone = getMilestone(opts, repo)
     # Create posts
     for game in games:
         print 'Getting Issues for:', games[game]
         issues = getIssues(repo, milestone, game)
         print 'Writing changelog'
         writeChangelog(games[game], milestone, issues)
-    print 'Second post(s) generated.'
+    print 'Changelog generated.'
 
 if __name__ == '__main__':
     try:

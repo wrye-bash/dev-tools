@@ -46,40 +46,50 @@ URL_BUGS = 'https://github.com/wrye-bash/wrye-bash/issues?labels=bug'
 URL_ENHANCEMENTS = \
     'https://github.com/wrye-bash/wrye-bash/issues?labels=enhancement'
 
-COLOR_INTRO = 'orange'
-COLOR_ASSIGNEE = '#00FF00'
-COLOR_DONE = 'orange'
+# LOGIN ========================================
+import github_wrapper
 
-# writeSecondPost formatting functions ========================================
-def color(text, color_=None):
-    if color_:
-        return '[color='+color_+']' + text + '[/color]'
+def _login(opts):
+    """Login to github . Return None if failed to login"""
+    if opts.user:
+        user = github_wrapper.getUser()
     else:
-        return text
+        user = (TOKEN,)
+    print "Logging in..."
+    git = github_wrapper.getGithub(*user)
+    if not git: return None
+    print "User:", git.get_user().name
+    return git
 
-def url(url_, title):
-    return '[url='+url_+']' + title + '[/url]'
+def _getRepo(git):
+    print "Getting repository..."
+    repo = github_wrapper.getRepo(git, ORG_NAME, REPO_NAME)
+    if not repo:
+        print 'Could not find repository:', REPO_NAME
+    return repo
 
-def bold(text):
-    return '[b]' + text + '[/b]'
+def _getMiles(opts, repo):
+    print "Getting Milestone..."
+    milestone = github_wrapper.getMilestone(repo, opts.milestone)
+    if not milestone:
+        print 'Could not find milestone:', opts.milestone
+    return milestone
 
-def strike(text):
-    return '[s]' + text + '[/s]'
+# OUTPUT DIR =====================================
+import os, shutil
 
-def li(text):
-    return '[*]' + text
+OUT_DIR = u'out'
 
-def formatIssue(issue, issueType):
-    if issue.state == 'open':
-        s = lambda x: x
-    else:
-        s = lambda x: color(strike(x), COLOR_DONE)
-    if issue.assignee:
-        assignee = issue.assignee
-        assignee = ' ' + url(assignee.url,
-                             color('(' + assignee.login + ')', COLOR_ASSIGNEE))
-    else:
-        assignee = ''
-    return li(s(url(issue.html_url, issueType + ' %i' % issue.number) +
-                ': ' + issue.title)
-              + assignee)
+def _cleanOutDir(path = OUT_DIR):
+     # Clean output directory
+    if os.path.exists(path):
+        try:
+            shutil.rmtree(path)
+        except:
+            pass
+
+def _outFile(dir=OUT_DIR,name="out.txt"):
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    outFile = os.path.join(dir,name)
+    return outFile
