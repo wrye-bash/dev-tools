@@ -28,7 +28,7 @@ the scripts are to be used for other repos too we need a repo factory here."""
 
 REPO_NAME = u'wrye-bash'
 ORG_NAME = u'Wrye Bash'
-TOKEN = '31ed03d9b3975325adf40cf9fc5ffacc39fc99f'
+TOKEN = '31ed03d9b3975325adf40cf9fc5ffacc39fc99f8'
 
 GAMES = {
     # Convert to display names
