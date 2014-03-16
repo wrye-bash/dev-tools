@@ -1,0 +1,24 @@
+<h2>304.4 [2014/03/16] ['Various community members']</h2><ul>
+	<li>Optimize PNGs [Metallicow]</li>
+	<li>Remove the auto-updater [lojack5]</li>
+	<li>Remove/Hide custom plugin timestamping [lojack5]</li>
+	<li>Skip .bsl files for BAIN [lojack5]</li>
+	<li>BOSSv3 support, installer and readme updates [WrinklyNinja]</li>
+	<li>Installer Improvements [WrinklyNinja]</li>
+	<li>Installer MSVC 2013 Redist Support [WrinklyNinja]</li>
+	<li>Missing context menu items [WrinklyNinja]</li>
+	<li>Show BSA Conflicts undocumented [WrinklyNinja]</li>
+</ul>
+
+
+<ul>
+	<li>Optimize PNGs [Metallicow] - set([u'enhancement'])</li>
+	<li>Remove the auto-updater [lojack5] - set([u'git', u'bug'])</li>
+	<li>Remove/Hide custom plugin timestamping [lojack5] - set([u'enhancement', u'rejected'])</li>
+	<li>Skip .bsl files for BAIN [lojack5] - set([u'enhancement', u'skyrim'])</li>
+	<li>BOSSv3 support, installer and readme updates [WrinklyNinja] - set([u'enhancement'])</li>
+	<li>Installer Improvements [WrinklyNinja] - set([u'enhancement'])</li>
+	<li>Installer MSVC 2013 Redist Support [WrinklyNinja] - set([u'enhancement'])</li>
+	<li>Missing context menu items [WrinklyNinja] - set([u'bug', u'fallout'])</li>
+	<li>Show BSA Conflicts undocumented [WrinklyNinja] - set([u'docs', u'bug'])</li>
+</ul>
