@@ -25,8 +25,11 @@
 """This module generates the changelog reading metadata for a milestone."""
 import argparse
 from datetime import date
-from github_wrapper import getMilestone, getIssues
-from globals import GAMES, _login, _cleanOutDir, _getRepo, _outFile
+
+from html import closedIssue
+from github_wrapper import getMilestone, getClosedIssues
+from globals import _login, _getRepo, _outFile
+
 
 # Functions ===================================================================
 def parseArgs():
@@ -61,71 +64,35 @@ def parseArgs():
     return parser.parse_args()
 
 TEMPLATE = u'changelog_template.txt'
-from html import h2
+from html import h2, ul
 
-def _title(milestone,authors=('Various community members',)):
+def _title(milestone, authors=('Various community members',)):
     return h2(milestone.title + ' [' + date.today().strftime(
-        '%Y/%m/%d') + '] [' + authors + ']'
+        '%Y/%m/%d') + '] ' + str(list(authors))
     )
 
-def writeChangelog(gameTitle, milestone):
-    """Write 'Buglist thread Starter - <gameTitle>.txt'"""
-    outFile = _outFile(name=u'Buglist thread Starter - ' + gameTitle + u'.txt')
+def writeChangelog(milestone, issues):
+    """Write 'Changelog - <milestone>.txt'"""
+    outFile = _outFile(name=u'Changelog - ' + milestone.title + u'.txt')
     with open(outFile, 'w') as out:
         # with open(TEMPLATE,'r') as ins:
-        out.write('\n'.join(_title(milestone)))
-        out.write(getSecondPostLine(ins))
-        out.write('\n\n')
-        # Upcoming release
-        line = getSecondPostLine(ins)
-        out.write(url(URL_MILESTONE % milestone.id,
-                      line % milestone.title))
-        out.write('\n[list]\n')
-        for issueList,issueType in ((issues[0],'Bug'),
-                                    (issues[1],'Enhancement')):
-            for issue in issueList:
-                out.write(formatIssue(issue, issueType))
-                out.write('\n')
-        out.write('[/list]\n\n')
-        # Other known bugs
-        out.write(url(URL_BUGS, getSecondPostLine(ins)))
-        out.write('\n[spoiler][list]\n')
-        for issue in issues[2]:
-            out.write(formatIssue(issue, 'Bug'))
-            out.write('\n')
-        if not issues[2]:
-            out.write('None\n')
-        out.write('[/list][/spoiler]\n\n')
-        # Other known feature requests
-        out.write((url(URL_ENHANCEMENTS, getSecondPostLine(ins))))
-        out.write('\n[spoiler][list]\n')
-        for issue in issues[3]:
-            out.write(formatIssue(issue, 'Enhancement'))
-            out.write('\n')
-        if not issues[3]:
-            out.write('None')
-        out.write('[/list][/spoiler]\n')
-
+        out.write(_title(milestone))
+        out.write('\n'.join(ul(issues, closedIssue)))
 
 def main():
     opts = parseArgs()
-    # Figure out which games to do:
-    if opts.game:
-        games = {opts.game: GAMES[opts.game]}
-    else:
-        games = GAMES
+    # # TODO per game # if opts.game:...
     # Login
     git = _login(opts)
     if not git: return
     repo = _getRepo(git)
     if not repo: return
-    milestone = getMilestone(opts, repo)
-    # Create posts
-    for game in games:
-        print 'Getting Issues for:', games[game]
-        issues = getIssues(repo, milestone, game)
-        print 'Writing changelog'
-        writeChangelog(games[game], milestone, issues)
+    milestone = getMilestone(repo, opts.milestone)
+    # # Clean Output directory
+    # _cleanOutDir()
+    issues = getClosedIssues(repo, milestone)
+    print 'Writing changelog'
+    writeChangelog(milestone, issues)
     print 'Changelog generated.'
 
 if __name__ == '__main__':

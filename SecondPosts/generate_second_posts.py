@@ -57,6 +57,7 @@
 import argparse
 import shutil
 from github_wrapper import *
+from html import color,COLOR_INTRO,url,formatIssue
 
 # Globals ====================================================================
 TEXT_FILE = u'generate_second_posts_lines.txt'

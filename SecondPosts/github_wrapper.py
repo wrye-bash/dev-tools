@@ -74,7 +74,7 @@ def getUser():
         print
         save = raw_input("Would you like to save these settings to the user "
                          "settings file? [Y/N]:")
-        if save in ('y','Y'):
+        if save in ('y', 'Y'):
             with open(USER_FILE, 'w') as out:
                 if key:
                     out.write(key)
@@ -123,10 +123,10 @@ def getRepo(git, orgName, repoName):
     return None
 
 
-def getMilestone(repo, milestone):
-    """Returns the github.Milestone object for a specified milstone."""
+def getMilestone(repo, milestoneTitle):
+    """Returns the github.Milestone object for a specified milestone."""
     for m in repo.get_milestones():
-        if m.title == milestone:
+        if m.title == milestoneTitle:
             return m
     return None
 
@@ -187,8 +187,34 @@ def getIssues(repo, milestone, gameLabel, skip_labels=()):
     #  open issues to the top
     current_bug = ([x for x in current_bug if x.state == 'open'] +
                    [x for x in current_bug if x.state == 'closed'])
-    return (current_bug, current_enh, other_bug, other_enh)
+    return current_bug, current_enh, other_bug, other_enh
 
+def getClosedIssues(repo, milestone, gameLabel=None, skip_labels=set()):
+    """Return a tuple of closed issues for the given game and milestone
+        repo: github.Repository object
+        milestone: github.Milestone object
+        gameLabel: label for the specific game (ie: `skyrim`, `fnv`, etc)
+        skip_labels: set of labels to skip, by default empty
+       return:
+        (current_bug, current_enh)
+        where:
+          current_bug: Issues tagged `bug` fixed in milestone
+          current_enh: Issues tagged `enhancement` fixed in milestone
+        Some Issues will be filtered out, regardless, such as those tagged with
+        `git`, etc."""
+    current = repo.get_issues(milestone,
+                              state='closed',
+                              sort='created',
+                              direction='desc')
+    if gameLabel is not None:
+        skip_labels = skip_labels - {gameLabel}
+    # Filter current issues
+    current_bug = []
+    for issue in current:
+        labels = set(x.name for x in issue.get_labels())
+        if not skip_labels & labels:
+            current_bug.append(issue)
+    return current_bug
 
 def getGithub(*user):
     return github.Github(*user)

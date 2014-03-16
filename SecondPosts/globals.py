@@ -22,8 +22,9 @@
 #
 # =============================================================================
 
-"""This module exports global constants and formatting functions for the
- scripts that generate the posts."""
+"""This module exports global constants for the scripts that generate the
+posts. Those constants are special to the wrye-bash/wrye-bash repository. If
+the scripts are to be used for other repos too we need a repo factory here."""
 
 REPO_NAME = u'wrye-bash'
 ORG_NAME = u'Wrye Bash'
@@ -61,9 +62,9 @@ def _login(opts):
     print "User:", git.get_user().name
     return git
 
-def _getRepo(git):
+def _getRepo(github):
     print "Getting repository..."
-    repo = github_wrapper.getRepo(git, ORG_NAME, REPO_NAME)
+    repo = github_wrapper.getRepo(github, ORG_NAME, REPO_NAME)
     if not repo:
         print 'Could not find repository:', REPO_NAME
     return repo
@@ -88,8 +89,8 @@ def _cleanOutDir(path = OUT_DIR):
         except:
             pass
 
-def _outFile(dir=OUT_DIR,name="out.txt"):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-    outFile = os.path.join(dir,name)
+def _outFile(dir_=OUT_DIR,name="out.txt"):
+    if not os.path.exists(dir_):
+        os.makedirs(dir_)
+    outFile = os.path.join(dir_,name)
     return outFile
