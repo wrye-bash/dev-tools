@@ -39,7 +39,7 @@ GAMES = {
     }
 
 SKIP_LABELS = {'git', 'goal', 'discussion', 'TODO', 'wont fix', 'works for me',
-               'rejected', 'duplicate'} | set(GAMES)
+               'rejected', 'duplicate'} | set(GAMES)  # unused but useful
 
 URL_MILESTONE = \
     'https://github.com/wrye-bash/wrye-bash/issues?milestone=%i&state=open'

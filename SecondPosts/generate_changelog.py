@@ -26,7 +26,7 @@
 import argparse
 from datetime import date
 
-from html import closedIssue
+from html import closedIssue, closedIssueLabels
 from github_wrapper import getMilestone, getClosedIssues
 from globals import _login, _getRepo, _outFile
 
@@ -78,6 +78,9 @@ def writeChangelog(milestone, issues):
         # with open(TEMPLATE,'r') as ins:
         out.write(_title(milestone))
         out.write('\n'.join(ul(issues, closedIssue)))
+        out.write('\n\n\n')
+        out.write('\n'.join(ul(issues, closedIssueLabels)))
+        out.write('\n')
 
 def main():
     opts = parseArgs()
