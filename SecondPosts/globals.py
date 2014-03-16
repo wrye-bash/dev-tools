@@ -59,7 +59,11 @@ def _login(opts):
     print "Logging in..."
     git = github_wrapper.getGithub(*user)
     if not git: return None
-    print "User:", git.get_user().name
+    try:
+        print "User:", github_wrapper.getUserName(git)
+    except github_wrapper.GithubApiException as e:
+        print e.message
+        return None
     return git
 
 def _getRepo(github):

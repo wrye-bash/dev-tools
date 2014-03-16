@@ -25,6 +25,7 @@
 """This module wraps github API calls."""
 
 import github
+from github import GithubException
 import os
 
 USER_FILE = u'generate_second_posts.usr'
@@ -216,3 +217,16 @@ def getClosedIssues(repo, milestone, accepted_labels = {'bug','enhancement'}
 
 def getGithub(*user):
     return github.Github(*user)
+
+
+def getUserName(git):
+    try:
+        return git.get_user().name
+    except github.BadCredentialsException as e:
+        raise GithubApiException(e.message)
+
+class GithubApiException(Exception):
+    def __init__(self, message):
+        # Call the base class constructor with the parameters it needs
+        Exception.__init__(self, message)
+        self.message = message
