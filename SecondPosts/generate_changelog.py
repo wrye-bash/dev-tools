@@ -63,7 +63,7 @@ def parseArgs():
                            help='Show issues for all games.')
     return parser.parse_args()
 
-TEMPLATE = u'changelog_template.txt'
+# TEMPLATE = u'changelog_template.txt'
 from html import h2, ul
 
 def _title(milestone, authors=('Various community members',)):

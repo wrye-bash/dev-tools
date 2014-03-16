@@ -70,8 +70,8 @@ def h2(text):
 def ul(items,f=lambda x: x):
     yield '<ul>'
     for i in items:
-        yield '<li>' + f(i) + '</li>'
-    yield ' </ul>'
+        yield '\t<li>' + f(i) + '</li>'
+    yield '</ul>'
 
 def closedIssue(issue):
     """Description of a closed issue"""
