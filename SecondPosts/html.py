@@ -23,7 +23,7 @@
 # =============================================================================
 
 """This module exports formatting functions for the forums and the doc files we
-use."""
+are generating."""
 
 COLOR_INTRO = 'orange'
 COLOR_ASSIGNEE = '#00FF00'
@@ -68,7 +68,7 @@ def h2(text):
     return '<h2>' + text + '</h2>'
 
 def ul(items, f=lambda x: x):
-    yield '<ul>'
+    yield '\n<ul>'
     for i in items:
         yield '\t<li>' + f(i) + '</li>'
     yield '</ul>'
