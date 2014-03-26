@@ -38,7 +38,7 @@
 
    Requires PyGithub installed: https://github.com/jacquev6/PyGithub
 
-   The script uses the 'wrye-bash-automoton' user on GitHub, which is a
+   The script uses the 'wrye-bash-automaton' user on GitHub, which is a
    read-only member of the wrye-bash repository.  A Personal Access Token
    has been generated and is hard coded in this tool.
 
@@ -155,6 +155,42 @@ def writeSecondPost(gameTitle, milestone, issues):
                 out.write('None')
             out.write('[/list][/spoiler]\n')
 
+def getIssuesForPosts(repo, milestone, gameLabel):
+    """Return a tuple of applicable issues for the given game and milestone
+        repo: github.Repository object
+        milestone: github.Milestone object
+        gameLabel: label for the specific game (ie: `skyrim`, `fnv`, etc). Only
+          issues for this game will be returned
+       return:
+        (current_bug, current_enh, other_bug, other_enh)
+        where:
+          current_bug: Issues tagged `bug` for milestone
+          current_enh: Issues tagged `enhancement` for milestone
+          other_bug: Issues tagged `bug`, but not for this milestone
+          other_enh: Issues tagged `enhancement`, but not for this milestone
+    """
+    skip_labels = set(GAMES.keys()) - {gameLabel} # what if gameLabel is None
+    current_bug = getIssues(repo, milestone, keep_labels={'bug'},
+                            skip_labels=skip_labels)
+    current_enh = getIssues(repo, milestone, keep_labels={'enhancement'},
+                            skip_labels=skip_labels)
+    other_bug = getIssues(repo, keep_labels={'bug'},
+                          skip_labels=skip_labels, state='open')
+    other_enh = getIssues(repo, keep_labels={'enhancement'},
+                          skip_labels=skip_labels, state='open')
+    # exclude current milestones issues from other_
+    milestone_title = milestone.title
+    other_bug = [x for x in other_bug if
+                 not x.milestone or x.milestone.title != milestone_title]
+    other_enh = [x for x in other_enh if
+                 not x.milestone or x.milestone.title != milestone_title]
+    # Sort current_bug/enh: already sorted by date, just move the
+    #  open issues to the top
+    current_bug = ([x for x in current_bug if x.state == 'open'] +
+                   [x for x in current_bug if x.state == 'closed'])
+    current_enh = ([x for x in current_enh if x.state == 'open'] +
+                   [x for x in current_enh if x.state == 'closed'])
+    return current_bug, current_enh, other_bug, other_enh
 
 def main():
     """Start everything off"""
@@ -191,7 +227,7 @@ def main():
     # Create posts
     for game in games:
         print 'Getting Issues for:', games[game]
-        issues = getIssues(repo, milestone, game)
+        issues = getIssuesForPosts(repo, milestone, game)
         print 'Writing second post...'
         writeSecondPost(games[game], milestone, issues)
     print 'Second post(s) generated.'

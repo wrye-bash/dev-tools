@@ -128,65 +128,50 @@ def getMilestone(repo, milestoneTitle):
             return m
     return None
 
-# TODO builder for issues Issues.Builder.getIssues(repo).milestone(miles).
-#   labels({'bug',enchancement'}).skip(GAMES - {game}).list()
-def getIssues(repo, milestone, gameLabel, skip_labels=()):
-    """Return a tuple of applicable issues for the given game and milestone
+def getIssues(repo, milestone="none", keep_labels=None, skip_labels=(), #"none"
+              state='all'):
+    """Return a _list_ of applicable issues for the given game and milestone
         repo: github.Repository object
         milestone: github.Milestone object
-        gameLabel: label for the specific game (ie: `skyrim`, `fnv`, etc)
-        skip_labels: set of labels to skip, by default empty
-       return:
-        (current_bug, current_enh, other_bug, other_enh)
-        where:
-          current_bug: Issues tagged `bug` for milestone
-          current_enh: Issues tagged `enhancement` for milestone
-          other_bug: Issues tagged `bug`, but not for this milestone
-          other_enh: Issues tagged `enhancement`, but not for this milestone
-        Some Issues will be filtered out, regardless, such as those tagged with
-        `git`, etc."""
+        keep_labels: set of labels an issue must partake to, to be included
+          in the results - by default all labels including no labels at all
+        skip_labels: set of labels to skip, by default empty - if an issue
+         has labels in this set it will be skipped
+        state: open or closed - by default 'all'
+       return: a list of issues
+        :rtype: :class:`github.PaginatedList.PaginatedList` of
+        :class:`github.Issue.Issue`
+    TODO: add sort, direction as needed, clean ifs up, list comprehensions
+    TODO: add Cache for milestone repo and state
+    """
     current = repo.get_issues(milestone,
-                              state='all',
+                              state=state,
                               sort='created',
                               direction='desc')
-    other = repo.get_issues(state='open',
-                            sort='created',
-                            direction='desc')
-    skip_labels = skip_labels - {gameLabel}
-    # Filter current issues
-    current_bug = []
-    current_enh = []
-    for issue in current:
-        labels = set(x.name for x in issue.get_labels())
-        if skip_labels & labels:
-            # Has one of the labels we're skipping
-            continue
-        if 'bug' in labels:
-            current_bug.append(issue)
-        elif 'enhancement' in labels:
-            current_enh.append(issue)
-    # Filter other issues
-    other_bug = []
-    other_enh = []
-    for issue in other:
-        if issue.state != 'open':
-            # Only care about open issues...
-            continue
-        if issue.milestone and issue.milestone.title == milestone.title:
-            # ...and issues that aren't part of the milestone.
-            continue
-        labels = set(x.name for x in issue.get_labels())
-        if skip_labels & labels:
-            continue
-        if 'bug' in labels:
-            other_bug.append(issue)
-        elif 'enhancement' in labels:
-            other_enh.append(issue)
-    # Sort current_bug/enh: already sorted by date, just move the
-    #  open issues to the top
-    current_bug = ([x for x in current_bug if x.state == 'open'] +
-                   [x for x in current_bug if x.state == 'closed'])
-    return current_bug, current_enh, other_bug, other_enh
+    if not keep_labels and not skip_labels:  # no label filters, return All
+        return current
+    # return only issues that partake in keep_labels, and not in skip_labels
+    result = []
+    if not keep_labels and skip_labels:
+        for issue in current:
+            labels = set(x.name for x in issue.get_labels())
+            if not skip_labels & labels:
+                result.append(issue)
+        return result
+    elif keep_labels and skip_labels:
+        keep_labels = keep_labels - skip_labels
+        for issue in current:
+            labels = set(x.name for x in issue.get_labels())
+            if keep_labels & labels and not skip_labels & labels:
+                result.append(issue)
+        return result
+    else:
+        for issue in current:
+            labels = set(x.name for x in issue.get_labels())
+            if keep_labels & labels:
+                result.append(issue)
+        return result
+
 
 def getClosedIssues(repo, milestone, keep_labels={'bug', 'enhancement'}
                     # , gameLabel=None, skip_labels=set() # TODO, game, skip
