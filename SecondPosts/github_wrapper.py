@@ -188,13 +188,13 @@ def getIssues(repo, milestone, gameLabel, skip_labels=()):
                    [x for x in current_bug if x.state == 'closed'])
     return current_bug, current_enh, other_bug, other_enh
 
-def getClosedIssues(repo, milestone, accepted_labels={'bug', 'enhancement'}
+def getClosedIssues(repo, milestone, keep_labels={'bug', 'enhancement'}
                     # , gameLabel=None, skip_labels=set() # TODO, game, skip
 ):
     """Return a list of closed issues for the given milestone
         repo: github.Repository object
         milestone: github.Milestone object
-        accepted_labels: set of labels for result to partake
+        keep_labels: set of labels for result to partake
        return:
         issue fixed in this milestone."""
     current = repo.get_issues(milestone,
@@ -208,7 +208,7 @@ def getClosedIssues(repo, milestone, accepted_labels={'bug', 'enhancement'}
     bug_or_enhancement = []
     for issue in current:
         labels = set(x.name for x in issue.get_labels())
-        if accepted_labels & labels:
+        if keep_labels & labels:
             bug_or_enhancement.append(issue)
     return bug_or_enhancement
 
