@@ -130,6 +130,7 @@ def getMilestone(repo, milestoneTitle):
 
 class _IssueCache(object):
     CACHE = {}
+    ALL_LABELS = {}
 
     class IssueFilter(object):
         def __init__(self, repo, milestone, state):
@@ -154,6 +155,21 @@ class _IssueCache(object):
     def update(repo, milestone, state, issues):  # not thread safe
         issueFilter = _IssueCache.IssueFilter(repo, milestone, state)
         _IssueCache.CACHE[issueFilter] = issues
+
+    @staticmethod
+    def all(repo, milestone=None, state='all'):
+        issueFilter = _IssueCache.IssueFilter(repo, milestone, state)
+        all_ = _IssueCache.ALL_LABELS.get(issueFilter)
+        if not all_:  # FIXME - parameters  milestone state unused below !
+            if milestone and state:  # milestone=github.GithubObject.NotSet ...
+                all_ = _IssueCache.ALL_LABELS[issueFilter] = repo.get_labels(
+                    milestone, state)
+            elif state:
+                all_ = _IssueCache.ALL_LABELS[issueFilter] = repo.get_labels(
+                    state)
+            else:
+                all_ = _IssueCache.ALL_LABELS[issueFilter] = repo.get_labels()
+        return all_
 
 def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
               state='all'):
@@ -210,6 +226,9 @@ def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
                 result.append(issue)
         return result
 
+def getUnlabeledIssues(repo, milestone=None, state='all'):
+    return getIssues(repo, milestone, state=state,
+                     skip_labels=_IssueCache.all(repo, milestone, state))
 
 def getClosedIssues(repo, milestone, keep_labels={'bug', 'enhancement'}
                     # , gameLabel=None, skip_labels=set() # TODO, game, skip
