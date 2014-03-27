@@ -170,8 +170,10 @@ def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
         :class:`github.Issue.Issue`
     TODO: add sort, direction as needed, clean ifs up, list comprehensions
     """
+    print skip_labels
     current = _IssueCache.hit(repo, milestone, state)
     if not current:
+        print repo, milestone, state
         if milestone: # FIXME - due to API won't let me specify None for all
             current = repo.get_issues(milestone,
                                       state=state,
@@ -194,6 +196,8 @@ def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
         return result
     elif keep_labels and skip_labels:
         keep_labels = keep_labels - skip_labels
+        print current
+        print keep_labels
         for issue in current:
             labels = set(x.name for x in issue.get_labels())
             if keep_labels & labels and not skip_labels & labels:

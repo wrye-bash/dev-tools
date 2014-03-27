@@ -225,6 +225,7 @@ def main():
         except:
             pass
     # Create posts
+    # games = {'fnv': u'Fallout - New Vegas'}
     for game in games:
         print 'Getting Issues for:', games[game]
         issues = getIssuesForPosts(repo, milestone, game)
