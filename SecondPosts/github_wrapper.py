@@ -128,7 +128,34 @@ def getMilestone(repo, milestoneTitle):
             return m
     return None
 
-def getIssues(repo, milestone="none", keep_labels=None, skip_labels=(), #"none"
+class _IssueCache(object):
+    CACHE = {}
+
+    class IssueFilter(object):
+        def __init__(self, repo, milestone, state):
+            self.repo = repo
+            self.milestone = milestone
+            self.state = state
+
+        def __key(self): # http://stackoverflow.com/a/2909119/281545
+            return self.repo, self.milestone, self.state
+
+        def __eq__(self, other):  # copy paste
+            return type(other) is type(self) and self.__key() == other.__key()
+
+        def __hash__(self): return hash(self.__key())
+
+    @staticmethod
+    def hit(repo, milestone, state):
+        issueFilter = _IssueCache.IssueFilter(repo, milestone, state)
+        return _IssueCache.CACHE.get(issueFilter)
+
+    @staticmethod
+    def update(repo, milestone, state, issues):  # not thread safe
+        issueFilter = _IssueCache.IssueFilter(repo, milestone, state)
+        _IssueCache.CACHE[issueFilter] = issues
+
+def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
               state='all'):
     """Return a _list_ of applicable issues for the given game and milestone
         repo: github.Repository object
@@ -142,12 +169,19 @@ def getIssues(repo, milestone="none", keep_labels=None, skip_labels=(), #"none"
         :rtype: :class:`github.PaginatedList.PaginatedList` of
         :class:`github.Issue.Issue`
     TODO: add sort, direction as needed, clean ifs up, list comprehensions
-    TODO: add Cache for milestone repo and state
     """
-    current = repo.get_issues(milestone,
-                              state=state,
-                              sort='created',
-                              direction='desc')
+    current = _IssueCache.hit(repo, milestone, state)
+    if not current:
+        if milestone: # FIXME - due to API won't let me specify None for all
+            current = repo.get_issues(milestone,
+                                      state=state,
+                                      sort='created',
+                                      direction='desc')
+        else:
+            current = repo.get_issues(state=state,
+                                      sort='created',
+                                      direction='desc')
+        _IssueCache.update(repo, milestone, state, current)
     if not keep_labels and not skip_labels:  # no label filters, return All
         return current
     # return only issues that partake in keep_labels, and not in skip_labels
