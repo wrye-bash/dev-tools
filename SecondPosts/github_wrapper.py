@@ -28,6 +28,8 @@ import github
 import os
 
 USER_FILE = u'generate_second_posts.usr'
+DEFAULT_ISSUE_STATE = 'all'
+DEFAULT_MILESTONE = None
 
 def getUser():
     """Attempts to load 'generate_second_posts.user' to read in user data for
@@ -136,7 +138,18 @@ class _IssueCache(object):
         def __init__(self, repo, milestone, state):
             self.repo = repo
             self.milestone = milestone
-            self.state = state
+            self._state = state
+
+        @property
+        def state(self):
+            return self._state
+
+        @state.setter
+        def state(self, value): # disallow None
+            if not value:
+                self._state = DEFAULT_ISSUE_STATE
+            else:
+                self._state = value
 
         def __key(self): # http://stackoverflow.com/a/2909119/281545
             return self.repo, self.milestone, self.state
@@ -157,22 +170,20 @@ class _IssueCache(object):
         _IssueCache.CACHE[issueFilter] = issues
 
     @staticmethod
-    def all(repo, milestone=None, state='all'):
+    def all(repo, milestone=None, state=DEFAULT_ISSUE_STATE):
         issueFilter = _IssueCache.IssueFilter(repo, milestone, state)
         all_ = _IssueCache.ALL_LABELS.get(issueFilter)
-        if not all_:  # FIXME - parameters  milestone state unused below !
-            if milestone and state:  # milestone=github.GithubObject.NotSet ...
+        if not all_:
+            if milestone:  # FIXME milestone=github.GithubObject.NotSet ...
                 all_ = _IssueCache.ALL_LABELS[issueFilter] = repo.get_labels(
                     milestone, state)
-            elif state:
+            else:
                 all_ = _IssueCache.ALL_LABELS[issueFilter] = repo.get_labels(
                     state)
-            else:
-                all_ = _IssueCache.ALL_LABELS[issueFilter] = repo.get_labels()
         return all_
 
 def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
-              state='all'):
+              state=DEFAULT_ISSUE_STATE):
     """Return a _list_ of applicable issues for the given game and milestone
         repo: github.Repository object
         milestone: github.Milestone object
@@ -226,7 +237,7 @@ def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
                 result.append(issue)
         return result
 
-def getUnlabeledIssues(repo, milestone=None, state='all'):
+def getUnlabeledIssues(repo, milestone=None, state=DEFAULT_ISSUE_STATE):
     return getIssues(repo, milestone, state=state,
                      skip_labels=_IssueCache.all(repo, milestone, state))
 
