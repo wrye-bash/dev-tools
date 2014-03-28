@@ -145,19 +145,20 @@ class _IssueCache(object):
             return self._state
 
         @state.setter
-        def state(self, value): # disallow None
+        def state(self, value):  # disallow None
             if not value:
                 self._state = DEFAULT_ISSUE_STATE
             else:
                 self._state = value
 
-        def __key(self): # http://stackoverflow.com/a/2909119/281545
+        def __key(self):  # http://stackoverflow.com/a/2909119/281545
             return self.repo, self.milestone, self.state
 
-        def __eq__(self, other):  # copy paste
+        def __eq__(self, other):  # add self is other optimization ?
             return type(other) is type(self) and self.__key() == other.__key()
 
-        def __hash__(self): return hash(self.__key())
+        def __hash__(self):
+            return hash(self.__key())
 
     @staticmethod
     def hit(repo, milestone, state):
@@ -201,7 +202,7 @@ def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
     current = _IssueCache.hit(repo, milestone, state)
     if not current:
         print repo, milestone, state
-        if milestone: # FIXME - due to API won't let me specify None for all
+        if milestone:  # FIXME - due to API won't let me specify None for all
             current = repo.get_issues(milestone,
                                       state=state,
                                       sort='created',
