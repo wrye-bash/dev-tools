@@ -218,6 +218,10 @@ def main():
     if not milestone:
         print 'Could not find milestone:', opts.milestone
         return
+    # print getUnlabeledIssues(repo)
+    # all_ = getIssues(repo)
+    # print [x.title for x in all_].__len__()
+    # return
     # Clean output directory
     if os.path.exists(u'out'):
         try:
