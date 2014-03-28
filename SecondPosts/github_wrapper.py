@@ -190,7 +190,7 @@ def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
     result = []
     if not keep_labels and skip_labels:
         for issue in current:
-            labels = set(x.name for x in issue.get_labels())
+            labels = set(x.name for x in issue.labels)
             if not skip_labels & labels:
                 result.append(issue)
         return result
@@ -199,13 +199,13 @@ def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
         print current
         print keep_labels
         for issue in current:
-            labels = set(x.name for x in issue.get_labels())
+            labels = set(x.name for x in issue.labels)
             if keep_labels & labels and not skip_labels & labels:
                 result.append(issue)
         return result
     else:
         for issue in current:
-            labels = set(x.name for x in issue.get_labels())
+            labels = set(x.name for x in issue.labels)
             if keep_labels & labels:
                 result.append(issue)
         return result
@@ -230,7 +230,7 @@ def getClosedIssues(repo, milestone, keep_labels={'bug', 'enhancement'}
     # Filter current issues
     bug_or_enhancement = []
     for issue in current:
-        labels = set(x.name for x in issue.get_labels())
+        labels = set(x.name for x in issue.labels)
         if keep_labels & labels:
             bug_or_enhancement.append(issue)
     return bug_or_enhancement
