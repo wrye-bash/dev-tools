@@ -170,7 +170,7 @@ class _IssueCache(object):
         _IssueCache.CACHE[issueFilter] = issues
 
     @staticmethod
-    def all(repo, milestone=None, state=DEFAULT_ISSUE_STATE):
+    def allLabels(repo, milestone=None, state=DEFAULT_ISSUE_STATE):
         issueFilter = _IssueCache.IssueFilter(repo, milestone, state)
         all_ = _IssueCache.ALL_LABELS.get(issueFilter)
         if not all_:
@@ -239,7 +239,7 @@ def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
 
 def getUnlabeledIssues(repo, milestone=None, state=DEFAULT_ISSUE_STATE):
     return getIssues(repo, milestone, state=state,
-                     skip_labels=_IssueCache.all(repo, milestone, state))
+                     skip_labels=_IssueCache.allLabels(repo, milestone, state))
 
 def getClosedIssues(repo, milestone, keep_labels={'bug', 'enhancement'}
                     # , gameLabel=None, skip_labels=set() # TODO, game, skip
