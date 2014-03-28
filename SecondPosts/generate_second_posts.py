@@ -52,7 +52,6 @@
    Generated seconds posts will be output to ./out
    """
 
-
 # Imports ====================================================================
 import argparse
 import shutil
@@ -169,7 +168,8 @@ def getIssuesForPosts(repo, milestone, gameLabel):
           other_bug: Issues tagged `bug`, but not for this milestone
           other_enh: Issues tagged `enhancement`, but not for this milestone
     """
-    skip_labels = set(GAMES.keys()) - {gameLabel} # what if gameLabel is None
+    skip_labels = GAME_LABELS - {gameLabel} # what if gameLabel is None
+    skip_labels = skip_labels | SKIP_LABELS
     current_bug = getIssues(repo, milestone, keep_labels={'bug'},
                             skip_labels=skip_labels)
     current_enh = getIssues(repo, milestone, keep_labels={'enhancement'},

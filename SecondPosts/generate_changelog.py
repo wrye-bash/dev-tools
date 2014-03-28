@@ -25,6 +25,7 @@
 """This module generates the changelog reading metadata for a milestone."""
 import argparse
 from datetime import date
+from globals import SKIP_LABELS
 
 from html import closedIssue, closedIssueLabels
 from github_wrapper import getMilestone, getClosedIssues
@@ -93,7 +94,7 @@ def main():
     milestone = getMilestone(repo, opts.milestone)
     # # Clean Output directory
     # _cleanOutDir()
-    issues = getClosedIssues(repo, milestone)
+    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
     print 'Writing changelog'
     writeChangelog(milestone, issues)
     print 'Changelog generated.'

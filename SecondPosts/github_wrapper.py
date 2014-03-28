@@ -157,6 +157,9 @@ class _IssueCache(object):
         def __eq__(self, other):  # add self is other optimization ?
             return type(other) is type(self) and self.__key() == other.__key()
 
+        def __ne__(self, other): # needed ?
+            return not self.__eq__(other)
+
         def __hash__(self):
             return hash(self.__key())
 
@@ -196,7 +199,8 @@ def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
        return: a list of issues
         :rtype: :class:`github.PaginatedList.PaginatedList` of
         :class:`github.Issue.Issue`
-    TODO: add sort, direction as needed, clean ifs up, list comprehensions
+    TODO: add sort, direction as needed, clean milestone ifs up,
+      list comprehensions
     """
     print skip_labels
     current = _IssueCache.hit(repo, milestone, state)
@@ -242,29 +246,17 @@ def getUnlabeledIssues(repo, milestone=None, state=DEFAULT_ISSUE_STATE):
     return getIssues(repo, milestone, state=state,
                      skip_labels=_IssueCache.allLabels(repo, milestone, state))
 
-def getClosedIssues(repo, milestone, keep_labels={'bug', 'enhancement'}
-                    # , gameLabel=None, skip_labels=set() # TODO, game, skip
-):
+def getClosedIssues(repo, milestone, keep_labels={'bug', 'enhancement'},
+                    skip_labels=set()):
     """Return a list of closed issues for the given milestone
         repo: github.Repository object
         milestone: github.Milestone object
         keep_labels: set of labels for result to partake
        return:
         issue fixed in this milestone."""
-    current = repo.get_issues(milestone,
-                              state='closed',
-                              sort='created',
-                              direction='desc')
-    # if gameLabel is not None:
-    #     skip_labels = skip_labels - {gameLabel}
-    #     accepted_labels = accepted_labels | {gameLabel}
-    # Filter current issues
-    bug_or_enhancement = []
-    for issue in current:
-        labels = set(x.name for x in issue.labels)
-        if keep_labels & labels:
-            bug_or_enhancement.append(issue)
-    return bug_or_enhancement
+    return getIssues(repo, milestone, keep_labels=keep_labels,
+                     skip_labels=skip_labels,
+                     state='closed')
 
 def getGithub(*user):
     return github.Github(*user)

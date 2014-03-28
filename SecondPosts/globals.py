@@ -38,8 +38,10 @@ GAMES = {
     'fnv': u'Fallout - New Vegas',
 }
 
-SKIP_LABELS = {'git', 'goal', 'discussion', 'TODO', 'wont fix', 'works for me',
-               'rejected', 'duplicate'} | set(GAMES)  # unused but useful
+DEV_LABELS = {'git', 'goal', 'discussion', 'TODO', 'wont fix', 'works for me',
+               'rejected', 'duplicate'}
+GAME_LABELS = set(GAMES.keys())
+SKIP_LABELS = DEV_LABELS
 
 URL_MILESTONE = \
     'https://github.com/wrye-bash/wrye-bash/issues?milestone=%i&state=open'
