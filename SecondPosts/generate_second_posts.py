@@ -38,7 +38,7 @@
 
    Requires PyGithub installed: https://github.com/jacquev6/PyGithub
 
-   The script uses the 'wrye-bash-automaton' user on GitHub, which is a
+   The script uses the 'wrye-bash-automoton' user on GitHub, which is a
    read-only member of the wrye-bash repository.  A Personal Access Token
    has been generated and is hard coded in this tool.
 
@@ -186,10 +186,8 @@ def getIssuesForPosts(repo, milestone, gameLabel):
                  not x.milestone or x.milestone.title != milestone_title]
     # Sort current_bug/enh: already sorted by date, just move the
     #  open issues to the top
-    current_bug = ([x for x in current_bug if x.state == 'open'] +
-                   [x for x in current_bug if x.state == 'closed'])
-    current_enh = ([x for x in current_enh if x.state == 'open'] +
-                   [x for x in current_enh if x.state == 'closed'])
+    current_bug = [x for x in current_bug if x.state in ('open', 'closed')]
+    current_enh = [x for x in current_enh if x.state in ('open', 'closed')]
     return current_bug, current_enh, other_bug, other_enh
 
 def main():
