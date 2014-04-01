@@ -52,46 +52,21 @@
    """
 
 # Imports ====================================================================
-import argparse
 from github_wrapper import *
 from html import color,COLOR_INTRO,url,formatIssue
 
 # Globals ====================================================================
 TEXT_FILE = u'generate_second_posts_lines.txt'
-from globals import *
+from globals import _outFile, Parser, URL_MILESTONE, URL_BUGS, \
+    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, _login, _getRepo, \
+    _getMiles
 
 # Functions ===================================================================
 def parseArgs():
-    parser = argparse.ArgumentParser(prog='Generate Second Posts',
-                                     add_help=True)
-    parser.add_argument('-m', '--milestone',
-                        dest='milestone',
-                        action='store',
-                        type=str,
-                        required=True,
-                        help='Specify the milestone for filtering Issues.')
-    parser.add_argument('-u', '--user',
-                        dest='user',
-                        action='store_true',
-                        default=False,
-                        help='Force usage of a different user to pull info.')
-    gameGroup = parser.add_mutually_exclusive_group()
-    gameGroup.add_argument('-g', '--game',
-                           dest='game',
-                           type=str,
-                           choices= ['skyrim',
-                                     'oblivion',
-                                     'fallout',
-                                     'fnv',
-                                     ],
-                           help='Generate a second post for a specific game.')
-    gameGroup.add_argument('-a', '--all',
-                           dest='all',
-                           action='store_true',
-                           default=False,
-                           help='Generate a second post for all games.')
-    return parser.parse_args()
-
+    return Parser.new(prog='Generate Second Posts').user().games(
+        help_='Generate a second post for a specific game.',
+        helpAll='Generate a second post for all games.').milestone(
+        help_='Specify the milestone for filtering Issues.').parse()
 
 def getSecondPostLine(ins):
     """Reads lines from ins until a blank line is found, then joins the lines

@@ -23,9 +23,8 @@
 # =============================================================================
 
 """This module generates the changelog for a milestone reading its metadata."""
-import argparse
 from datetime import date
-from globals import SKIP_LABELS
+from globals import SKIP_LABELS, Parser
 
 from html import closedIssue, closedIssueLabels
 from github_wrapper import getMilestone, getClosedIssues
@@ -33,35 +32,10 @@ from globals import _login, _getRepo, _outFile
 
 # Functions ===================================================================
 def parseArgs():
-    parser = argparse.ArgumentParser(prog='Generate Changelog',
-                                     add_help=True)
-    parser.add_argument('-m', '--milestone',
-                        dest='milestone',
-                        action='store',
-                        type=str,
-                        required=True,
-                        help='Specify the milestone for latest release.')
-    parser.add_argument('-u', '--user',
-                        dest='user',
-                        action='store_true',
-                        default=False,
-                        help='Force usage of a different user to pull info.')
-    gameGroup = parser.add_mutually_exclusive_group()
-    gameGroup.add_argument('-g', '--game',
-                           dest='game',
-                           type=str,
-                           choices=['skyrim',
-                                    'oblivion',
-                                    'fallout',
-                                    'fnv',
-                           ],
-                           help='Show issues for a specific game only.')
-    gameGroup.add_argument('-a', '--all',
-                           dest='all',
-                           action='store_true',
-                           default=False,
-                           help='Show issues for all games.')
-    return parser.parse_args()
+    return Parser.new(prog='Generate Changelog').user().milestone(
+        help_='Specify the milestone for latest release.').games(
+        help_='Show issues for a specific game only.',
+        helpAll='Show issues for all games.').parse()
 
 # TEMPLATE = u'changelog_template.txt'
 from html import h2, ul

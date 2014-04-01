@@ -100,3 +100,50 @@ def _outFile(dir_=OUT_DIR, name="out.txt"):
         os.makedirs(dir_)
     outFile = os.path.join(dir_, name)
     return outFile
+
+# Arguments Parser =====================================
+import argparse
+
+class Parser:
+    def __init__(self, prog, add_help=True):
+        self.parser = argparse.ArgumentParser(prog=prog, add_help=add_help)
+
+    @staticmethod
+    def new(prog, add_help=True):
+        return Parser(prog, add_help)
+
+    def games(self, help_='Show issues for a specific game only.',
+              helpAll='Show issues for all games.'):
+        gameGroup = self.parser.add_mutually_exclusive_group()
+        gameGroup.add_argument('-g', '--game',
+                               dest='game',
+                               type=str,
+                               choices=GAMES.keys(),
+                               help=help_)
+        gameGroup.add_argument('-a', '--all',
+                               dest='all',
+                               action='store_true',
+                               default=False,
+                               help=helpAll)
+        return self
+
+    def milestone(self, help_='Specify the milestone for latest release.'):
+        self.parser.add_argument('-m', '--milestone',
+                                 dest='milestone',
+                                 action='store',
+                                 type=str,
+                                 required=True,
+                                 help=help_)
+        return self
+
+    def user(self):
+        self.parser.add_argument('-u', '--user',
+                                 dest='user',
+                                 action='store_true',
+                                 default=False,
+                                 help='Force usage of a different user to '
+                                      'pull info.')
+        return self
+
+    def parse(self):
+        return self.parser.parse_args()
