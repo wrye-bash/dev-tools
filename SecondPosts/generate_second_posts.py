@@ -56,10 +56,11 @@ from github_wrapper import *
 from html import color,COLOR_INTRO,url,formatIssue
 
 # Globals ====================================================================
-TEXT_FILE = u'generate_second_posts_lines.txt'
 from globals import _outFile, Parser, URL_MILESTONE, URL_BUGS, \
     URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, _login, _getRepo, \
-    _getMiles
+    _getMiles, _template
+
+TEMPLATE = _template(name=u'generate_second_posts_lines.txt')
 
 # Functions ===================================================================
 def parseArgs():
@@ -87,7 +88,7 @@ def writeSecondPost(gameTitle, milestone, issues):
     """Write 'Buglist thread Starter - <gameTitle>.txt'"""
     outFile = _outFile(name=u'Buglist thread Starter - ' + gameTitle + u'.txt')
     with open(outFile, 'w') as out:
-        with open(TEXT_FILE,'r') as ins:
+        with open(TEMPLATE,'r') as ins:
             # Intro paragraph
             line = getSecondPostLine(ins)
             out.write(color(line % milestone.title, COLOR_INTRO))

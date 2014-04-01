@@ -34,7 +34,6 @@ def _parseArgs():
         help_='Show issues for a specific game only.',
         helpAll='Show issues for all games.').parse()
 
-# TEMPLATE = u'changelog_template.txt'
 from html import h2, ul
 
 def _title(milestone, authors=('Various community members',)):

@@ -86,6 +86,7 @@ def _getMiles(opts, repo):
 import os, shutil
 
 OUT_DIR = u'out'
+TEMPLATES_DIR = u'templates'
 
 def _cleanOutDir(path=OUT_DIR):
     # Clean output directory
@@ -99,6 +100,18 @@ def _outFile(dir_=OUT_DIR, name="out.txt"):
     if not os.path.exists(dir_):
         os.makedirs(dir_)
     outFile = os.path.join(dir_, name)
+    return outFile
+
+def _template(dir_=TEMPLATES_DIR, name=''):
+    """Returns a template file to use when building a page/post.
+
+    :param dir_: the directory the templates are in.
+    :param name: the filename of a specific template file.
+    :return: :raise IOError: when the file does not exist
+    """
+    outFile = os.path.join(dir_, name)
+    if not os.path.exists(outFile):
+        raise IOError('Template file must exist')
     return outFile
 
 # Arguments Parser =====================================
