@@ -24,14 +24,11 @@
 
 """This module generates the changelog for a milestone reading its metadata."""
 from datetime import date
-from globals import SKIP_LABELS, Parser
-
-from html import closedIssue, closedIssueLabels
-from github_wrapper import getMilestone, getClosedIssues
-from globals import _login, _getRepo, _outFile
+from github_wrapper import getClosedIssues
+from globals import SKIP_LABELS, Parser, _login, _getRepo, _outFile, _getMiles
 
 # Functions ===================================================================
-def parseArgs():
+def _parseArgs():
     return Parser.new(prog='Generate Changelog').user().milestone(
         help_='Specify the milestone for latest release.').games(
         help_='Show issues for a specific game only.',
@@ -41,10 +38,13 @@ def parseArgs():
 from html import h2, ul
 
 def _title(milestone, authors=('Various community members',)):
-    # TODO - get them from issues
+    # TODO - get authors from issues
     return h2(milestone.title + ' [' + date.today().strftime(
-        '%Y/%m/%d') + '] ' + str(list(authors))
+        '%Y/%m/%d') + '] ' + '[' + ", ".join(authors) + ']'
     )
+
+# API =========================================================================
+from html import closedIssue
 
 def writeChangelog(milestone, issues):
     """Write 'Changelog - <milestone>.txt'"""
@@ -53,21 +53,19 @@ def writeChangelog(milestone, issues):
         # with open(TEMPLATE,'r') as ins:
         out.write(_title(milestone))
         out.write('\n'.join(ul(issues, closedIssue)))
-        out.write('\n\n\n')
-        out.write('\n'.join(ul(issues, closedIssueLabels)))
-        out.write('\n')
+        out.write('\n\n')
+        # out.write('\n'.join(ul(issues, closedIssueLabels)))
+        # out.write('\n')
 
 def main():
-    opts = parseArgs()
-    # # TODO per game # if opts.game:...
-    # Login
+    opts = _parseArgs()  # TODO per game # if opts.game:...
+    # Login # TODO move this to globals !!! same code in all main()s
     git = _login(opts)
     if not git: return
     repo = _getRepo(git)
     if not repo: return
-    milestone = getMilestone(repo, opts.milestone)
-    # # Clean Output directory
-    # _cleanOutDir()
+    milestone = _getMiles(opts, repo)
+    if not milestone: return
     issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
     print 'Writing changelog'
     writeChangelog(milestone, issues)
