@@ -23,7 +23,6 @@
 #
 # =============================================================================
 
-
 """Generates the second posts (bug list, etc) for all applicable sub-forums of
    Bethesda's forums.
 
@@ -54,7 +53,6 @@
 
 # Imports ====================================================================
 import argparse
-import shutil
 from github_wrapper import *
 from html import color,COLOR_INTRO,url,formatIssue
 
@@ -110,13 +108,9 @@ def getSecondPostLine(ins):
             break
     return ''.join(lines)
 
-
 def writeSecondPost(gameTitle, milestone, issues):
     """Write 'Buglist thread Starter - <gameTitle>.txt'"""
-    if not os.path.exists(u'out'):
-        os.makedirs(u'out')
-    outFile = os.path.join(u'out',
-                           u'Buglist thread Starter - ' + gameTitle + u'.txt')
+    outFile = _outFile(name=u'Buglist thread Starter - ' + gameTitle + u'.txt')
     with open(outFile, 'w') as out:
         with open(TEXT_FILE,'r') as ins:
             # Intro paragraph
@@ -198,34 +192,19 @@ def main():
         games = {opts.game: GAMES[opts.game]}
     else:
         games = GAMES
-    # login
-    if opts.user:
-        user = getUser()
-    else:
-        user = (TOKEN,)
-    print "Logging in..."
-    git = getGithub(*user)
-    print "User:", git.get_user().name
-    print "Getting repository..."
-    repo = getRepo(git, ORG_NAME, REPO_NAME)
-    if not repo:
-        print 'Could not find repository:', REPO_NAME
-        return
-    print "Getting Milestone..."
-    milestone = getMilestone(repo, opts.milestone)
-    if not milestone:
-        print 'Could not find milestone:', opts.milestone
-        return
+    # Login
+    git = _login(opts)
+    if not git: return
+    repo = _getRepo(git)
+    if not repo: return
+    milestone = _getMiles(opts, repo)
+    if not milestone: return
     # print getUnlabeledIssues(repo)
     # all_ = getIssues(repo)
     # print [x.title for x in all_].__len__()
     # return
-    # Clean output directory
-    if os.path.exists(u'out'):
-        try:
-            shutil.rmtree(u'out')
-        except:
-            pass
+    # # Clean Output directory
+    # _cleanOutDir()
     # Create posts
     # games = {'fnv': u'Fallout - New Vegas'}
     for game in games:

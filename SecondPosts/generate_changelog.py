@@ -22,7 +22,7 @@
 #
 # =============================================================================
 
-"""This module generates the changelog reading metadata for a milestone."""
+"""This module generates the changelog for a milestone reading its metadata."""
 import argparse
 from datetime import date
 from globals import SKIP_LABELS
@@ -30,7 +30,6 @@ from globals import SKIP_LABELS
 from html import closedIssue, closedIssueLabels
 from github_wrapper import getMilestone, getClosedIssues
 from globals import _login, _getRepo, _outFile
-
 
 # Functions ===================================================================
 def parseArgs():
@@ -68,6 +67,7 @@ def parseArgs():
 from html import h2, ul
 
 def _title(milestone, authors=('Various community members',)):
+    # TODO - get them from issues
     return h2(milestone.title + ' [' + date.today().strftime(
         '%Y/%m/%d') + '] ' + str(list(authors))
     )
