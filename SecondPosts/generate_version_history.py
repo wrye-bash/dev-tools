@@ -40,13 +40,15 @@ def _parseArgs():
 
 import shutil
 import os
-WRYE_BASH_REPO_DOCS_DIR='wrye-bash\\Mopy\\Docs'
-IO_REPO_DOCS_DIR='wrye-bash.github.io\\docs'
+
+# TODO command line args for those
+WRYE_BASH_REPO_DOCS_DIR = 'wrye-bash\\Mopy\\Docs'
+IO_REPO_DOCS_DIR = 'wrye-bash.github.io\\docs'
 
 def writeVersionHistory(repo, milestone):
     """Writes the html, copies it to the main repo and waits for you to
-    manually edit it before it copies the edited file to the 'wrye-bash
-    .github.io\\docs' folder
+    manually edit it (and commit it) before it copies the edited file to the
+    wrye-bash.github.io\\docs folder
     :param repo:
     :param milestone:
     """
@@ -62,9 +64,9 @@ def writeVersionHistory(repo, milestone):
     docsDir = os.path.join(os.path.abspath('../..'), WRYE_BASH_REPO_DOCS_DIR)
     shutil.copy(out_, docsDir)
     htmlInDocs = os.path.join(docsDir, os.path.basename(out_))
-    print('Hand edit ' + str(htmlInDocs))
+    print('Manually edit ' + str(htmlInDocs))
     docsDir = os.path.join(os.path.abspath('../..'), IO_REPO_DOCS_DIR)
-    # in_ =
+    # TODO: launch git gui & to inspect the diff - GitPython
     raw_input('Then press Enter to copy this file to ' + str(docsDir))
     # TODO soft link instead of copying + get the input
     shutil.copy(htmlInDocs, docsDir)
@@ -85,4 +87,3 @@ if __name__ == '__main__':
         main()
     except KeyboardInterrupt:
         print "Aborted"
-

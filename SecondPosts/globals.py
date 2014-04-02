@@ -39,7 +39,7 @@ GAMES = {
 }
 
 DEV_LABELS = {'git', 'goal', 'discussion', 'TODO', 'wont fix', 'works for me',
-               'rejected', 'duplicate'}
+              'rejected', 'duplicate'}
 GAME_LABELS = set(GAMES.keys())
 SKIP_LABELS = DEV_LABELS
 
@@ -97,6 +97,12 @@ def _cleanOutDir(path=OUT_DIR):
             pass
 
 def _outFile(dir_=OUT_DIR, name="out.txt"):
+    """Returns a path joining the dir_ and name parameters. Will create the
+    dirs in dir_ if not existing
+
+    :param dir_: a directory path
+    :param name: a filename
+    """
     if not os.path.exists(dir_):
         os.makedirs(dir_)
     outFile = os.path.join(dir_, name)

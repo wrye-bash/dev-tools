@@ -70,7 +70,7 @@ def h2(text):
 def ul(items, f=lambda x: x):
     yield '\n<ul>'
     for i in items:
-        yield '\t<li>' + f(i) + '</li>'
+        yield '<li>' + f(i) + '</li>'
     yield '</ul>'
 
 # Display =====================================
