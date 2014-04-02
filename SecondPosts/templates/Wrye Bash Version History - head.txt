@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="shortcut icon" href="../bash/images/bash_32.ico"/>
+<title>Wrye Bash Version History</title>
+<style>
+	html {font-family:Arial,sans-serif; background:#ffffcc; font-size:0.9em;}
+	h1, h2 { background: #9ACD32; margin-left: -8px; margin-right: -8px; padding:0.6em; }
+	h1 { margin-top:-8px; padding-left:1.5em;margin-bottom:0;}
+	h2 { margin-top:5em; padding-left:2em;}
+	h3 { font-size:1.1em; margin-top:3em;}
+	a:link { text-decoration:none; }
+	a:hover { text-decoration:underline; }
+	li ul, li ol {margin-top:0.4em;}
+	li {margin-bottom:10px;}
+	ol ol {list-style:lower-alpha;}
+ ol ol li {margin-bottom:0.2em;}
+	td, th {border:1px solid black; padding: 5px; vertical-align:top;}
+	table {margin:1em; background:#fdfdfd; border-collapse:collapse;}
+	thead {font-weight:bold; background:#8af;}
+	img {border:0;}
+	a[href^="http"]:after {vertical-align: super;  content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=);}
+	q {font-style:italic;}
+	code {display:inline-block; padding:2px 5px; background:#DDD;}
+	code.box {line-height:20px; white-space:pre; margin:1em 0 0 3em; display:table; padding:5px 10px;}
+	blockquote {background:#E6E6FA; display:table; padding:5px 30px 5px 10px;}
+	figure {margin:0;}
+	figcaption {font-style:italic; margin-bottom:2em;}
+ .missing {background:red; color:white; border:0.25em solid black;}
+	abbr {cursor:help;}
+
+	h2 {margin-left:0; padding:0; background:inherit; font-size:1.1em; margin-top:3em;}
+ li {margin-bottom:0.2em;}
+</style>
+
+<h1 id="history">Wrye Bash Version History</h1>
+
+<p style="font-style:italic;font-weight:bold;">All versions by Wrye unless otherwise noted.
+

@@ -45,8 +45,10 @@ def _title(milestone, authors=('Various community members',)):
 # API =========================================================================
 from html import closedIssue
 
-def writeChangelog(milestone, issues):
+def writeChangelog(repo, milestone):
     """Write 'Changelog - <milestone>.txt'"""
+    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
+    print 'Writing changelog'
     outFile = _outFile(name=u'Changelog - ' + milestone.title + u'.txt')
     with open(outFile, 'w') as out:
         # with open(TEMPLATE,'r') as ins:
@@ -55,6 +57,8 @@ def writeChangelog(milestone, issues):
         out.write('\n\n')
         # out.write('\n'.join(ul(issues, closedIssueLabels)))
         # out.write('\n')
+    print 'Changelog generated.'
+    return outFile
 
 def main():
     opts = _parseArgs()  # TODO per game # if opts.game:...
@@ -65,10 +69,7 @@ def main():
     if not repo: return
     milestone = _getMiles(opts, repo)
     if not milestone: return
-    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
-    print 'Writing changelog'
-    writeChangelog(milestone, issues)
-    print 'Changelog generated.'
+    writeChangelog(repo, milestone)
 
 if __name__ == '__main__':
     try:
