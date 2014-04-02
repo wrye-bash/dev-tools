@@ -44,12 +44,17 @@ def _title(milestone, authors=('Various community members',)):
 
 # API =========================================================================
 from html import closedIssue
+import os.path
 
-def writeChangelog(repo, milestone):
+CHANGELOGS_DIR = '../ChangeLogs'
+
+def writeChangelog(repo, milestone, overwrite=False):
     """Write 'Changelog - <milestone>.txt'"""
-    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
+    outFile = _outFile(dir_=CHANGELOGS_DIR,
+                       name=u'Changelog - ' + milestone.title + u'.txt')
+    if os.path.isfile(outFile) and not overwrite: return outFile
     print 'Writing changelog'
-    outFile = _outFile(name=u'Changelog - ' + milestone.title + u'.txt')
+    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
     with open(outFile, 'w') as out:
         # with open(TEMPLATE,'r') as ins:
         out.write(_title(milestone))

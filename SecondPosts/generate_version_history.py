@@ -36,16 +36,17 @@ TEMPLATE_TAIL = _template(name=u'Wrye Bash Version History - tail.txt')
 # Functions ===================================================================
 def _parseArgs():
     return Parser.new(prog='Wrye Bash Version History.html').user().milestone(
-        help_='Specify the milestone for latest release.').parse()
+        help_='Specify the milestone for latest release.').editor().parse()
 
 import shutil
-import os
+import os.path
+import subprocess
 
 # TODO command line args for those
 WRYE_BASH_REPO_DOCS_DIR = 'wrye-bash\\Mopy\\Docs'
 IO_REPO_DOCS_DIR = 'wrye-bash.github.io\\docs'
 
-def writeVersionHistory(repo, milestone):
+def writeVersionHistory(repo, milestone, editor):
     """Writes the html, copies it to the main repo and waits for you to
     manually edit it (and commit it) before it copies the edited file to the
     wrye-bash.github.io\\docs folder
@@ -56,23 +57,37 @@ def writeVersionHistory(repo, milestone):
     with open(out_, 'wb') as outfile:
         with open(TEMPLATE_HEAD) as readfile:
             shutil.copyfileobj(readfile, outfile)
-        latestChangelog = writeChangelog(repo, milestone)
+        latestChangelog = writeChangelog(repo,
+                                         milestone)  # TODO overwrite flag
+        if editor:
+            print('Please review the changelog (mind the date): ' + str(
+                latestChangelog))
+            subprocess.call([editor, str(latestChangelog)])  # TODO call_check
         with open(latestChangelog) as readfile:
             shutil.copyfileobj(readfile, outfile)
         with open(TEMPLATE_TAIL) as readfile:
             shutil.copyfileobj(readfile, outfile)
+    if editor:
+        print('Please review the html ' + str(out_))
+        print(
+            'It will then be copied to the main repository for you to commit')
+        subprocess.call([editor, str(out_)])  # TODO call_check
+    raw_input('Press Enter to copy the html to the main and io repos.')
     docsDir = os.path.join(os.path.abspath('../..'), WRYE_BASH_REPO_DOCS_DIR)
+    print('Copying to ' + str(docsDir))
     shutil.copy(out_, docsDir)
-    htmlInDocs = os.path.join(docsDir, os.path.basename(out_))
-    print('Manually edit ' + str(htmlInDocs))
     docsDir = os.path.join(os.path.abspath('../..'), IO_REPO_DOCS_DIR)
     # TODO: launch git gui & to inspect the diff - GitPython
-    raw_input('Then press Enter to copy this file to ' + str(docsDir))
-    # TODO soft link instead of copying + get the input
-    shutil.copy(htmlInDocs, docsDir)
+    # TODO soft link instead of copying
+    print('Copying to ' + str(docsDir))
+    shutil.copy(out_, docsDir)
 
 def main():
     opts = _parseArgs()
+    if opts.no_editor:
+        editor = None
+    else:
+        editor = opts.editor
     # Login
     git = _login(opts)
     if not git: return
@@ -80,7 +95,7 @@ def main():
     if not repo: return
     milestone = _getMiles(opts, repo)
     if not milestone: return
-    writeVersionHistory(repo, milestone)
+    writeVersionHistory(repo, milestone, editor)
 
 if __name__ == '__main__':
     try:

@@ -164,5 +164,21 @@ class Parser:
                                       'pull info.')
         return self
 
+    def editor(self, help_='Path to editor executable to launch.',
+               helpNoEditor='Never launch an editor'):
+        editorGroup = self.parser.add_mutually_exclusive_group()
+        editorGroup.add_argument('-e', '--editor',
+                                 dest='editor',
+                                 action='store',
+                                 default='C:\\__\\Notepad++\\notepad++.exe',
+                                 type=str,
+                                 help=help_)
+        editorGroup.add_argument('-ne', '--no-editor',
+                                 dest='no_editor',
+                                 action='store_true',
+                                 default=False,
+                                 help=helpNoEditor)
+        return self
+
     def parse(self):
         return self.parser.parse_args()
