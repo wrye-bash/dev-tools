@@ -108,7 +108,7 @@ def _cleanOutDir(path=OUT_DIR):
 
 def _outFile(dir_=OUT_DIR, name="out.txt"):
     """Returns a path joining the dir_ and name parameters. Will create the
-    dirs in dir_ if not existing
+    dirs in dir_ if not existing.
 
     :param dir_: a directory path
     :param name: a filename

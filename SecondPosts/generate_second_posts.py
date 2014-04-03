@@ -42,10 +42,10 @@
    has been generated and is hard coded in this tool.
 
    If you need or want to use your own user to pull the information, you
-   must past '-u' on the command line, which will read
+   must pass '-u' on the command line, which will read
    'generate_second_posts.usr' for your user/password or access token.AMPER
    It is *highly recommended* to use an access token (requires 2-factor
-   authentication) so you password isn't stored in plain-text on your
+   authentication) so your password isn't stored in plain-text on your
    computer.  See the wiki on wrye-bash/meta on how to set this up.
 
    Generated seconds posts will be output to ./out
@@ -53,7 +53,7 @@
 
 # Imports ====================================================================
 from github_wrapper import *
-from html import color,COLOR_INTRO,url,formatIssue
+from html import color, COLOR_INTRO, url, formatIssue
 
 # Globals ====================================================================
 from globals import _outFile, Parser, URL_MILESTONE, URL_BUGS, \
@@ -87,7 +87,7 @@ def writeSecondPost(gameTitle, milestone, issues):
     """Write 'Buglist thread Starter - <gameTitle>.txt'"""
     outFile = _outFile(name=u'Buglist thread Starter - ' + gameTitle + u'.txt')
     with open(outFile, 'w') as out:
-        with open(TEMPLATE,'r') as ins:
+        with open(TEMPLATE, 'r') as ins:
             # Intro paragraph
             line = getSecondPostLine(ins)
             out.write(color(line % milestone.title, COLOR_INTRO))
@@ -137,7 +137,7 @@ def getIssuesForPosts(repo, milestone, gameLabel):
           other_bug: Issues tagged `bug`, but not for this milestone
           other_enh: Issues tagged `enhancement`, but not for this milestone
     """
-    skip_labels = GAME_LABELS - {gameLabel} # what if gameLabel is None
+    skip_labels = GAME_LABELS - {gameLabel}  # what if gameLabel is None
     skip_labels = skip_labels | SKIP_LABELS
     current_bug = getIssues(repo, milestone, keep_labels={'bug'},
                             skip_labels=skip_labels)
@@ -161,8 +161,8 @@ def getIssuesForPosts(repo, milestone, gameLabel):
 
 def main():
     """Start everything off"""
-    # Figure out which games to do:
     opts = parseArgs()
+    # Figure out which games to do:
     if opts.game:
         games = {opts.game: GAMES[opts.game]}
     else:

@@ -31,8 +31,8 @@ from globals import SKIP_LABELS, Parser, _outFile, hub
 def _parseArgs():
     return Parser.new(prog='Generate Changelog').user().milestone(
         help_='Specify the milestone for latest release.').games(
-        help_='Show issues for a specific game only.',
-        helpAll='Show issues for all games.').parse()
+        help_='Show closed issues for a specific game only.',
+        helpAll='Show closed issues for all games.').parse()
 
 from html import h2, ul
 

@@ -146,7 +146,7 @@ class _IssueCache(object):
             return self._state
 
         @state.setter
-        def state(self, value):  # disallow None
+        def state(self, value):  # disallow None - API's fault
             if not value:
                 self._state = DEFAULT_ISSUE_STATE
             else:
@@ -158,7 +158,7 @@ class _IssueCache(object):
         def __eq__(self, other):  # add `self is other` optimization ?
             return type(other) is type(self) and self.__key() == other.__key()
 
-        def __ne__(self, other): # needed ?
+        def __ne__(self, other):  # needed ?
             return not self.__eq__(other)
 
         def __hash__(self):
