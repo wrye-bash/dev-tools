@@ -57,8 +57,7 @@ from html import color,COLOR_INTRO,url,formatIssue
 
 # Globals ====================================================================
 from globals import _outFile, Parser, URL_MILESTONE, URL_BUGS, \
-    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, _login, _getRepo, \
-    _getMiles, _template
+    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, _template, hub
 
 TEMPLATE = _template(name=u'generate_second_posts_lines.txt')
 
@@ -168,13 +167,9 @@ def main():
         games = {opts.game: GAMES[opts.game]}
     else:
         games = GAMES
-    # Login
-    git = _login(opts)
-    if not git: return
-    repo = _getRepo(git)
-    if not repo: return
-    milestone = _getMiles(opts, repo)
-    if not milestone: return
+    git_ = hub(opts)
+    if not git_: return
+    repo, milestone = git_[0], git_[1]
     # print getUnlabeledIssues(repo)
     # all_ = getIssues(repo)
     # print [x.title for x in all_].__len__()

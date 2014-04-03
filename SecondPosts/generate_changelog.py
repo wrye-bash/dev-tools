@@ -25,7 +25,7 @@
 """This module generates the changelog for a milestone reading its metadata."""
 from datetime import date
 from github_wrapper import getClosedIssues
-from globals import SKIP_LABELS, Parser, _login, _getRepo, _outFile, _getMiles
+from globals import SKIP_LABELS, Parser, _outFile, hub
 
 # Functions ===================================================================
 def _parseArgs():
@@ -67,13 +67,9 @@ def writeChangelog(repo, milestone, overwrite=False):
 
 def main():
     opts = _parseArgs()  # TODO per game # if opts.game:...
-    # Login # TODO move this to globals !!! same code in all main()s
-    git = _login(opts)
-    if not git: return
-    repo = _getRepo(git)
-    if not repo: return
-    milestone = _getMiles(opts, repo)
-    if not milestone: return
+    git_ = hub(opts)
+    if not git_: return
+    repo, milestone = git_[0], git_[1]
     writeChangelog(repo, milestone)
 
 if __name__ == '__main__':
