@@ -33,16 +33,17 @@
 [/*]
 [/LIST]
 [/spoiler]
-[size=5][color=#3366ff]Download:[/color][/size] [url=http://www.nexusmods.com/oblivion/mods/22368]Oblivion Nexus[/url] and, of course, [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url].
+[size=5][color=#3366ff]Download:[/color][/size] [url=http://www.nexusmods.com/oblivion/mods/22368]Oblivion Nexus[/url] and, of course, [url=https://github.com/wrye-bash/wrye-bash/releases]GitHub[/url].
 
 [size=5][color=#3366ff]Documentation:[/color][/size]
 [LIST]
-[*][url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Technical%20Readme.html]Technical Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url] (also included in the download as "Wrye Bash General Readme.html" in the Mopy folder)[/*]
+[*][url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Technical%20Readme.html]Technical Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url] (also included in the download as "Wrye Bash General Readme.html" in the Mopy/Docs folder)[/*]
 [*]alt3rn1ty's [url=http://www.nexusmods.com/oblivion/mods/35230]Wrye Bash Pictorial Guide[/url] (For Oblivion, new guide for Skyrim pending)[/*]
 [*]Metallicow's BAIN [url=http://www.nexusmods.com/oblivion/mods/38857]Demo Wizard[/url][/*]
 [*]Translated documentation and guides: [url=http://guides.tesfans.org]简体中文[/url][/*]
 [/LIST]
-[b]Requirements and Installation[/b]:
+
+[size=5][color=#3366ff]Requirements and Installation:[/color][/size]
 
 Short version: just use the installer, and install everything to their default locations.
 
@@ -75,7 +76,7 @@ The project is hosted at [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url
 [*]If you think you've found an error in the WBSA, be sure to uninstall ALL python components and test it again first, to be sure we get an accurate report. Having python installed can sometimes trick the WBSA into thinking that it has all of the files it requires, even if it really doesn't.[/*]
 [/LIST]
 [/spoiler]
-You can see all the known bugs in the [url=https://github.com/wrye-bash/wrye-bash/issues]bug tracker[/url]
+You can see all the known bugs in the [url=https://github.com/wrye-bash/wrye-bash/issues]bug tracker[/url].
 
 [size=5][color=#3366ff]Linking:[/color][/size] If you'd like to link to Bash from somewhere else, please do! But be sure to link to either [url=http://www.nexusmods.com/oblivion/mods/22368]Oblivion Nexus[/url] or [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url]. Don't link to the actual download file, since that changes fairly frequently.
 
@@ -85,6 +86,7 @@ You can see all the known bugs in the [url=https://github.com/wrye-bash/wrye-bas
 [*]Load orders should be managed with [url=http://boss-developers.github.io/]BOSS for Skyrim[/url], which also supplies updated lists of tags used for importing (though even if you don't use BOSS, a basic taglist is shipped with each version of Wrye Bash)[/*]
 [*]Valda ported and maintains Wrye Bash for Fallout3 ([topic=1211142]Wrye Flash[/topic]) and Fallout3 New Vegas ([topic=1234195]Wrye Flash NV[/topic]). These are in the process of being re-integrated into Wrye Bash proper.[/*]
 [/LIST]
+
 [size=5][color=#3366ff]Join the Wrye Bash Team:[/color][/size]
 
 Currently we are looking for volunteers to contribute Wrye Bash. The main focus is updating Wrye Bash's code so that it can handle more than just leveled lists for Skyrim. However, that does not mean that the Oblivion version will be ignored. Wrye Bash is written in Python but does use some external C++ files. For that reason we need Python programmers primarily but could use anyone with C++ experience to update the external libraries that Wrye Bash uses. If you would like to volunteer please PM me. Your help will be greatly appreciated.
