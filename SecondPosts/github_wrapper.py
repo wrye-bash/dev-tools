@@ -29,7 +29,8 @@ import github
 import os
 
 USER_FILE = u'generate_second_posts.usr'
-DEFAULT_ISSUE_STATE = 'all'
+ALL_ISSUES = 'all'
+DEFAULT_ISSUE_STATE = ALL_ISSUES
 DEFAULT_MILESTONE = None
 
 def getUser():
@@ -169,6 +170,17 @@ class _IssueCache(object):
         issueFilter = _IssueCache.IssueFilter(repo, milestone, state)
         current = _IssueCache.CACHE.get(issueFilter)
         if not current:
+            # if I have state='all' in cache, filter here open or closed issues
+            # instead of fetching them from github
+            # TODO milestone cache
+            all_ = _IssueCache.CACHE.get(
+                _IssueCache.IssueFilter(repo, milestone, ALL_ISSUES))
+            if all_:
+                filter_state = issueFilter.state
+                current = [x for x in all_ if x.state == filter_state]
+                _IssueCache._update(repo, milestone, state, current)
+                return current
+            # else fetch them...
             print repo, milestone, state
             if milestone:  # FIXME - API won't let me specify None for all
                 # milestone=github.GithubObject.NotSet ...
@@ -196,7 +208,7 @@ class _IssueCache(object):
             all_ = _IssueCache.ALL_LABELS[issueFilter] = repo.get_labels()
         return set(all_)
 
-def getIssues(repo, milestone=None, keep_labels=None, skip_labels=(),
+def getIssues(repo, milestone=None, keep_labels=set(), skip_labels=set(),
               state=DEFAULT_ISSUE_STATE):
     """Return a _list_ of applicable issues for the given game and milestone
         repo: github.Repository object
