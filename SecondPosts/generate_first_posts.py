@@ -23,6 +23,7 @@
 # =============================================================================
 
 """This module generates the first posts for the Bethesda forums threads."""
+import string
 
 from generate_changelog import writeChangelog
 from globals import _template, Parser, _outFile, hub
@@ -63,12 +64,12 @@ def _thread_history(game):
         with open(_template(name="Thread History.txt"), "r") as threads:
             return threads.read()
 
-def _other_threads(game):
-    for _g, g in _GAMES:
-        if g != game:
-            yield '\n'.join('[*]The Official [topic=' + str(g.cur_thread) +
-                            ']Wrye Bash for ' + g.display +
-                            ' thread[/topic].[/*]')
+def _other_threads(label):
+    for _g, g in _GAMES.iteritems():
+        if _g != label:
+            yield ('[*]The Official [topic=' + str(g.cur_thread) +
+                   ']Wrye Bash for ' + g.display +
+                   ' thread[/topic].[/*]')
 
 def writeFirstPosts(repo, milestone, editor):
     for label, game in _GAMES.iteritems():
@@ -85,11 +86,16 @@ def writeFirstPosts(repo, milestone, editor):
                 out.write('\n\n')
             with open(TEMPLATE, 'r') as template:
                 data = template.read()
-            out.write(data % {'game': game.display,
-                                  'nexus_url': game.nexusUrl,
-                                  'game_threads': _other_threads(game),
-                                  'latest_changelog': writeChangelog(repo,
-                                                                     milestone)})
+            data = data.decode('utf-8')  # NEEDED
+            src = string.Template(data)
+            with open(writeChangelog(repo, milestone), 'r') as changelog_file:
+                changelog = changelog_file.read()
+            dictionary = {'game': game.display, 'nexus_url': game.nexusUrl,
+                          'game_threads': '\n'.join(_other_threads(label)),
+                          'latest_changelog': changelog}
+            src_substitute = src.substitute(dictionary)
+            src_substitute = src_substitute.encode('utf-8')
+            out.write(src_substitute)
             #     if editor:
             #         print('Please review the changelog (mind the
             # date): ' + str(

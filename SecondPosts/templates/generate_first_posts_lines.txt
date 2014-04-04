@@ -31,7 +31,7 @@
 [/*]
 [/LIST]
 [/spoiler]
-[size=5][color=#3366ff]Download:[/color][/size] %(nexus_url)s and, of course, [url=https://github.com/wrye-bash/wrye-bash/releases]GitHub[/url].
+[size=5][color=#3366ff]Download:[/color][/size] $nexus_url and, of course, [url=https://github.com/wrye-bash/wrye-bash/releases]GitHub[/url].
 
 [size=5][color=#3366ff]Documentation:[/color][/size]
 [LIST]
@@ -56,7 +56,7 @@ The project is hosted at [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url
 [*]What version of Wrye Bash are you using? If you're using a development version, be sure to include the commit SHA.[/*]
 [*]What are all the symptoms? Be sure to include what you did (step-by-step is helpful), what you expected, and what happened.[/*]
 [*]What do you see? Error messages are very valuable to us.[/*]
-[*]What version of Windows are you using? Is UAC enabled and is %(game)s in the default directory? (If it is, please install it somewhere else. This can cause lots of problems)[/*]
+[*]What version of Windows are you using? Is UAC enabled and is $game in the default directory? (If it is, please install it somewhere else. This can cause lots of problems)[/*]
 [*]Are you using a bash.ini? If so, include its contents (in spoiler tags, please!)[/*]
 [*]Is the problem related to the Bashed Patch? If so include the following:
 [LIST]
@@ -76,11 +76,11 @@ The project is hosted at [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url
 [/spoiler]
 You can see all the known bugs in the [url=https://github.com/wrye-bash/wrye-bash/issues]bug tracker[/url].
 
-[size=5][color=#3366ff]Linking:[/color][/size] If you'd like to link to Bash from somewhere else, please do! But be sure to link to either %(nexus_url)s or [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url]. Don't link to the actual download file, since that changes fairly frequently.
+[size=5][color=#3366ff]Linking:[/color][/size] If you'd like to link to Bash from somewhere else, please do! But be sure to link to either $nexus_url or [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url]. Don't link to the actual download file, since that changes fairly frequently.
 
 [size=5][color=#3366ff]Related Projects:[/color][/size]
 [LIST]
-%(game_threads)s
+$game_threads
 [*]Load orders should be managed with [url=http://boss-developers.github.io/]BOSS for Skyrim[/url], which also supplies updated lists of tags used for importing (though even if you don't use BOSS, a basic taglist is shipped with each version of Wrye Bash)[/*]
 [*]Valda ported and maintains Wrye Bash for Fallout3 ([topic=1211142]Wrye Flash[/topic]) and Fallout3 New Vegas ([topic=1234195]Wrye Flash NV[/topic]). These are in the process of being re-integrated into Wrye Bash proper.[/*]
 [/LIST]
@@ -100,7 +100,7 @@ Currently we are looking for volunteers to contribute Wrye Bash. The main focus 
 [1] CBash is the exception in that it can be updated at any time as long as there is a volunteer to work on it.
 
 [size=5][color=#3366ff]Changelog for Latest Version:[/color][/size]
-%(latest_changelog)s
+$latest_changelog
 [size=5]Version 304.3[2013/11/21][/size]
 [spoiler]
 [LIST]
