@@ -33,10 +33,6 @@ def _parseArgs():
     return Parser.new(prog='Wrye Bash Version History.html').user().milestone(
         help_='Specify the milestone for latest release.').editor().parse()
 
-import shutil
-import os.path
-import subprocess
-
 class _Game(object):
     def __init__(self, display, nexusUrl, prev_thread, cur_thread):
         self.display = display
@@ -71,6 +67,8 @@ def _other_threads(label):
                    ']Wrye Bash for ' + g.display +
                    ' thread[/topic].[/*]')
 
+import subprocess
+
 def writeFirstPosts(repo, milestone, editor):
     for label, game in _GAMES.iteritems():
         out_ = _outFile(dir_=POSTS_DIR,
@@ -96,13 +94,10 @@ def writeFirstPosts(repo, milestone, editor):
             src_substitute = src.substitute(dictionary)
             src_substitute = src_substitute.encode('utf-8')
             out.write(src_substitute)
-            #     if editor:
-            #         print('Please review the changelog (mind the
-            # date): ' + str(
-            #             latestChangelog))
-            #         subprocess.call(
-            #             [editor, str(latestChangelog)])  # TODO
-            # call_check
+            if editor:
+                print('Please review the changelog (mind the release date): '
+                      + str(out))
+                subprocess.call([editor, str(out)])  # TODO call_check
 
 def main():
     opts = _parseArgs()
