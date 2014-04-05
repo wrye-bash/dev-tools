@@ -133,8 +133,9 @@ def getMilestone(repo, milestoneTitle):
     return None
 
 class _IssueCache(object):
-    CACHE = {}
-    ALL_LABELS = {}
+    CACHE = {}  # key: an IssueFilter --> value: a list of issues
+    ALL_LABELS = {}  # key is an IssueFilter (but only Repo matters, todo) and
+    # value a list of issue labels for this repo - should be a set probably
 
     class IssueFilter(object):
         def __init__(self, repo, milestone=None, state=DEFAULT_ISSUE_STATE):
@@ -211,6 +212,13 @@ class _IssueCache(object):
 def getIssues(repo, milestone=None, keep_labels=set(), skip_labels=set(),
               state=DEFAULT_ISSUE_STATE):
     """Return a _list_ of applicable issues for the given game and milestone
+
+        skip_labels = {"git"}
+        keep_labels = {"bug"}
+        issue.labels = ['enhancement'] // skipped
+        issue.labels = ['bug', 'git'] // skipped
+        issue.labels = ['bug'] // kept
+        issue.labels = [] // skipped
         repo: github.Repository object
         milestone: github.Milestone object
         keep_labels: set of labels an issue must partake to, to be included

@@ -87,15 +87,17 @@ def writeFirstPosts(repo, milestone, editor):
                 out.write(history)
                 out.write('\n\n')
             with open(TEMPLATE, 'r') as template:
-                data = template.read()
+                data = template.read()  # reads file at once - bad
             data = data.decode('utf-8')  # NEEDED
             src = string.Template(data)
             with open(writeChangelogBBcode(repo, milestone),
                       'r') as changelog_file:
-                changelog = changelog_file.read()
+                changelog = changelog_file.read()  # decode if changelog
+                # contains unicode chars # reads file at once - bad
             dictionary = {'game': game.display, 'nexus_url': game.nexusUrl,
                           'game_threads': '\n'.join(_other_threads(label)),
-                          'latest_changelog': changelog}
+                          'latest_changelog': changelog}  # TODO get rid of
+            # 'latest_changelog' - keep the last few ones
             src_substitute = src.substitute(dictionary)
             src_substitute = src_substitute.encode('utf-8')  # NEEDED
             out.write(src_substitute)
