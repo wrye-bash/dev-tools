@@ -27,7 +27,6 @@ Still relies on manually editing the pages (NB the thread numbers which are
 hardcoded here (should be in a ini file) and the latest release date). Uses
 a common template for Oblivion and Skyrim posts which is not yet set in
 stone. Also unicode and newlines support is very much a hack (TODO)."""
-import os
 import string
 
 from generate_changelog import writeChangelogBBcode
