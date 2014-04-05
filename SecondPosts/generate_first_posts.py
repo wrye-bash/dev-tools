@@ -79,7 +79,7 @@ def writeFirstPosts(repo, milestone, editor):
         out_ = _outFile(dir_=POSTS_DIR,
                         name=u'Forum thread starter - ' + game.display +
                              u'.txt')
-        with open(out_, 'wb') as out:
+        with open(out_, 'w') as out:
             out.write(_previous_thread(
                 game.prev_thread))  # TODO ask user and/or command line args
             out.write('\n\n')
