@@ -101,6 +101,7 @@ Currently we are looking for volunteers to contribute Wrye Bash. The main focus 
 
 [size=5][color=#3366ff]Changelog for Latest Version:[/color][/size]
 $latest_changelog
+[size=5][color=#3366ff]Changelog for Version 304.3:[/color][/size]
 [size=5]Version 304.3[2013/11/21][/size]
 [spoiler]
 [LIST]

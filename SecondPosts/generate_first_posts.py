@@ -22,10 +22,15 @@
 #
 # =============================================================================
 
-"""This module generates the first posts for the Bethesda forums threads."""
+"""This module generates the first posts for the Bethesda forums threads.
+Still relies on manually editing the pages (NB the thread numbers which are
+hardcoded here (should be in a ini file) and the latest release date). Uses
+a common template for Oblivion and Skyrim posts which is not yet set in
+stone. Also unicode and newlines support is very much a hack (TODO)."""
+import os
 import string
 
-from generate_changelog import writeChangelog
+from generate_changelog import writeChangelogBBcode
 from globals import _template, Parser, _outFile, hub
 
 # Functions ===================================================================
@@ -86,16 +91,17 @@ def writeFirstPosts(repo, milestone, editor):
                 data = template.read()
             data = data.decode('utf-8')  # NEEDED
             src = string.Template(data)
-            with open(writeChangelog(repo, milestone), 'r') as changelog_file:
+            with open(writeChangelogBBcode(repo, milestone),
+                      'r') as changelog_file:
                 changelog = changelog_file.read()
             dictionary = {'game': game.display, 'nexus_url': game.nexusUrl,
                           'game_threads': '\n'.join(_other_threads(label)),
                           'latest_changelog': changelog}
             src_substitute = src.substitute(dictionary)
-            src_substitute = src_substitute.encode('utf-8')
+            src_substitute = src_substitute.encode('utf-8')  # NEEDED
             out.write(src_substitute)
             if editor:
-                print('Please review the changelog (mind the release date): '
+                print('Please review (mind the release date and thread links):'
                       + str(out))
                 subprocess.call([editor, str(out)])  # TODO call_check
 

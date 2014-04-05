@@ -28,6 +28,7 @@ are generating."""
 COLOR_INTRO = 'orange'
 COLOR_ASSIGNEE = '#00FF00'
 COLOR_DONE = 'orange'
+CHANGELOG_TITLE_SIZE = 5
 
 # BBCODE ========================================
 def color(text, color_=None):
@@ -47,6 +48,15 @@ def strike(text):
 
 def li(text):
     return '[*]' + text
+
+def list_(items, f=lambda x: x):
+    yield '\n[list]'
+    for i in items:
+        yield li(f(i))
+    yield '[/list]'
+
+def size(num, text):
+    return '[size=' + str(num) + ']' + text + '[/size]'
 
 def formatIssue(issue, issueType):
     if issue.state == 'open':

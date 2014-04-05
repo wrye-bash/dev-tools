@@ -34,13 +34,14 @@ def _parseArgs():
         help_='Show closed issues for a specific game only.',
         helpAll='Show closed issues for all games.').parse()
 
-from html import h2, ul
+from html import h2, ul, list_, size, \
+    CHANGELOG_TITLE_SIZE  # TODO this has no place here
 
 def _title(milestone, authors=('Various community members',)):
     # TODO - get authors from issues
-    return h2(milestone.title + ' [' + date.today().strftime(
-        '%Y/%m/%d') + '] ' + '[' + ", ".join(authors) + ']'
-    )
+    title = milestone.title + ' [' + date.today().strftime('%Y/%m/%d') + '] '
+    if not authors: return title
+    return title + '[' + ", ".join(authors) + ']'
 
 # API =========================================================================
 from html import closedIssue
@@ -57,7 +58,7 @@ def writeChangelog(repo, milestone, overwrite=False):
     issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
     with open(outFile, 'w') as out:
         # with open(TEMPLATE,'r') as ins:
-        out.write(_title(milestone))
+        out.write(h2(_title(milestone)))
         out.write('\n'.join(ul(issues, closedIssue)))
         out.write('\n\n')
         # out.write('\n'.join(ul(issues, closedIssueLabels)))
@@ -65,8 +66,26 @@ def writeChangelog(repo, milestone, overwrite=False):
     print 'Changelog generated.'
     return outFile
 
+def writeChangelogBBcode(repo, milestone, overwrite=False):
+    # TODO merge with writeChangelog()
+    """Write 'Changelog - <milestone>.txt'"""
+    outFile = _outFile(dir_=CHANGELOGS_DIR,
+                       name=u'Changelog - ' + milestone.title + u'.bbcode.txt')
+    if os.path.isfile(outFile) and not overwrite: return outFile
+    print 'Writing changelog'
+    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
+    with open(outFile, 'w') as out:
+        out.write(size(CHANGELOG_TITLE_SIZE, _title(milestone, authors=None)))
+        out.write('\n'+'[spoiler]')
+        out.write('\n'.join(list_(issues, closedIssue)))
+        out.write('\n'+'[/spoiler]')
+        out.write('\n')
+    print 'Changelog generated.'
+    return outFile
+
 def main():
     opts = _parseArgs()  # TODO per game # if opts.game:...
+    # TODO overwrite
     git_ = hub(opts)
     if not git_: return
     repo, milestone = git_[0], git_[1]
