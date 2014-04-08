@@ -1,15 +1,14 @@
 *.py[co]
 
-## Repo specific
+## Repo specific ##
 
 # User settings file (has username/password/access token) - CAREFUL
 *.usr
 
 # Output from second post script
-SecondPosts/out/
+scripts/out/
 
-
-## IDEs
+## IDEs ##
 
 # pycharm
 .idea/
