@@ -1,4 +1,4 @@
-[center][color=red][size=6]We only support Wrye Bash 304 or higher.[/size][/color][/center]
+﻿[center][color=red][size=6]We only support Wrye Bash 304 or higher.[/size][/color][/center]
 
 [color=orange]Important: Wrye Bash's developers have been MIA for quite some time due to various real life circumstances. As such, development slowed to a crawl with only a few modders that didn't have much experience with Python (in which Bash is written) trying to fix existing bugs.  Starting with version 303 Wrye Bash is the product of these attempted bug fixes on top of what was done before the developers went MIA.
 
@@ -14,7 +14,7 @@ If you are familiar with the Python programming language, please consider helpin
 
 [size=3][color=#3366ff]Comments? Problems?[/color][/size]
 
-Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1471926-relz-wrye-bash-thread-98/]Oblivion[/url], and [url=http://forums.bethsoft.com/topic/1471586-relz-wrye-bash-thread-33/]Skyrim[/url].  If you are have having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed : )
+Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1501046-wrye-bash-thread-100/]Oblivion[/url], and [url=http://forums.bethsoft.com/topic/1497553-relz-wrye-bash-thread-36/]Skyrim[/url].  If you are have having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed : )
 
 There is much more information in the OP of the Wrye Bash topic at the BethSoft forums: [url=http://forums.bethsoft.com/topic/1471926-relz-wrye-bash-thread-98/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1471586-relz-wrye-bash-thread-33/]Skyrim[/url], but here is some stuff to get you started:
 
@@ -44,7 +44,7 @@ If you're using the Standalone version, the only other thing you need to install
  
 If you are using the Python version, dependency installation will be handled automatically by the installer. However, if you want or need to do things manually:
  
-[url=http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi]Python 2.7.3[/url]
+[url=https://www.python.org/ftp/python/2.7.6/python-2.7.6.msi]Python 2.7.6[/url]
 [url=http://sourceforge.net/projects/wxpython/files/wxPython/2.8.12.1/wxPython2.8-win32-unicode-2.8.12.1-py27.exe]wxPython 2.8.12.1 unicode for Python 2.7[/url]
 [url=http://sourceforge.net/projects/comtypes/files/comtypes/0.6.2/comtypes-0.6.2.win32.exe/download]comtypes 0.6.2[/url]
 [url=http://sourceforge.net/projects/pywin32/files/pywin32/Build]PyWin32 for Python 2.7[/url]
@@ -61,12 +61,6 @@ Then:
 [/LIST]
 Remember! In Windows Vista and up, don't install Oblivion in the Program Files folder due to User Account Control! See File Permissions.
 See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html#trouble-permissions]File Permissions[/url]
-
-[size=3][color=#3366ff]Version history:[/color][/size]
-
-[color=#00BFFF]Version 305 SVN 3002 contains the following changes:[/color]
-
-Not released.  Stay tuned.
 
 Known Bugs:
 
@@ -99,25 +93,6 @@ Known Bugs:
 - Fix for bug #251 "'Do you want to enable Installers?' dialog throws exception". [d4id4los]
 - Added option to view BSA conflicts in Installer tab. This is an experimental feature and still needs work. [d4id4los]
 - New Dragonborn Files added for Clean Data installer function. [Sharlikran]
-
-[color=#00BFFF]Version 303 contains the following changes:[/color]
-
-- [Oblivion] Fixed issues with CBash saying that files don't exist during the patch building process. [Lojack]
-- Uninstalling a mod in BAIN should no longer throw an error that the ESP/ESM could not be found if it was removed. [Lojack]
-- Encoding format for INI Tweak files has been fixed. [Lokack]
-- Typo corrections, unused variables, and other minor issues cleaned up. [Various]
-- The bash_default.ini file has been cleaned up to remove unused entries and tidy up documentation. [Lojack]
-- BAIN should now properly inform the user if an archive being installed is corrupted. [Lojack]
-- Numerous changes have been made for better UAC support when installed on Vista, Windows 7, and Windows 8. (Note that Windows 8 is not yet officially supported but should still work.) [Lojack]
-- BAIN should no longer leave behind empty folders when a mod is uninstalled. [Lojack]
-- Better support for running Bash from within a folder containing Unicode characters. [Lojack]
-- [Skyrim] Bash can now see string files inside of a BSA and will no longer mark mods with red bars because the files were not packaged loose. [Lojack]
-- Bash will no longer throw errors if it encounters Nehrim.esm (the filename) in a Data folder not belonging to a Nehrim install. [Lojack]
-- Updated the Windows icon used for Bash to something more visually appealing. [Wrinklyninja]
-- Updated UI icon for BOSS. [Wrinklyninja]
-- [Skyrim] Removed the non-functional inventory prompt tweak for buying and selling as Skyrim does not use the value. [Arthmoor]
-- Deleting ghosted mods from the mods tab should no longer throw up errors about deleting the game's master files. [Lojack]
-- Several updates to the documentation for Bash. [Lojack]
 
 ------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------

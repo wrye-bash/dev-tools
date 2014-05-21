@@ -1,4 +1,4 @@
-[center][color=red][size=6]We only support Skyrim version 1.9.32.0.8 and[/size][/color][/center]
+﻿[center][color=red][size=6]We only support Skyrim version 1.9.32.0.8 and[/size][/color][/center]
 [center][color=red][size=6]Wrye Bash 304.3.[/size][/color][/center]
 
 [center][color=red][size=6]When using ModOrganizer you have to launch Wrye Bash from MO as covered on their description page.[/size][/color][/center]
@@ -16,9 +16,9 @@ If you are familiar with the Python programming language, please consider helpin
 [/list]
 [size=3][color=#3366ff]Comments? Problems?[/color][/size]
 
-Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1471926-relz-wrye-bash-thread-98/]Oblivion[/url], and [url=http://forums.bethsoft.com/topic/1471586-relz-wrye-bash-thread-33/]Skyrim[/url].  If you are have having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed : )
+Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1501046-wrye-bash-thread-100/]Oblivion[/url], and [url=http://forums.bethsoft.com/topic/1497553-relz-wrye-bash-thread-36/]Skyrim[/url].  If you are have having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed : )
 
-There is much more information in the OP of the Wrye Bash topic at the BethSoft forums: [url=http://forums.bethsoft.com/topic/1471926-relz-wrye-bash-thread-98/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1471586-relz-wrye-bash-thread-33/]Skyrim[/url], but here is some stuff to get you started:
+There is much more information in the OP of the Wrye Bash topic at the BethSoft forums: [url=http://forums.bethsoft.com/topic/1501046-wrye-bash-thread-100/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1497553-relz-wrye-bash-thread-36/]Skyrim[/url], but here is some stuff to get you started:
 
 [size=3][color=#3366ff]Documentation[/color][/size]
 
@@ -46,7 +46,7 @@ If you're using the Standalone version, the only other thing you need to install
  
 If you are using the Python version, dependency installation will be handled automatically by the installer. However, if you want or need to do things manually:
  
-[url=http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi]Python 2.7.3[/url]
+[url=https://www.python.org/ftp/python/2.7.6/python-2.7.6.msi]Python 2.7.6[/url]
 [url=http://sourceforge.net/projects/wxpython/files/wxPython/2.8.12.1/wxPython2.8-win32-unicode-2.8.12.1-py27.exe]wxPython 2.8.12.1 unicode for Python 2.7[/url]
 [url=http://sourceforge.net/projects/comtypes/files/comtypes/0.6.2/comtypes-0.6.2.win32.exe/download]comtypes 0.6.2[/url]
 [url=http://sourceforge.net/projects/pywin32/files/pywin32/Build]PyWin32 for Python 2.7[/url]

@@ -1,4 +1,4 @@
-Continuing from the [topic=1459682]previous thread[/topic]...
+﻿Continuing from the [topic=1482255]previous thread[/topic]...
 
 [size=5][color=#3366ff]What does Wrye Bash do?[/color][/size]
 [LIST]
@@ -81,23 +81,22 @@ You can see all the known bugs in the [url=https://github.com/wrye-bash/wrye-bas
 
 [size=5][color=#3366ff]Related Projects:[/color][/size]
 [LIST]
-[*]The Official [topic=1471586]Wrye Bash for Skyrim thread[/topic].[/*]
+[*]The Official [topic=1497553]Wrye Bash for Skyrim thread[/topic].[/*]
 [*]Load orders should be managed with [url=http://boss-developers.github.io/]BOSS for Skyrim[/url], which also supplies updated lists of tags used for importing (though even if you don't use BOSS, a basic taglist is shipped with each version of Wrye Bash)[/*]
 [*]Valda ported and maintains Wrye Bash for Fallout3 ([topic=1211142]Wrye Flash[/topic]) and Fallout3 New Vegas ([topic=1234195]Wrye Flash NV[/topic]). These are in the process of being re-integrated into Wrye Bash proper.[/*]
 [/LIST]
- 
 [size=5][color=#3366ff]Join the Wrye Bash Team:[/color][/size]
- 
-Currently we are looking for volunteers to contribute Wrye Bash.  The main focus is updating Wrye Bash's code so that it can handle more than just leveled lists for Skyrim.  However, that does not mean that the Oblivion version will be ignored.  Wrye Bash is written in Python but does use some external C++ files.  For that reason we need Python programmers primarily but could use anyone with C++ experience to update the external libraries that Wrye Bash uses.  If you would like to volunteer please PM me.  Your help will be greatly appreciated.
- 
+
+Currently we are looking for volunteers to contribute Wrye Bash. The main focus is updating Wrye Bash's code so that it can handle more than just leveled lists for Skyrim. However, that does not mean that the Oblivion version will be ignored. Wrye Bash is written in Python but does use some external C++ files. For that reason we need Python programmers primarily but could use anyone with C++ experience to update the external libraries that Wrye Bash uses. If you would like to volunteer please PM me. Your help will be greatly appreciated.
+
 [size=5][color=#3366ff]The updates that are needed:[/color][/size]
- 
+
 1) Refactor out just the patcher routines and then update them so Wrye Bash can process Skyrim's files as it does for Oblivion
 2) Refactor all of Wrye Bashes code so that bugs can be worked on and resolved the first time. Currently some bug fixes are just temporary workarounds.
 3) Properly solve all UTF8 implementation
 4) Update to a newer version of Python
 5) Update things on a case by case basis such as the UI or CBash[1].
- 
+
 [1] CBash is the exception in that it can be updated at any time as long as there is a volunteer to work on it.
 
 [size=5][color=#3366ff]Changelog for Latest Version:[/color][/size]
@@ -118,65 +117,5 @@ Currently we are looking for volunteers to contribute Wrye Bash.  The main focu
 [*]Updated bosh.py to add a potential fix for "Clean Data" when files are removed while Wrye Bash is open[/*]
 [*]Updated basher.py to add a potential fix bug 268 onMouseCaptureLost not handled under wine for Installers tab by rifter[/*]
 [*]Fix for Bug [#270] "False flagged ESP files cannot be sorted with the ESM group as expected." by Daidalos[/*]
-[/LIST]
-[/spoiler]
-[size=5][color=#3366ff]Changelog for Version:[/color][/size]
-[size=5]Version 304.1 Hotfix [2013/08/11][/size]
-[spoiler]
-[LIST]
-[*]Fixed runtime (boost) error in non English locales introduced in 2942. [wrinklyninja][/*]
-[/LIST]
-[/spoiler]
-[size=5][color=#3366ff]Changelog for Version 304:[/color][/size]
-[size=5]304 [2013/06/30] [Various community members][/size]
-[spoiler]
-[LIST]
-[*]Fixed bug in libloadorder that would stop it from including Update.esm in its list of active plugins if Skyrim.esm wasn't listed in plugins.txt. [wrinklyninja][/*]
-[*]Fixed libloadorder version display in Bash's log. [wrinklyninja][/*]
-[*]Fixed Bash not passing Update.esm in a list of plugins to activate to libloadorder. liblo.py now returns the active plugin list in load order (which libloadorder doesn't), preventing needless load order 'mismatches' being 'corrected'. [wrinklyninja][/*]
-[*]Fixed issue with Oblivion introduced in r2952. [wrinklyninja][/*]
-[*]It is now impossible to deactivate Skyrim.esm and Update.esm, the game force loads them. [d4id4los][/*]
-[*]Fix for bug #243 "Annealing an activated esp breaks load order.". Anneal will now properly remove deleted plugins from load order. [d4id4los][/*]
-[*]Fix for bug #244 "Automatically activating the bashed patch after rebuild does not work." [d4id4los][/*]
-[*]Fix for bug #245 "Auto-Anneal can not be disabled" [d4id4los][/*]
-[*]Possible fix for special characters in system language name crashing Wrye Bash. [d4id4los][/*]
-[*]Changes to the text of List Masters... to make translation easier. [d4id4los][/*]
-[*]Fixed renaming mods in the mods tab causing an exception to be thrown. [d4id4los][/*]
-[*]Fixed error-messages for Installer Wizards. [d4id4los][/*]
-[*]Changes to the restart button tool-tip to make it translatable. [d4id4los][/*]
-[*]Make Headlines in getModList translatable. [d4id4los][/*]
-[*]Fix renaming/deleting mod files outside of Wrye Bash causing load order issues. [d4id4los][/*]
-[*]Fix for an exception in bain wizzards, introduced in rev. 2966 [d4id4los][/*]
-[*]Fix for Bug #246 'Better naming scheme for backups' [Mr_and_Mrs_D][/*]
-[*]Fix for Bug #247 'Do not report 0 KB for non empty files, plugins, BCFs etc' [Mr_and_Mrs_D][/*]
-[*]Fix for Bash not installing more than one mod at a time for Oblivion. [d4id4los][/*]
-[*]Wrye Bash Un-Installer was leaving behind a few files which have not been accounted for. [d4id4los][/*]
-[*]Fix for Bug #256 'Skip Docs skips translation files for Mods'. [d4id4los][/*]
-[*]Fix for Bug #258 "#258 LO mismatch between loadorder.txt and plugins.txt causes a crash on statup" [d4id4los][/*]
-[*]Fix for bug #251 "'Do you want to enable Installers?' dialog throws exception". [d4id4los][/*]
-[*]Added option to view BSA conflicts in Installer tab. This is an experimental feature and still needs work. [d4id4los][/*]
-[*]New Dragonborn Files added for Clean Data installer function. [Sharlikran][/*]
-[/LIST]
-[/spoiler]
-[size=5][color=#3366ff]Changelog for Version 303:[/color][/size]
-[size=5]303 [2013/01/02] [Various community members][/size]
-[spoiler]
-[LIST]
-[*][Oblivion] Fixed issues with CBash saying that files don't exist during the patch building process. [Lojack][/*]
-[*]Uninstalling a mod in BAIN should no longer throw an error that the ESP/ESM could not be found if it was removed. [Lojack][/*]
-[*]Encoding format for INI Tweak files has been fixed. [Lokack][/*]
-[*]Typo corrections, unused variables, and other minor issues cleaned up. [Various][/*]
-[*]The bash_default.ini file has been cleaned up to remove unused entries and tidy up documentation. [Lojack][/*]
-[*]BAIN should now properly inform the user if an archive being installed is corrupted. [Lojack][/*]
-[*]Numerous changes have been made for better UAC support when installed on Vista, Windows 7, and Windows 8. (Note that Windows 8 is not yet officially supported but should still work.) [Lojack][/*]
-[*]BAIN should no longer leave behind empty folders when a mod is uninstalled. [Lojack][/*]
-[*]Better support for running Bash from within a folder containing Unicode characters. [Lojack][/*]
-[*][Skyrim] Bash can now see string files inside of a BSA and will no longer mark mods with red bars because the files were not packaged loose. [Lojack][/*]
-[*]Bash will no longer throw errors if it encounters Nehrim.esm (the filename) in a Data folder not belonging to a Nehrim install. [Lojack][/*]
-[*]Updated the Windows icon used for Bash to something more visually appealing. [Wrinklyninja][/*]
-[*]Updated UI icon for BOSS. [Wrinklyninja][/*]
-[*][Skyrim] Removed the non-functional inventory prompt tweak for buying and selling as Skyrim does not use the value. [Arthmoor][/*]
-[*]Deleting ghosted mods from the mods tab should no longer throw up errors about deleting the game's master files. [Lojack][/*]
-[*]Several updates to the documentation for Bash. [Lojack][/*]
 [/LIST]
 [/spoiler]
