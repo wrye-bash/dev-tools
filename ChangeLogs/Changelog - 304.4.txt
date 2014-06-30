@@ -1,6 +1,11 @@
-<h2>304.4 [2014/04/02] [Various community members]</h2>
+<h2>304.4 [2014/06/30] [Various community members]</h2>
 <ul>
 <li>Moved to GitHub from Sourceforge: <a href="https://github.com/wrye-bash">https://github.com/wrye-bash</a>. [Lojack, Utumno, Wrinklyninja]
+<li>Make splash screen optional [lojack5]</li>
+<li>Installers.bat is not backed up when prompting user to backup settings on version change [lojack5]</li>
+<li>Mods Tab: Load -> All throws an exception [lojack5]</li>
+<li>sort order reverses [lojack5]</li>
+<li>shellMakeDirs may fall into an infinite loop [lojack5]</li>
 <li>Fixed error when copying files from an archive in BAIN. [bluesky404]
 <li>Fixed load order changes outside of Bash not being detected. [wrinklyninja]
 <li>Fixed unnecessary timestamp changes when setting load order. [wrinklyninja]
@@ -17,4 +22,3 @@
 <li>Missing context menu items [WrinklyNinja]</li>
 <li>Show BSA Conflicts undocumented [WrinklyNinja]</li>
 </ul>
-

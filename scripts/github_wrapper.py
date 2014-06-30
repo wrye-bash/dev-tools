@@ -283,6 +283,9 @@ def getUserName(git):
     except github.BadCredentialsException as e:
         raise GithubApiException(e.message)
 
+def allLabels(repo):
+    return _IssueCache.allLabels(repo)
+
 class GithubApiException(Exception):
     def __init__(self, message):
         # Call the base class constructor with the parameters it needs

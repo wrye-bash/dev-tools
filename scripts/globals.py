@@ -38,10 +38,16 @@ GAMES = {
     'fnv': u'Fallout - New Vegas',
 }
 
-DEV_LABELS = {'git', 'goal', 'discussion', 'TODO', 'wont fix', 'works for me',
-              'rejected', 'duplicate'}
-GAME_LABELS = set(GAMES.keys())
-SKIP_LABELS = DEV_LABELS
+ALL_LABELS = {'TODO', 'bug', 'discussion', 'docs', 'duplicate', 'enhancement',
+              'fallout', 'fnv', 'git', 'goal', 'in progress', 'morrowind',
+              'oblivion', 'question', 'ready', 'rejected', 'skyrim', 'svn',
+              'wont fix', 'works for me', 'wxPyGUI'}
+MAIN_LABELS = {'bug','docs', 'enhancement'}
+REJECTED_LABELS = {'duplicate', 'rejected', 'wont fix', 'works for me'}
+DEV_LABELS = {'TODO', 'discussion', 'git', 'goal', 'question', 'wxPyGUI'}
+PROGRESS_LABELS = {'in progress', 'ready', 'svn'}
+GAME_LABELS = set(GAMES.keys()) | {'morrowind'}
+SKIP_LABELS = DEV_LABELS | REJECTED_LABELS
 
 URL_MILESTONE = \
     'https://github.com/wrye-bash/wrye-bash/issues?milestone=%i&state=open'

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # GPL License and Copyright Notice ============================================
-#  This file is part of Wrye Bash.
+# This file is part of Wrye Bash.
 #
 #  Wrye Bash is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -34,7 +34,7 @@ def _parseArgs():
         help_='Show closed issues for a specific game only.',
         helpAll='Show closed issues for all games.').parse()
 
-from html import h2, ul, list_, size, \
+from html import h2, ul, bbList, size, markdownList, \
     CHANGELOG_TITLE_SIZE  # TODO this has no place here
 
 def _title(milestone, authors=('Various community members',)):
@@ -49,47 +49,58 @@ import os.path
 
 CHANGELOGS_DIR = '../ChangeLogs'
 
-def writeChangelog(repo, milestone, overwrite=False):
+def writeChangelog(issues, milestone, overwrite=False):
     """Write 'Changelog - <milestone>.txt'"""
     outFile = _outFile(dir_=CHANGELOGS_DIR,
                        name=u'Changelog - ' + milestone.title + u'.txt')
     if os.path.isfile(outFile) and not overwrite: return outFile
-    print 'Writing changelog'
-    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
     with open(outFile, 'w') as out:
-        # with open(TEMPLATE,'r') as ins:
         out.write(h2(_title(milestone)))
         out.write('\n'.join(ul(issues, closedIssue)))
-        out.write('\n\n')
+        out.write('\n')
         # out.write('\n'.join(ul(issues, closedIssueLabels)))
         # out.write('\n')
-    print 'Changelog generated.'
     return outFile
 
-def writeChangelogBBcode(repo, milestone, overwrite=False):
+def writeChangelogBBcode(issues, milestone, overwrite=False):
     # TODO merge with writeChangelog()
-    """Write 'Changelog - <milestone>.txt'"""
+    """Write 'Changelog - <milestone>.bbcode.txt'"""
     outFile = _outFile(dir_=CHANGELOGS_DIR,
                        name=u'Changelog - ' + milestone.title + u'.bbcode.txt')
     if os.path.isfile(outFile) and not overwrite: return outFile
-    print 'Writing changelog'
-    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
     with open(outFile, 'w') as out:
-        out.write(size(CHANGELOG_TITLE_SIZE, _title(milestone, authors=None)))
-        out.write('\n'+'[spoiler]')
-        out.write('\n'.join(list_(issues, closedIssue)))
-        out.write('\n'+'[/spoiler]')
+        out.write(size(CHANGELOG_TITLE_SIZE, _title(milestone)))
+        out.write('\n' + '[spoiler]')
+        out.write('\n'.join(bbList(issues, closedIssue)))
+        out.write('\n' + '[/spoiler]')
         out.write('\n')
-    print 'Changelog generated.'
+    return outFile
+
+def writeChangelogMarkdown(issues, milestone, overwrite=False):
+    # TODO merge with writeChangelog()
+    """Write 'Changelog - <milestone>.markdown.txt'"""
+    outFile = _outFile(dir_=CHANGELOGS_DIR,
+                       name=u'Changelog - ' + milestone.title + u'.markdown')
+    if os.path.isfile(outFile) and not overwrite: return outFile
+    with open(outFile, 'w') as out:
+        out.write( _title(milestone))
+        out.write('\n\n')
+        out.write('\n'.join(markdownList(issues, closedIssue)))
+        out.write('\n')
     return outFile
 
 def main():
     opts = _parseArgs()  # TODO per game # if opts.game:...
-    # TODO overwrite
+    # TODO add command line option to overwrite existing changelog
     git_ = hub(opts)
     if not git_: return
     repo, milestone = git_[0], git_[1]
-    writeChangelog(repo, milestone)
+    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
+    print 'Writing changelogs'
+    writeChangelog(issues, milestone)
+    writeChangelogMarkdown(issues, milestone)
+    writeChangelogBBcode(issues, milestone)
+    print 'Changelogs generated.'
 
 if __name__ == '__main__':
     try:

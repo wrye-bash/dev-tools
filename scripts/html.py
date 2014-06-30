@@ -30,6 +30,11 @@ COLOR_ASSIGNEE = '#00FF00'
 COLOR_DONE = 'orange'
 CHANGELOG_TITLE_SIZE = 5
 
+# MARKDOWN ========================================
+def markdownList(items, f=lambda x: x):
+    for i in items:
+        yield '- ' + f(i)
+
 # BBCODE ========================================
 def color(text, color_=None):
     if color_:
@@ -49,7 +54,7 @@ def strike(text):
 def li(text):
     return '[*]' + text
 
-def list_(items, f=lambda x: x):
+def bbList(items, f=lambda x: x):
     yield '\n[list]'
     for i in items:
         yield li(f(i))
