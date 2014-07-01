@@ -32,74 +32,80 @@ def _parseArgs():
     return Parser.new(prog='Generate Changelog').user().milestone(
         help_='Specify the milestone for latest release.').games(
         help_='Show closed issues for a specific game only.',
-        helpAll='Show closed issues for all games.').parse()
+        helpAll='Show closed issues for all games.').overwrite(
+    ).milestoneTitle().parse()
 
 from html import h2, ul, bbList, size, markdownList, \
     CHANGELOG_TITLE_SIZE  # TODO this has no place here
 
-def _title(milestone, authors=('Various community members',)):
-    # TODO - get authors from issues
-    title = milestone.title + ' [' + date.today().strftime('%Y/%m/%d') + '] '
+def _title(title, authors=('Various community members',)):
+    # TODO - get the authors from issues instead of passing them in
+    title = title + ' [' + date.today().strftime('%Y/%m/%d') + '] '
     if not authors: return title
     return title + '[' + ", ".join(authors) + ']'
 
-# API =========================================================================
 from html import closedIssue
-import os.path
 
-CHANGELOGS_DIR = '../ChangeLogs'
-
-def writeChangelog(issues, milestone, overwrite=False):
-    """Write 'Changelog - <milestone>.txt'"""
-    outFile = _outFile(dir_=CHANGELOGS_DIR,
-                       name=u'Changelog - ' + milestone.title + u'.txt')
-    if os.path.isfile(outFile) and not overwrite: return outFile
+def _changelog_bbcode(issues, title, outFile):
     with open(outFile, 'w') as out:
-        out.write(h2(_title(milestone)))
-        out.write('\n'.join(ul(issues, closedIssue)))
-        out.write('\n')
-        # out.write('\n'.join(ul(issues, closedIssueLabels)))
-        # out.write('\n')
-    return outFile
-
-def writeChangelogBBcode(issues, milestone, overwrite=False):
-    # TODO merge with writeChangelog()
-    """Write 'Changelog - <milestone>.bbcode.txt'"""
-    outFile = _outFile(dir_=CHANGELOGS_DIR,
-                       name=u'Changelog - ' + milestone.title + u'.bbcode.txt')
-    if os.path.isfile(outFile) and not overwrite: return outFile
-    with open(outFile, 'w') as out:
-        out.write(size(CHANGELOG_TITLE_SIZE, _title(milestone)))
+        out.write(size(CHANGELOG_TITLE_SIZE, _title(title)))
         out.write('\n' + '[spoiler]')
         out.write('\n'.join(bbList(issues, closedIssue)))
         out.write('\n' + '[/spoiler]')
         out.write('\n')
     return outFile
 
-def writeChangelogMarkdown(issues, milestone, overwrite=False):
-    # TODO merge with writeChangelog()
-    """Write 'Changelog - <milestone>.markdown.txt'"""
-    outFile = _outFile(dir_=CHANGELOGS_DIR,
-                       name=u'Changelog - ' + milestone.title + u'.markdown')
-    if os.path.isfile(outFile) and not overwrite: return outFile
+def _changelog_txt(issues, title, outFile):
     with open(outFile, 'w') as out:
-        out.write( _title(milestone))
+        out.write(h2(_title(title)))
+        out.write('\n'.join(ul(issues, closedIssue)))
+        out.write('\n')
+    return outFile
+
+def _changelog_markdown(issues, title, outFile):
+    with open(outFile, 'w') as out:
+        out.write(_title(title))
         out.write('\n\n')
         out.write('\n'.join(markdownList(issues, closedIssue)))
         out.write('\n')
     return outFile
 
+# API =========================================================================
+import os.path
+
+CHANGELOGS_DIR = '../ChangeLogs'
+
+def writeChangelog(repo, milestone, title=None, overwrite=False,
+                   extension=u'.txt',
+                   logic=_changelog_txt):
+    """Write 'Changelog - <milestone>.txt'"""
+    if title: title = milestone.title + " " + title + " "
+    else: title = milestone.title
+    outFile = _outFile(dir_=CHANGELOGS_DIR,
+                       name=u'Changelog - ' + milestone.title + extension)
+    if os.path.isfile(outFile) and not overwrite: return outFile
+    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
+    return logic(issues, title, outFile)
+
+def writeChangelogBBcode(repo, milestone, title=None, overwrite=False):
+    """Write 'Changelog - <milestone>.bbcode.txt'"""
+    return writeChangelog(repo, milestone, title, overwrite,
+                          extension=u'.bbcode.txt', logic=_changelog_bbcode)
+
+def writeChangelogMarkdown(repo, milestone, title=None, overwrite=False):
+    """Write 'Changelog - <milestone>.markdown.txt'"""
+    return writeChangelog(repo, milestone, title, overwrite,
+                          extension=u'.markdown', logic=_changelog_markdown)
+
 def main():
     opts = _parseArgs()  # TODO per game # if opts.game:...
-    # TODO add command line option to overwrite existing changelog
     git_ = hub(opts)
     if not git_: return
     repo, milestone = git_[0], git_[1]
-    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
     print 'Writing changelogs'
-    writeChangelog(issues, milestone)
-    writeChangelogMarkdown(issues, milestone)
-    writeChangelogBBcode(issues, milestone)
+    writeChangelog(repo, milestone, opts.title, opts.overwrite)
+    writeChangelogMarkdown(repo, milestone, opts.title, opts.overwrite)
+    writeChangelogBBcode(repo, milestone, opts.title, opts.overwrite)
     print 'Changelogs generated.'
 
 if __name__ == '__main__':

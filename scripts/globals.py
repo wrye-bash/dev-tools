@@ -171,6 +171,14 @@ class Parser:
                                  help=help_)
         return self
 
+    def milestoneTitle(self, help_='Specify a title for the milestone changelog.'):
+        self.parser.add_argument('-t', '--title',
+                                 dest='title',
+                                 action='store',
+                                 type=str,
+                                 help=help_)
+        return self
+
     def user(self):
         self.parser.add_argument('-u', '--user',
                                  dest='user',
@@ -178,6 +186,14 @@ class Parser:
                                  default=False,
                                  help='Force usage of a different user to '
                                       'pull info.')
+        return self
+
+    def overwrite(self):
+        self.parser.add_argument('-o', '--overwrite',
+                                 dest='overwrite',
+                                 action='store_true',
+                                 default=False,
+                                 help='Overwrite existing file(s)')
         return self
 
     def editor(self, help_='Path to editor executable to launch.',
@@ -197,4 +213,10 @@ class Parser:
         return self
 
     def parse(self):
+        """
+        Return an object which can be used to get the arguments as in:
+            parser_instance.parse().milestone
+
+        :return: ArgumentParser
+        """
         return self.parser.parse_args()
