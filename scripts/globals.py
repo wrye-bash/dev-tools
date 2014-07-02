@@ -202,7 +202,7 @@ class Parser:
         editorGroup.add_argument('-e', '--editor',
                                  dest='editor',
                                  action='store',
-                                 default='C:\\__\\Notepad++\\notepad++.exe',
+                                 default='C:\\Program Files\\Notepad++\\notepad++.exe',
                                  type=str,
                                  help=help_)
         editorGroup.add_argument('-ne', '--no-editor',

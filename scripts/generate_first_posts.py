@@ -22,17 +22,18 @@
 #
 # =============================================================================
 
-"""This module generates the first posts for the Bethesda forums threads.
-Still relies on manually editing the pages (NB the thread numbers which are
-hardcoded here (should be in a ini file) and the latest release date). Uses
+"""This module generates the first posts for the Bethesda forums threads. Uses
 a common template for Oblivion and Skyrim posts which is not yet set in
-stone. Also unicode and newlines support is very much a hack (TODO)."""
+stone. Some manual editing may be needed (pay attention to the latest release
+date). Also unicode and newlines support is very much a hack."""
 import string
 
 from generate_changelog import writeChangelogBBcode
 from globals import _template, Parser, _outFile, hub
 
 # Functions ===================================================================
+import ini_parser
+
 def _parseArgs():
     return Parser.new(prog='Wrye Bash Version History.html').user().milestone(
         help_='Specify the milestone for latest release.').editor().parse()
@@ -46,18 +47,20 @@ class _Game(object):
 
 OBLIVION = _Game(u'Oblivion', u'[url=http://www.nexusmods'
                               u'.com/oblivion/mods/22368]Oblivion Nexus[/url]',
-                 prev_thread=1471926, cur_thread=1482255)
+                 ini_parser.previous_oblivion_thread(),
+                 ini_parser.current_oblivion_thread())
 SKYRIM = _Game(u'Skyrim', u'[url=http://www.nexusmods'
                           u'.com/skyrim/mods/1840]Skyrim Nexus[/url]',
-               prev_thread=1485637, cur_thread=1497553)
+               ini_parser.previous_skyrim_thread(),
+               ini_parser.current_skyrim_thread())
 _GAMES = {'oblivion': OBLIVION, 'skyrim': SKYRIM}
 
 POSTS_DIR = '../FirstPosts'
 TEMPLATE = _template(name=u'generate_first_posts_lines.txt')
 
-def _previous_thread(num):
+def _previous_thread(game):
     return 'Continuing from the [topic=' + str(
-        num) + ']previous thread[/topic]...'
+        game.prev_thread) + ']previous thread[/topic]...'
 
 def _thread_history(game):
     if game == 'skyrim':
@@ -79,32 +82,31 @@ def writeFirstPosts(repo, milestone, editor):
                         name=u'Forum thread starter - ' + game.display +
                              u'.txt')
         with open(out_, 'w') as out:
-            out.write(_previous_thread(
-                game.prev_thread))  # TODO ask user and/or command line args
+            out.write(_previous_thread(game))
             out.write('\n\n')
             history = _thread_history(label)
             if history:
                 out.write(history)
                 out.write('\n\n')
             with open(TEMPLATE, 'r') as template:
-                data = template.read()  # reads file at once - bad
+                data = template.read()  # reads file at once - should be OK
             data = data.decode('utf-8')  # NEEDED
             src = string.Template(data)
             with open(writeChangelogBBcode(repo, milestone),
                       'r') as changelog_file:
-                changelog = changelog_file.read()  # decode if changelog
-                # contains unicode chars # reads file at once - bad
+                changelog = changelog_file.read()
+                changelog = changelog.decode('utf-8')  # just in case changelog
+                # contains unicode chars  # reads file at once - should be OK
             dictionary = {'game': game.display, 'nexus_url': game.nexusUrl,
                           'game_threads': '\n'.join(_other_threads(label)),
-                          'latest_changelog': changelog}  # TODO get rid of
-            # 'latest_changelog' - keep the last few ones
+                          'latest_changelog': changelog}
             src_substitute = src.substitute(dictionary)
             src_substitute = src_substitute.encode('utf-8')  # NEEDED
             out.write(src_substitute)
             if editor:
                 print('Please review (mind the release date and thread links):'
                       + str(out))
-                subprocess.call([editor, str(out)])  # TODO call_check
+                subprocess.call([editor, out.name])  # TODO call_check
 
 def main():
     opts = _parseArgs()
