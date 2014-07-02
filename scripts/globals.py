@@ -42,7 +42,7 @@ ALL_LABELS = {'TODO', 'bug', 'discussion', 'docs', 'duplicate', 'enhancement',
               'fallout', 'fnv', 'git', 'goal', 'in progress', 'morrowind',
               'oblivion', 'question', 'ready', 'rejected', 'skyrim', 'svn',
               'wont fix', 'works for me', 'wxPyGUI'}
-MAIN_LABELS = {'bug','docs', 'enhancement'}
+MAIN_LABELS = {'bug', 'docs', 'enhancement'}
 REJECTED_LABELS = {'duplicate', 'rejected', 'wont fix', 'works for me'}
 DEV_LABELS = {'TODO', 'discussion', 'git', 'goal', 'question', 'wxPyGUI'}
 PROGRESS_LABELS = {'in progress', 'ready', 'svn'}
@@ -112,7 +112,7 @@ def _cleanOutDir(path=OUT_DIR):
         except:
             pass
 
-def _outFile(dir_=OUT_DIR, name="out.txt"):
+def outPath(dir_=OUT_DIR, name="out.txt"):
     """Returns a path joining the dir_ and name parameters. Will create the
     dirs in dir_ if not existing.
 
@@ -124,8 +124,8 @@ def _outFile(dir_=OUT_DIR, name="out.txt"):
     outFile = os.path.join(dir_, name)
     return outFile
 
-def _template(dir_=TEMPLATES_DIR, name=''):
-    """Returns a template file to use when building a page/post.
+def templatePath(dir_=TEMPLATES_DIR, name=''):
+    """Returns a template path to use when building a page/post.
 
     :param dir_: the directory the templates are in.
     :param name: the filename of a specific template file.
@@ -171,7 +171,8 @@ class Parser:
                                  help=help_)
         return self
 
-    def milestoneTitle(self, help_='Specify a title for the milestone changelog.'):
+    def milestoneTitle(self,
+                       help_='Specify a title for the milestone changelog.'):
         self.parser.add_argument('-t', '--title',
                                  dest='title',
                                  action='store',
@@ -202,7 +203,8 @@ class Parser:
         editorGroup.add_argument('-e', '--editor',
                                  dest='editor',
                                  action='store',
-                                 default='C:\\Program Files\\Notepad++\\notepad++.exe',
+                                 default='C:\\Program '
+                                         'Files\\Notepad++\\notepad++.exe',
                                  type=str,
                                  help=help_)
         editorGroup.add_argument('-ne', '--no-editor',

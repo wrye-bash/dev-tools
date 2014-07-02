@@ -67,11 +67,11 @@ def getUser():
         print " 1) Entering a Personal Access Token"
         print " 2) Entering a user name and password"
         print " 3) Exit"
-        input = raw_input(">")
-        if input == '1':
+        input_ = raw_input(">")
+        if input_ == '1':
             user = raw_input('user:')
             password = raw_input('password:')
-        elif input == '2':
+        elif input_ == '2':
             key = raw_input('token:')
         else:
             return ()
@@ -87,8 +87,8 @@ def getUser():
                     out.write('\n')
                     out.write(password)
     if key:
-        return (key,)
-    return (user, password)
+        return key,
+    return user, password
 
 def getRepo(git, orgName, repoName):
     """Get a githubapi repository object for the specified repository.

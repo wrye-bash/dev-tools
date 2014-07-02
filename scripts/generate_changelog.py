@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # GPL License and Copyright Notice ============================================
-# This file is part of Wrye Bash.
+#  This file is part of Wrye Bash.
 #
 #  Wrye Bash is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@
 """This module generates the changelog for a milestone reading its metadata."""
 from datetime import date
 from github_wrapper import getClosedIssues
-from globals import SKIP_LABELS, Parser, _outFile, hub
+from globals import SKIP_LABELS, Parser, outPath, hub
 
 # Functions ===================================================================
 def _parseArgs():
@@ -59,7 +59,7 @@ def _changelog_txt(issues, title, outFile):
     with open(outFile, 'w') as out:
         out.write(h2(_title(title)))
         out.write('\n'.join(ul(issues, closedIssue)))
-        out.write('\n')
+        out.write('\n\n')  # needs blank line for Version History.html
     return outFile
 
 def _changelog_markdown(issues, title, outFile):
@@ -76,12 +76,11 @@ import os.path
 CHANGELOGS_DIR = '../ChangeLogs'
 
 def writeChangelog(repo, milestone, title=None, overwrite=False,
-                   extension=u'.txt',
-                   logic=_changelog_txt):
+                   extension=u'.txt', logic=_changelog_txt):
     """Write 'Changelog - <milestone>.txt'"""
     if title: title = milestone.title + " " + title + " "
     else: title = milestone.title
-    outFile = _outFile(dir_=CHANGELOGS_DIR,
+    outFile = outPath(dir_=CHANGELOGS_DIR,
                        name=u'Changelog - ' + milestone.title + extension)
     if os.path.isfile(outFile) and not overwrite: return outFile
     issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)

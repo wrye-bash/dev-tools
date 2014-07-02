@@ -56,10 +56,10 @@ from github_wrapper import *
 from html import color, COLOR_INTRO, url, formatIssue
 
 # Globals ====================================================================
-from globals import _outFile, Parser, URL_MILESTONE, URL_BUGS, \
-    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, _template, hub
+from globals import outPath, Parser, URL_MILESTONE, URL_BUGS, \
+    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, templatePath, hub
 
-TEMPLATE = _template(name=u'generate_second_posts_lines.txt')
+TEMPLATE = templatePath(name=u'generate_second_posts_lines.txt')
 
 # Functions ===================================================================
 def parseArgs():
@@ -85,7 +85,7 @@ def getSecondPostLine(ins):
 
 def writeSecondPost(gameTitle, milestone, issues):
     """Write 'Buglist thread Starter - <gameTitle>.txt'"""
-    outFile = _outFile(name=u'Buglist thread Starter - ' + gameTitle + u'.txt')
+    outFile = outPath(name=u'Buglist thread Starter - ' + gameTitle + u'.txt')
     with open(outFile, 'w') as out:
         with open(TEMPLATE, 'r') as ins:
             # Intro paragraph
@@ -98,8 +98,8 @@ def writeSecondPost(gameTitle, milestone, issues):
             out.write(url(URL_MILESTONE % milestone.id,
                           line % milestone.title))
             out.write('\n[list]\n')
-            for issueList,issueType in ((issues[0],'Bug'),
-                                        (issues[1],'Enhancement')):
+            for issueList, issueType in ((issues[0], 'Bug'),
+                                         (issues[1], 'Enhancement')):
                 for issue in issueList:
                     out.write(formatIssue(issue, issueType))
                     out.write('\n')
@@ -154,7 +154,7 @@ def getIssuesForPosts(repo, milestone, gameLabel):
     other_enh = [x for x in other_enh if
                  not x.milestone or x.milestone.title != milestone_title]
     # Sort current_bug/enh: already sorted by date, just move the
-    #  open issues to the top
+    # open issues to the top
     current_bug = [x for x in current_bug if x.state in ('open', 'closed')]
     current_enh = [x for x in current_enh if x.state in ('open', 'closed')]
     return current_bug, current_enh, other_bug, other_enh
@@ -170,14 +170,6 @@ def main():
     git_ = hub(opts)
     if not git_: return
     repo, milestone = git_[0], git_[1]
-    # print getUnlabeledIssues(repo)
-    # all_ = getIssues(repo)
-    # print [x.title for x in all_].__len__()
-    # return
-    # # Clean Output directory
-    # _cleanOutDir()
-    # Create posts
-    # games = {'fnv': u'Fallout - New Vegas'}
     for game in games:
         print 'Getting Issues for:', games[game]
         issues = getIssuesForPosts(repo, milestone, game)

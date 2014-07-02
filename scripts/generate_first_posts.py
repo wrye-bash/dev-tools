@@ -25,11 +25,11 @@
 """This module generates the first posts for the Bethesda forums threads. Uses
 a common template for Oblivion and Skyrim posts which is not yet set in
 stone. Some manual editing may be needed (pay attention to the latest release
-date). Also unicode and newlines support is very much a hack."""
+date and thread links). Also unicode and newlines support is very much a
+hack."""
 import string
-
 from generate_changelog import writeChangelogBBcode
-from globals import _template, Parser, _outFile, hub
+from globals import templatePath, Parser, outPath, hub
 
 # Functions ===================================================================
 import ini_parser
@@ -56,7 +56,7 @@ SKYRIM = _Game(u'Skyrim', u'[url=http://www.nexusmods'
 _GAMES = {'oblivion': OBLIVION, 'skyrim': SKYRIM}
 
 POSTS_DIR = '../FirstPosts'
-TEMPLATE = _template(name=u'generate_first_posts_lines.txt')
+TEMPLATE = templatePath(name=u'generate_first_posts_lines.txt')
 
 def _previous_thread(game):
     return 'Continuing from the [topic=' + str(
@@ -64,7 +64,7 @@ def _previous_thread(game):
 
 def _thread_history(game):
     if game == 'skyrim':
-        with open(_template(name="Thread History.txt"), "r") as threads:
+        with open(templatePath(name="Thread History.txt"), "r") as threads:
             return threads.read()
 
 def _other_threads(label):
@@ -78,7 +78,7 @@ import subprocess
 
 def writeFirstPosts(repo, milestone, editor):
     for label, game in _GAMES.iteritems():
-        out_ = _outFile(dir_=POSTS_DIR,
+        out_ = outPath(dir_=POSTS_DIR,
                         name=u'Forum thread starter - ' + game.display +
                              u'.txt')
         with open(out_, 'w') as out:

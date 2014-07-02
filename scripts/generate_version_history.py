@@ -28,10 +28,10 @@ changelog for a milestone. It then copies the Wrye Bash Version History.html to
  on the parent directory of the dir this script is run from."""
 
 from generate_changelog import writeChangelog
-from globals import _template, Parser, _outFile, hub
+from globals import templatePath, Parser, outPath, hub
 
-TEMPLATE_HEAD = _template(name=u'Wrye Bash Version History - head.txt')
-TEMPLATE_TAIL = _template(name=u'Wrye Bash Version History - tail.txt')
+TEMPLATE_HEAD = templatePath(name=u'Wrye Bash Version History - head.txt')
+TEMPLATE_TAIL = templatePath(name=u'Wrye Bash Version History - tail.txt')
 
 # Functions ===================================================================
 def _parseArgs():
@@ -53,12 +53,11 @@ def writeVersionHistory(repo, milestone, editor):
     :param repo:
     :param milestone:
     """
-    out_ = _outFile(name=u'Wrye Bash Version History.html')
+    out_ = outPath(name=u'Wrye Bash Version History.html')
     with open(out_, 'wb') as outfile:
         with open(TEMPLATE_HEAD) as readfile:
             shutil.copyfileobj(readfile, outfile)
-        latestChangelog = writeChangelog(repo,
-                                         milestone)  # TODO overwrite flag
+        latestChangelog = writeChangelog(repo, milestone)
         if editor:
             print('Please review the changelog (mind the date): ' + str(
                 latestChangelog))
