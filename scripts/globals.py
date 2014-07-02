@@ -141,7 +141,8 @@ import argparse
 
 class Parser:
     def __init__(self, prog, add_help=True):
-        self.parser = argparse.ArgumentParser(prog=prog, add_help=add_help)
+        self.parser = argparse.ArgumentParser(prog=prog, add_help=add_help,
+                        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     @staticmethod
     def new(prog, add_help=True):
