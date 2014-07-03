@@ -1,8 +1,8 @@
-This is the Wrye Bash meta repository, containing Bethesda forums posts (thread
-starter and second post), nexus description pages, release changelogs  in
-various formats and some scripts to generate these (nexus description pages
-must still be manually edited). The scripts depend on the [PyGithub][1]
-module to interface with github - see link for installation.<br/>
+This is the Wrye Bash meta repository, containing Bethesda forums thread
+starter posts (Oblivion and Skyrim), nexus description pages, release changelogs
+in various formats and some scripts to generate these as well as second posts
+(nexus description pages must still be manually edited). The scripts depend on
+the [PyGithub][1] module to interface with github - see link for installation.<br/>
 The content is distributed in the following directories:
 
 - __scripts__: the scripts for generating forum posts, changelogs  etc by
