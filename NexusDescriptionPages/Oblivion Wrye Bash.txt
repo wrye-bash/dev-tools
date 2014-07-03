@@ -1,4 +1,4 @@
-﻿[center][color=red][size=6]We only support Wrye Bash 304 or higher.[/size][/color][/center]
+[center][color=red][size=6]We only support Wrye Bash 304.3 or higher.[/size][/color][/center]
 
 [color=orange]Important: Wrye Bash's developers have been MIA for quite some time due to various real life circumstances. As such, development slowed to a crawl with only a few modders that didn't have much experience with Python (in which Bash is written) trying to fix existing bugs.  Starting with version 303 Wrye Bash is the product of these attempted bug fixes on top of what was done before the developers went MIA.
 
@@ -62,9 +62,25 @@ Then:
 Remember! In Windows Vista and up, don't install Oblivion in the Program Files folder due to User Account Control! See File Permissions.
 See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html#trouble-permissions]File Permissions[/url]
 
-Known Bugs:
+[size=3][color=#3366ff]Version history:[/color][/size]
 
-- partial fix for bug #264 Extended chars in .ini file causes an exception. [tox2ik]
+[color=#00BFFF]Version 304.3 contains the following changes:[/color]
+
+- 275 Wrye Bash crashes on startup if there are no .esp files in the Data directory. [Daidalos]
+- 274 Bash throws an error when deleting esm files in the mods tab. [Daidalos]
+- 273 Order of masters on a file does not match mod list view	Current. [Daidalos]
+- 272 Bash throws an error when renaming files using the mods tab. [Daidalos]
+
+[color=#00BFFF]Version 304.2 Beta contains the following changes:[/color]
+
+- Fix for Bug 267 using "sort by selected" provided by Edwyn Lannister
+- Updated bosh.py to add a potential fix for "Clean Data" when files are removed while Wrye Bash is open
+- Updated basher.py to add a potential fix bug 268 onMouseCaptureLost not handled under wine for Installers tab by rifter
+- Fix for Bug [#270] "False flagged ESP files cannot be sorted with the ESM group as expected." by Daidalos
+
+[color=#00BFFF]Version 304.1 Hotfix contains the following changes:[/color]
+
+- Fixed runtime (boost) error in non English locales introduced in 2942. [wrinklyninja]
 
 [color=#00BFFF]Version 304 contains the following changes:[/color]
 
@@ -83,7 +99,7 @@ Known Bugs:
 - Changes to the restart button tool-tip to make it translatable. [d4id4los]
 - Make Headlines in getModList translatable. [d4id4los]
 - Fix renaming/deleting mod files outside of Wrye Bash causing load order issues. [d4id4los]
-- Fix for an exception in bain wizzards, introduced in rev. 2966 [d4id4los]
+- Fix for an exception in bain wizards, introduced in rev. 2966 [d4id4los]
 - Fix for Bug #246 'Better naming scheme for backups' [Mr_and_Mrs_D]
 - Fix for Bug #247 'Do not report 0 KB for non empty files, plugins, BCFs etc' [Mr_and_Mrs_D]
 - Fix for Bash not installing more than one mod at a time for Oblivion. [d4id4los]

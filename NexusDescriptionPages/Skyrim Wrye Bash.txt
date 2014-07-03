@@ -1,5 +1,5 @@
-﻿[center][color=red][size=6]We only support Skyrim version 1.9.32.0.8 and[/size][/color][/center]
-[center][color=red][size=6]Wrye Bash 304.3.[/size][/color][/center]
+[center][color=red][size=6]We only support Skyrim version 1.9.32.0.8 and[/size][/color][/center]
+[center][color=red][size=6]Wrye Bash 304.3 or higher.[/size][/color][/center]
 
 [center][color=red][size=6]When using ModOrganizer you have to launch Wrye Bash from MO as covered on their description page.[/size][/color][/center]
 
@@ -12,8 +12,19 @@ If you are familiar with the Python programming language, please consider helpin
 [list]
 [*]It makes it safe to try out new mods because it will restore everything to the way it was when you uninstall a mod
 [*]It makes more mods compatible with each other by importing information from different mods into a "bashed patch"
-[*]It allows you to exceed the 255 mod threshold by automatically merging mods for you
 [/list]
+
+[color=red][size=64]Note: Wrye Bash can not merge mods
+that add new records to Skyrim. It can only merge mods that overwrite a
+previous master. If a mod alters Skyrim.esm, or any other ESM from the
+Nexus, it can be merged into the Bash Patch. As an example a mod like
+Immersive Armors introduces new records to Skyrim and can not be merged.
+However, just like Immersive Armors the vast majority of Skyrim mods add
+new records. This means there is no way to load 300, 400, or 500 mods and
+still be under the safe limit of 254 mods max. That number is 0 to 254 or,
+255 mods. Skyrim.esm is always (00), Update.esm is always, (01) and so
+on.[/size][/color]
+
 [size=3][color=#3366ff]Comments? Problems?[/color][/size]
 
 Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1501046-wrye-bash-thread-100/]Oblivion[/url], and [url=http://forums.bethsoft.com/topic/1497553-relz-wrye-bash-thread-36/]Skyrim[/url].  If you are have having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed : )
@@ -101,7 +112,7 @@ See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.htm
 - Changes to the restart button tool-tip to make it translatable. [d4id4los]
 - Make Headlines in getModList translatable. [d4id4los]
 - Fix renaming/deleting mod files outside of Wrye Bash causing load order issues. [d4id4los]
-- Fix for an exception in bain wizzards, introduced in rev. 2966 [d4id4los]
+- Fix for an exception in bain wizards, introduced in rev. 2966 [d4id4los]
 - Fix for Bug #246 'Better naming scheme for backups' [Mr_and_Mrs_D]
 - Fix for Bug #247 'Do not report 0 KB for non empty files, plugins, BCFs etc' [Mr_and_Mrs_D]
 - Fix for Bash not installing more than one mod at a time for Oblivion. [d4id4los]
@@ -116,7 +127,7 @@ See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.htm
 
 - [Oblivion] Fixed issues with CBash saying that files don't exist during the patch building process. [Lojack]
 - Uninstalling a mod in BAIN should no longer throw an error that the ESP/ESM could not be found if it was removed. [Lojack]
-- Encoding format for INI Tweak files has been fixed. [Lokack]
+- Encoding format for INI Tweak files has been fixed. [Lojack]
 - Typo corrections, unused variables, and other minor issues cleaned up. [Various]
 - The bash_default.ini file has been cleaned up to remove unused entries and tidy up documentation. [Lojack]
 - BAIN should now properly inform the user if an archive being installed is corrupted. [Lojack]
