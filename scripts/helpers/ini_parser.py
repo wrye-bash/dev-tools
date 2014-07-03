@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # GPL License and Copyright Notice ============================================
-# This file is part of Wrye Bash.
+#  This file is part of Wrye Bash.
 #
 #  Wrye Bash is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License

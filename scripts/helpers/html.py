@@ -28,7 +28,6 @@ are generating."""
 COLOR_INTRO = 'orange'
 COLOR_ASSIGNEE = '#00FF00'
 COLOR_DONE = 'orange'
-CHANGELOG_TITLE_SIZE = 5
 
 # MARKDOWN ========================================
 def markdownList(items, f=lambda x: x):

@@ -13,6 +13,9 @@ Subdirectories:
   * _scripts/out (not versioned)_: used for outputting the posts that either
 belong to another repo (eg Version History.html) or change too frequently to be
 versioned (eg the second posts in the Bethesda forums)
+  * _scripts/helpers_: helpers for the scripts, including a github wrapper for
+getting issues (features caching), formatting (html, bbcode and markdown) and
+parsing the ini file.
 - __ChangeLogs__: contains changelogs for the last few releases in the various
 text formats we use (bbcode, html, markdown).
 - __FirstPosts__: forum thread starters, currently Oblivion and Skyrim.
