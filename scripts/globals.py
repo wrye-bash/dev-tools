@@ -56,7 +56,7 @@ URL_ENHANCEMENTS = \
     'https://github.com/wrye-bash/wrye-bash/issues?labels=enhancement'
 
 # LOGIN ========================================
-from scripts.helpers import github_wrapper
+from helpers import github_wrapper
 
 def _login(opts):
     """Login to github . Return None if failed to login"""

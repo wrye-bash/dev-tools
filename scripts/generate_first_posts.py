@@ -32,7 +32,7 @@ from generate_changelog import writeChangelogBBcode
 from globals import templatePath, Parser, outPath, hub
 
 # Functions ===================================================================
-from scripts.helpers import ini_parser
+from helpers import ini_parser
 
 def _parseArgs():
     return Parser.new(prog='Wrye Bash Version History.html').user().milestone(

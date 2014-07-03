@@ -52,8 +52,8 @@
    """
 
 # Imports ====================================================================
-from scripts.helpers.github_wrapper import *
-from scripts.helpers.html import color, COLOR_INTRO, url, formatIssue
+from helpers.github_wrapper import *
+from helpers.html import color, COLOR_INTRO, url, formatIssue
 
 # Globals ====================================================================
 from globals import outPath, Parser, URL_MILESTONE, URL_BUGS, \

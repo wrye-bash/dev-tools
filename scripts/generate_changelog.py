@@ -24,7 +24,7 @@
 
 """This module generates the changelog for a milestone reading its metadata."""
 from datetime import date
-from scripts.helpers.github_wrapper import getClosedIssues
+from helpers.github_wrapper import getClosedIssues
 from globals import SKIP_LABELS, Parser, outPath, hub
 CHANGELOG_TITLE_SIZE = 5
 
@@ -36,7 +36,7 @@ def _parseArgs():
         helpAll='Show closed issues for all games.').overwrite(
     ).milestoneTitle().parse()
 
-from scripts.helpers.html import h2, ul, bbList, size, markdownList
+from helpers.html import h2, ul, bbList, size, markdownList
 
 def _title(title, authors=('Various community members',)):
     # TODO - get the authors from issues instead of passing them in
@@ -44,7 +44,7 @@ def _title(title, authors=('Various community members',)):
     if not authors: return title
     return title + '[' + ", ".join(authors) + ']'
 
-from scripts.helpers.html import closedIssue
+from helpers.html import closedIssue
 
 def _changelog_bbcode(issues, title, outFile):
     with open(outFile, 'w') as out:
