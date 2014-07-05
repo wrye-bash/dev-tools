@@ -24,8 +24,7 @@
 
 """This module generates the changelog for a milestone reading its metadata."""
 from datetime import date
-from helpers.github_wrapper import getClosedIssues
-from globals import SKIP_LABELS, Parser, outPath, hub
+from globals import Parser
 CHANGELOG_TITLE_SIZE = 5
 
 # Functions ===================================================================
@@ -72,6 +71,8 @@ def _changelog_markdown(issues, title, outFile):
 
 # API =========================================================================
 import os.path
+from globals import SKIP_LABELS, outPath, hub
+from helpers.github_wrapper import getClosedIssues
 
 CHANGELOGS_DIR = '../ChangeLogs'
 

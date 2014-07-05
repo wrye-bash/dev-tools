@@ -143,7 +143,7 @@ Currently we are looking for volunteers to contribute Wrye Bash. The main focus 
 [1] CBash is the exception in that it can be updated at any time as long as there is a volunteer to work on it.
 
 [size=5][color=#3366ff]Changelog for Latest Version:[/color][/size]
-[size=5]304.4 Move to git  [2014/07/01] [Various community members][/size]
+[size=5]304.4 Move to git  [2014/07/05] [Various community members][/size]
 [spoiler]
 [list]
 [*]Moved to GitHub from Sourceforge: <a href="https://github.com/wrye-bash">https://github.com/wrye-bash</a>. [Lojack, Utumno, Wrinklyninja]
@@ -170,3 +170,4 @@ Currently we are looking for volunteers to contribute Wrye Bash. The main focus 
 [/list]
 [/spoiler]
 
+Full Version History at: http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html

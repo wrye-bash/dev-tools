@@ -134,7 +134,7 @@ def getMilestone(repo, milestoneTitle):
 
 class _IssueCache(object):
     CACHE = {}  # key: an IssueFilter --> value: a list of issues
-    ALL_LABELS = {}  # key is an IssueFilter (but only Repo matters, todo) and
+    ALL_LABELS = {}  # key is an IssueFilter (but only Repo matters, TODO) and
     # value a list of issue labels for this repo - should be a set probably
 
     class IssueFilter(object):
@@ -212,19 +212,19 @@ class _IssueCache(object):
 def getIssues(repo, milestone=None, keep_labels=set(), skip_labels=set(),
               state=DEFAULT_ISSUE_STATE):
     """Return a _list_ of applicable issues for the given game and milestone
-
-        skip_labels = {"git"}
-        keep_labels = {"bug"}
-        issue.labels = ['enhancement'] // skipped
-        issue.labels = ['bug', 'git'] // skipped
-        issue.labels = ['bug'] // kept
-        issue.labels = [] // skipped
         repo: github.Repository object
         milestone: github.Milestone object
         keep_labels: set of labels an issue must partake to, to be included
           in the results - by default all labels including no labels at all
         skip_labels: set of labels to skip, by default empty - if an issue
          has labels in this set it will be skipped
+            Keep/skip Labels example:
+                skip_labels = {"git"}
+                keep_labels = {"bug"}
+                issue.labels = ['enhancement'] // skipped
+                issue.labels = ['bug', 'git'] // skipped
+                issue.labels = ['bug'] // kept
+                issue.labels = [] // skipped
         state: open or closed - by default 'all'
        return: a list of issues
         :rtype: :class:`github.PaginatedList.PaginatedList` of
@@ -263,7 +263,7 @@ def getUnlabeledIssues(repo, milestone=None, state=DEFAULT_ISSUE_STATE):
                      skip_labels=_IssueCache.allLabels(repo))
 
 def getClosedIssues(repo, milestone, keep_labels={'bug', 'enhancement'},
-                    skip_labels=set()):
+                    skip_labels=set()): # TODO move to globals.py
     """Return a list of closed issues for the given milestone
         repo: github.Repository object
         milestone: github.Milestone object

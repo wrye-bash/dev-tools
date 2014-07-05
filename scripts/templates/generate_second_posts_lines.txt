@@ -1,4 +1,4 @@
-Bug tracking and progress towards %s. 
+Bug tracking and progress towards %s.
 
 Here's a rundown of what the next release will contain, as well as a list of
  all known bugs and requested enhancements. Links lead to the github issue
@@ -9,6 +9,9 @@ Here's a rundown of what the next release will contain, as well as a list of
  updating from git: please check the following for any closed/fixed bugs
  (indicated with a [color=#FF8C00]strikethrough[/color]). Confirmation of the
  fix would be much appreciated.
+ NB: we have not finished transferring the bug tracker from Sourceforge so have
+ a look there too:
+ http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html
 
 Upcoming release %s:
 

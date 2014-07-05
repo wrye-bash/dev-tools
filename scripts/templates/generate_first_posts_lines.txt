@@ -101,3 +101,4 @@ Currently we are looking for volunteers to contribute Wrye Bash. The main focus 
 
 [size=5][color=#3366ff]Changelog for Latest Version:[/color][/size]
 $latest_changelog
+Full Version History at: http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html

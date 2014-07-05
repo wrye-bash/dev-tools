@@ -27,17 +27,20 @@ and Skyrim.
 All scripts use the [argparse][2] module to parse command line arguments - so
 use `-h` to display usage. Here are some quick notes to get you started.
 
-- First generate the changelogs - the milestone  is the _latest_ release:
+- Generate the changelogs - the milestone  is the _latest_ release:
 
         generate_changelog.py -m 304.4 -t "Move to git" -o
   where the `-o` flag forces overwrite of existing changelogs for the specified
 milestone.
 
-- Then generate the first posts:
+- Generate the first posts:
 
         generate_first_posts.py -m 304.4 -e "C:\\__\\Notepad++\\notepad++.exe"
   They will use the changelogs you generated and the values for current and
-previous threads as specified in the `scripts/values.ini` file. An editor will
+previous threads as specified in the `scripts/values.ini` file. So if you want
+to generate the posts because of a new release then _generate the changelogs
+first_ - if you want to generate the posts because of thread change you must
+first update `values.ini` with proper thread numbers. An editor will
 pop up where you can manually tweak them (mind the thread numbers and dates).
 The default editor is `C:\\Program Files\\Notepad++\\notepad++.exe`. Specify
 `no_editor` to skip this (not recommended).

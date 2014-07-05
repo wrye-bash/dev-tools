@@ -38,16 +38,14 @@ GAMES = {
     'fnv': u'Fallout - New Vegas',
 }
 
-ALL_LABELS = {'TODO', 'bug', 'discussion', 'docs', 'duplicate', 'enhancement',
-              'fallout', 'fnv', 'git', 'goal', 'in progress', 'morrowind',
-              'oblivion', 'question', 'ready', 'rejected', 'skyrim', 'svn',
-              'wont fix', 'works for me', 'wxPyGUI'}
 MAIN_LABELS = {'bug', 'docs', 'enhancement'}
 REJECTED_LABELS = {'duplicate', 'rejected', 'wont fix', 'works for me'}
 DEV_LABELS = {'TODO', 'discussion', 'git', 'goal', 'question', 'wxPyGUI'}
 PROGRESS_LABELS = {'in progress', 'ready', 'svn'}
 GAME_LABELS = set(GAMES.keys()) | {'morrowind'}
 SKIP_LABELS = DEV_LABELS | REJECTED_LABELS
+ALL_LABELS = MAIN_LABELS, REJECTED_LABELS, DEV_LABELS, PROGRESS_LABELS, \
+             GAME_LABELS
 
 URL_MILESTONE = \
     'https://github.com/wrye-bash/wrye-bash/issues?milestone=%i&state=open'
@@ -121,8 +119,7 @@ def outPath(dir_=OUT_DIR, name="out.txt"):
     """
     if not os.path.exists(dir_):
         os.makedirs(dir_)
-    outFile = os.path.join(dir_, name)
-    return outFile
+    return os.path.join(dir_, name)
 
 def templatePath(dir_=TEMPLATES_DIR, name=''):
     """Returns a template path to use when building a page/post.

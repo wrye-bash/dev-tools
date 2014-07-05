@@ -1,4 +1,4 @@
-304.4 Move to git  [2014/07/01] [Various community members]
+304.4 Move to git  [2014/07/05] [Various community members]
 
 - Moved to GitHub from Sourceforge: <a href="https://github.com/wrye-bash">https://github.com/wrye-bash</a>. [Lojack, Utumno, Wrinklyninja]
 - Make splash screen optional [lojack5]

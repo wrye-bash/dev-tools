@@ -27,11 +27,10 @@ a common template for Oblivion and Skyrim posts which is not yet set in
 stone. Some manual editing may be needed (pay attention to the latest release
 date and thread links). Also unicode and newlines support is very much a
 hack."""
-import string
-from generate_changelog import writeChangelogBBcode
-from globals import templatePath, Parser, outPath, hub
 
 # Functions ===================================================================
+from generate_changelog import writeChangelogBBcode
+from globals import Parser, templatePath
 from helpers import ini_parser
 
 def _parseArgs():
@@ -75,6 +74,8 @@ def _other_threads(label):
                    ' thread[/topic].[/*]')
 
 import subprocess
+import string
+from globals import outPath, hub
 
 def writeFirstPosts(repo, milestone, editor):
     for label, game in _GAMES.iteritems():
