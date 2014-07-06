@@ -1,6 +1,6 @@
 Bug tracking and progress towards %s.
 
-Here's a rundown of what the next release will contain, as well as a list of
+ Here's a rundown of what the next release will contain, as well as a list of
  all known bugs and requested enhancements. Links lead to the github issue
  tracker artifacts. If you have information or opinions pertaining to any
  particular bug or enhancement, please comment at the tracker link. If you

@@ -1,4 +1,4 @@
-[size=5]304.4 Move to git  [2014/07/05] [Various community members][/size]
+[size=5]304.4 Move to git  [2014/07/06] [Various community members][/size]
 [spoiler]
 [list]
 [*]Moved to GitHub from Sourceforge: <a href="https://github.com/wrye-bash">https://github.com/wrye-bash</a>. [Lojack, Utumno, Wrinklyninja]
