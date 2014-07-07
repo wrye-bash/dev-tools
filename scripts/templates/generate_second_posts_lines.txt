@@ -10,8 +10,7 @@ Bug tracking and progress towards %s.
  (indicated with a [color=#FF8C00]strikethrough[/color]). Confirmation of the
  fix would be much appreciated.
  NB: we have not finished transferring the bug tracker from Sourceforge so have
- a look there too:
- http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html
+ a look there too: http://sourceforge.net/p/oblivionworks/bugs/
 
 Upcoming release %s:
 
