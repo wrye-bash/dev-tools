@@ -35,7 +35,8 @@ TEMPLATE_TAIL = templatePath(name=u'Wrye Bash Version History - tail.txt')
 
 # Functions ===================================================================
 def _parseArgs():
-    return Parser.new(prog='Wrye Bash Version History.html').user().milestone(
+    return Parser.new(description='Generate Wrye Bash Version '
+                                  'History.html').user().milestone(
         help_='Specify the milestone for latest release.').editor().parse()
 
 import shutil

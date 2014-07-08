@@ -63,7 +63,7 @@ TEMPLATE = templatePath(name=u'generate_second_posts_lines.txt')
 
 # Functions ===================================================================
 def parseArgs():
-    return Parser.new(prog='Generate Second Posts').user().games(
+    return Parser.new(description='Generate Second Posts').user().games(
         help_='Generate a second post for a specific game.',
         helpAll='Generate a second post for all games.').milestone(
         help_='Specify the milestone for filtering Issues.').parse()

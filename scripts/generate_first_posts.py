@@ -34,7 +34,9 @@ from globals import Parser, templatePath
 from helpers import ini_parser
 
 def _parseArgs():
-    return Parser.new(prog='Wrye Bash Version History.html').user().milestone(
+    return Parser.new(
+        description='Generate first posts for Bethesda forums').user(
+    ).milestone(
         help_='Specify the milestone for latest release.').editor().parse()
 
 class _Game(object):

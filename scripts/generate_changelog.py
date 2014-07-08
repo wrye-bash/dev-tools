@@ -29,7 +29,7 @@ CHANGELOG_TITLE_SIZE = 5
 
 # Functions ===================================================================
 def _parseArgs():
-    return Parser.new(prog='Generate Changelog').user().milestone(
+    return Parser.new(description='Generate Changelog').user().milestone(
         help_='Specify the milestone for latest release.').games(
         help_='Show closed issues for a specific game only.',
         helpAll='Show closed issues for all games.').overwrite(

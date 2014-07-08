@@ -137,13 +137,13 @@ def templatePath(dir_=TEMPLATES_DIR, name=''):
 import argparse
 
 class Parser:
-    def __init__(self, prog, add_help=True):
-        self.parser = argparse.ArgumentParser(prog=prog, add_help=add_help,
+    def __init__(self, desc, add_h=True):
+        self.parser = argparse.ArgumentParser(description=desc, add_help=add_h,
                         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     @staticmethod
-    def new(prog, add_help=True):
-        return Parser(prog, add_help)
+    def new(description, add_help=True):
+        return Parser(description, add_help)
 
     def games(self, help_='Show issues for a specific game only.',
               helpAll='Show issues for all games.'):
@@ -163,7 +163,6 @@ class Parser:
     def milestone(self, help_='Specify the milestone for latest release.'):
         self.parser.add_argument('-m', '--milestone',
                                  dest='milestone',
-                                 action='store',
                                  type=str,
                                  required=True,
                                  help=help_)
@@ -173,7 +172,6 @@ class Parser:
                        help_='Specify a title for the milestone changelog.'):
         self.parser.add_argument('-t', '--title',
                                  dest='title',
-                                 action='store',
                                  type=str,
                                  help=help_)
         return self
@@ -200,7 +198,6 @@ class Parser:
         editorGroup = self.parser.add_mutually_exclusive_group()
         editorGroup.add_argument('-e', '--editor',
                                  dest='editor',
-                                 action='store',
                                  default='C:\\Program '
                                          'Files\\Notepad++\\notepad++.exe',
                                  type=str,
