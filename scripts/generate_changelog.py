@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 #
 # GPL License and Copyright Notice ============================================
@@ -29,7 +30,7 @@ CHANGELOG_TITLE_SIZE = 5
 
 # Functions ===================================================================
 def _parseArgs():
-    return Parser.new(prog='Generate Changelog').user().milestone(
+    return Parser.new(description='Generate Changelog').user().milestone(
         help_='Specify the milestone for latest release.').games(
         help_='Show closed issues for a specific game only.',
         helpAll='Show closed issues for all games.').overwrite(
@@ -39,7 +40,7 @@ from helpers.html import h2, ul, bbList, size, markdownList
 
 def _title(title, authors=('Various community members',)):
     # TODO - get the authors from issues instead of passing them in
-    title = title + ' [' + date.today().strftime('%Y/%m/%d') + '] '
+    title = title + '[' + date.today().strftime('%Y/%m/%d') + '] '
     if not authors: return title
     return title + '[' + ", ".join(authors) + ']'
 

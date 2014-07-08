@@ -16,7 +16,7 @@ Continuing from the [topic=1485637]previous thread[/topic]...
 [topic=1424272]Thread 25[/topic]
 [topic=1421484]Thread 24[/topic]
 [topic=1418237]Thread 23[/topic]
-[topic=1412088]Thread 22[/topic]
+[topic=1412088]Thread, who knows well go with, 10[/topic]
 [topic=1403337]Thread 21[/topic]
 [topic=1399559]Thread 20[/topic]
 [topic=1395353]Thread 19[/topic]
@@ -39,8 +39,6 @@ Continuing from the [topic=1485637]previous thread[/topic]...
 [topic=1294281]Thread 2[/topic]
 [topic=1256835]Thread 1[/topic]
 [/spoiler]
-
-
 [size=5][color=#3366ff]What does Wrye Bash do?[/color][/size]
 [LIST]
 [*]It makes it safe to try out new mods because it will restore everything to the way it was when you uninstall a mod[/*]
@@ -83,12 +81,11 @@ Continuing from the [topic=1485637]previous thread[/topic]...
 [*]Metallicow's BAIN [url=http://www.nexusmods.com/oblivion/mods/38857]Demo Wizard[/url][/*]
 [*]Translated documentation and guides: [url=http://guides.tesfans.org]简体中文[/url][/*]
 [/LIST]
-
 [size=5][color=#3366ff]Requirements and Installation:[/color][/size]
 
 Short version: just use the installer, and install everything to their default locations.
 
-Long version: see the General Readme for information, and the Advanced Readme for even more details.
+Long version: see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url] for information, and the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url] for even more details.
 
 [size=5][color=#3366ff]Development:[/color][/size]
 The project is hosted at [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url]. You'll need a GitHub account to create or add data to bug reports and feature requests.
@@ -127,7 +124,6 @@ You can see all the known bugs in the [url=https://github.com/wrye-bash/wrye-bas
 [*]Load orders should be managed with [url=http://boss-developers.github.io/]BOSS for Skyrim[/url], which also supplies updated lists of tags used for importing (though even if you don't use BOSS, a basic taglist is shipped with each version of Wrye Bash)[/*]
 [*]Valda ported and maintains Wrye Bash for Fallout3 ([topic=1211142]Wrye Flash[/topic]) and Fallout3 New Vegas ([topic=1234195]Wrye Flash NV[/topic]). These are in the process of being re-integrated into Wrye Bash proper.[/*]
 [/LIST]
-
 [size=5][color=#3366ff]Join the Wrye Bash Team:[/color][/size]
 
 Currently we are looking for volunteers to contribute Wrye Bash. The main focus is updating Wrye Bash's code so that it can handle more than just leveled lists for Skyrim. However, that does not mean that the Oblivion version will be ignored. Wrye Bash is written in Python but does use some external C++ files. For that reason we need Python programmers primarily but could use anyone with C++ experience to update the external libraries that Wrye Bash uses. If you would like to volunteer please PM me. Your help will be greatly appreciated.
@@ -143,31 +139,31 @@ Currently we are looking for volunteers to contribute Wrye Bash. The main focus 
 [1] CBash is the exception in that it can be updated at any time as long as there is a volunteer to work on it.
 
 [size=5][color=#3366ff]Changelog for Latest Version:[/color][/size]
-[size=5]304.4 Move to git  [2014/07/06] [Various community members][/size]
+[size=5]304.4 Move to git [2014/07/06] [Various community members][/size]
 [spoiler]
 [list]
-[*]Moved to GitHub from Sourceforge: <a href="https://github.com/wrye-bash">https://github.com/wrye-bash</a>. [Lojack, Utumno, Wrinklyninja]
-[*]Make splash screen optional [lojack5]
-[*]Installers.bat is not backed up when prompting user to backup settings on version change [lojack5]
-[*]Mods Tab: Load -> All throws an exception [lojack5]
-[*]sort order reverses [lojack5]
-[*]shellMakeDirs may fall into an infinite loop [lojack5]
-[*]Fixed error when copying files from an archive in BAIN. [bluesky404]
-[*]Fixed load order changes outside of Bash not being detected. [wrinklyninja]
-[*]Fixed unnecessary timestamp changes when setting load order. [wrinklyninja]
-[*]Updated BOSS API to v3.0.0. [wrinklyninja]
-[*]Implemented support for launching BOSS v3.0.0. [wrinklyninja]
-[*]Documentation updates. [wrinklyninja]
-[*]Streamlined installer's handling of requirements. [wrinklyninja]
-[*]Optimize PNGs [Metallicow]
-[*]Remove the auto-updater [lojack5]
-[*]Skip .bsl files for BAIN [lojack5]
-[*]BOSSv3 support, installer and readme updates [WrinklyNinja]
-[*]Installer Improvements [WrinklyNinja]
-[*]Installer MSVC 2013 Redist Support [WrinklyNinja]
-[*]Missing context menu items [WrinklyNinja]
-[*]Show BSA Conflicts undocumented [WrinklyNinja]
+[*]Moved from Sourceforge [url=https://github.com/wrye-bash]to GitHub[/url]. [Lojack, Utumno, Wrinklyninja][/*]
+[*]Make splash screen optional [lojack5][/*]
+[*]Installers.bat is not backed up when prompting user to backup settings on version change [lojack5][/*]
+[*]Mods Tab: Load -> All throws an exception [lojack5][/*]
+[*]sort order reverses [lojack5][/*]
+[*]shellMakeDirs may fall into an infinite loop [lojack5][/*]
+[*]Fixed error when copying files from an archive in BAIN. [bluesky404][/*]
+[*]Fixed load order changes outside of Bash not being detected. [wrinklyninja][/*]
+[*]Fixed unnecessary timestamp changes when setting load order. [wrinklyninja][/*]
+[*]Updated BOSS API to v3.0.0. [wrinklyninja][/*]
+[*]Implemented support for launching BOSS v3.0.0. [wrinklyninja][/*]
+[*]Documentation updates. [wrinklyninja][/*]
+[*]Streamlined installer's handling of requirements. [wrinklyninja][/*]
+[*]Optimize PNGs [Metallicow][/*]
+[*]Remove the auto-updater [lojack5][/*]
+[*]Skip .bsl files for BAIN [lojack5][/*]
+[*]BOSSv3 support, installer and readme updates [WrinklyNinja][/*]
+[*]Installer Improvements [WrinklyNinja][/*]
+[*]Installer MSVC 2013 Redist Support [WrinklyNinja][/*]
+[*]Missing context menu items [WrinklyNinja][/*]
+[*]Show BSA Conflicts undocumented [WrinklyNinja][/*]
 [/list]
 [/spoiler]
 
-Full Version History at: http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html
+Full [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url] is available online.

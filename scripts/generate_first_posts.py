@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 #
 # GPL License and Copyright Notice ============================================
@@ -34,7 +35,9 @@ from globals import Parser, templatePath
 from helpers import ini_parser
 
 def _parseArgs():
-    return Parser.new(prog='Wrye Bash Version History.html').user().milestone(
+    return Parser.new(
+        description='Generate first posts for Bethesda forums').user(
+    ).milestone(
         help_='Specify the milestone for latest release.').editor().parse()
 
 class _Game(object):
@@ -88,7 +91,6 @@ def writeFirstPosts(repo, milestone, editor):
             history = _thread_history(label)
             if history:
                 out.write(history)
-                out.write('\n\n')
             with open(TEMPLATE, 'r') as template:
                 data = template.read()  # reads file at once - should be OK
             data = data.decode('utf-8')  # NEEDED
