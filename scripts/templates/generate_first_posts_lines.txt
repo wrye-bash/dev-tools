@@ -40,12 +40,11 @@
 [*]Metallicow's BAIN [url=http://www.nexusmods.com/oblivion/mods/38857]Demo Wizard[/url][/*]
 [*]Translated documentation and guides: [url=http://guides.tesfans.org]简体中文[/url][/*]
 [/LIST]
-
 [size=5][color=#3366ff]Requirements and Installation:[/color][/size]
 
 Short version: just use the installer, and install everything to their default locations.
 
-Long version: see the General Readme for information, and the Advanced Readme for even more details.
+Long version: see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url] for information, and the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url] for even more details.
 
 [size=5][color=#3366ff]Development:[/color][/size]
 The project is hosted at [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url]. You'll need a GitHub account to create or add data to bug reports and feature requests.
@@ -84,7 +83,6 @@ $game_threads
 [*]Load orders should be managed with [url=http://boss-developers.github.io/]BOSS for Skyrim[/url], which also supplies updated lists of tags used for importing (though even if you don't use BOSS, a basic taglist is shipped with each version of Wrye Bash)[/*]
 [*]Valda ported and maintains Wrye Bash for Fallout3 ([topic=1211142]Wrye Flash[/topic]) and Fallout3 New Vegas ([topic=1234195]Wrye Flash NV[/topic]). These are in the process of being re-integrated into Wrye Bash proper.[/*]
 [/LIST]
-
 [size=5][color=#3366ff]Join the Wrye Bash Team:[/color][/size]
 
 Currently we are looking for volunteers to contribute Wrye Bash. The main focus is updating Wrye Bash's code so that it can handle more than just leveled lists for Skyrim. However, that does not mean that the Oblivion version will be ignored. Wrye Bash is written in Python but does use some external C++ files. For that reason we need Python programmers primarily but could use anyone with C++ experience to update the external libraries that Wrye Bash uses. If you would like to volunteer please PM me. Your help will be greatly appreciated.
@@ -101,4 +99,4 @@ Currently we are looking for volunteers to contribute Wrye Bash. The main focus 
 
 [size=5][color=#3366ff]Changelog for Latest Version:[/color][/size]
 $latest_changelog
-Full Version History at: http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html
+Full [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url] is available online.

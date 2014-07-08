@@ -90,7 +90,6 @@ def writeFirstPosts(repo, milestone, editor):
             history = _thread_history(label)
             if history:
                 out.write(history)
-                out.write('\n\n')
             with open(TEMPLATE, 'r') as template:
                 data = template.read()  # reads file at once - should be OK
             data = data.decode('utf-8')  # NEEDED
