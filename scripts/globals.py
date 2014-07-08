@@ -136,10 +136,20 @@ def templatePath(dir_=TEMPLATES_DIR, name=''):
 # Arguments Parser =====================================
 import argparse
 
+class _PromptUserAction(argparse.Action):
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        if values == self.default:
+            print 'Please specify', self.dest
+            values = raw_input('>')
+        setattr(namespace, self.dest, values)
+
 class Parser:
     def __init__(self, desc, add_h=True):
         self.parser = argparse.ArgumentParser(description=desc, add_help=add_h,
                         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        # actions to be run on options if not specified
+        self.actions = []
 
     @staticmethod
     def new(description, add_help=True):
@@ -161,11 +171,13 @@ class Parser:
         return self
 
     def milestone(self, help_='Specify the milestone for latest release.'):
-        self.parser.add_argument('-m', '--milestone',
+        action = self.parser.add_argument('-m', '--milestone',
                                  dest='milestone',
+                                 action=_PromptUserAction,
+                                 default='PROMPT',
                                  type=str,
-                                 required=True,
                                  help=help_)
+        self.actions.append(action)
         return self
 
     def milestoneTitle(self,
@@ -216,4 +228,13 @@ class Parser:
 
         :return: ArgumentParser
         """
-        return self.parser.parse_args()
+        args = self.parser.parse_args()
+        # see: http://stackoverflow.com/a/21588198/281545
+        dic = vars(args)
+        ns = argparse.Namespace()
+        for a in self.actions:
+            if dic[a.dest] == a.default:
+                a(self.parser, ns, a.default) # call action
+        print ns
+        import sys
+        return self.parser.parse_args(sys.argv[1:],ns)
