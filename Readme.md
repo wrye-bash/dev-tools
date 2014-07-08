@@ -2,7 +2,17 @@ This is the Wrye Bash meta repository, containing Bethesda forums thread
 starter posts (Oblivion and Skyrim), nexus description pages, release changelogs
 in various formats and some scripts to generate these as well as second posts
 (nexus description pages must still be manually edited). The scripts depend on
-the [PyGithub][1] module to interface with github - see link for installation.<br/>
+the [PyGithub][1] module to interface with github - see link for installation.
+
+##### Content:
+
+__Do not edit the content directly__ (except the Nexus description Pages).
+Instead run the scripts (see below for command line usage and important info
+but keep in mind that you can also run them by double click  and they will
+prompt for required parameters - do install Python launcher for windows).
+If you want to edit the form of the posts edit the relevant template. The posts
+are versioned here so one can easily diff the scripts' output but are not meant
+to be edited directly.</br>
 The content is distributed in the following directories:
 
 - __scripts__: the scripts for generating forum posts, changelogs  etc by
@@ -46,7 +56,8 @@ The default editor is `C:\\Program Files\\Notepad++\\notepad++.exe`. Specify
 `no_editor` to skip this (not recommended).
 
 To generate the second posts just use `generate_second_posts.py -m 305` where
-now the milestone corresponds to the ___next___ release.<br/>
+now the milestone corresponds to the ___next___ release. The posts will be
+dumped into `scripts/out/SecondPosts`.<br/>
 To generate the version history use
 `generate_version_history.py -m 304.4  -e "C:\\__\\Notepad++\\notepad++.exe"`
 (304.4 stands for the latest release). The script should let you edit the file

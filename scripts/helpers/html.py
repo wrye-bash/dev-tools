@@ -54,10 +54,10 @@ def li(text):
     return '[*]' + text + '[/*]'
 
 def bbList(items, f=lambda x: x):
-    yield '\n[list]'
+    yield '\n[LIST]'
     for i in items:
         yield li(f(i))
-    yield '[/list]'
+    yield '[/LIST]'
 
 def size(num, text):
     return '[size=' + str(num) + ']' + text + '[/size]'

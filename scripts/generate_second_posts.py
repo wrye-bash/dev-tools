@@ -85,9 +85,10 @@ def getSecondPostLine(ins):
 
 def writeSecondPost(gameTitle, milestone, issues):
     """Write 'Buglist thread Starter - <gameTitle>.txt'"""
-    outFile = outPath(name=u'Buglist thread Starter - ' + gameTitle + u'.txt')
+    outFile = outPath(name=u'Buglist thread Starter - ' + gameTitle + u'.txt',
+                      subdir='SecondPosts')
     with open(outFile, 'w') as out:
-        with open(TEMPLATE, 'r') as ins:
+        with open(TEMPLATE, 'r') as ins: # TODO use bbList and real template
             # Intro paragraph
             line = getSecondPostLine(ins)
             out.write(color(line % milestone.title, COLOR_INTRO))

@@ -5,12 +5,15 @@ Bug tracking and progress towards %s.
  tracker artifacts. If you have information or opinions pertaining to any
  particular bug or enhancement, please comment at the tracker link. If you
  have screenshots or sample files, you can attach them (or a link to them) to
- the trackers too. Any information helps! Users who have reported bugs and are
+ the trackers too. Any information helps but keep the posts at the tracker as
+ technical as possible! Users who have reported bugs and are
  updating from git: please check the following for any closed/fixed bugs
  (indicated with a [color=#FF8C00]strikethrough[/color]). Confirmation of the
  fix would be much appreciated.
- NB: we have not finished transferring the bug tracker from Sourceforge so have
- a look there too: http://sourceforge.net/p/oblivionworks/bugs/
+ Please note: we have not finished transferring the bug tracker from
+ Sourceforge so please look
+ [url=http://sourceforge.net/p/oblivionworks/bugs/]there[/url] as well before
+ posting a bug.
 
 Upcoming release %s:
 

@@ -110,13 +110,14 @@ def _cleanOutDir(path=OUT_DIR):
         except:
             pass
 
-def outPath(dir_=OUT_DIR, name="out.txt"):
+def outPath(dir_=OUT_DIR, subdir='', name="out.txt"):
     """Returns a path joining the dir_ and name parameters. Will create the
     dirs in dir_ if not existing.
 
     :param dir_: a directory path
     :param name: a filename
     """
+    dir_ = os.path.join(dir_, subdir)
     if not os.path.exists(dir_):
         os.makedirs(dir_)
     return os.path.join(dir_, name)
@@ -172,22 +173,22 @@ class Parser:
 
     def milestone(self, help_='Specify the milestone for latest release.'):
         action = self.parser.add_argument('-m', '--milestone',
-                                 dest='milestone',
-                                 action=_PromptUserAction,
-                                 default='PROMPT',
-                                 type=str,
-                                 help=help_)
+                                          dest='milestone',
+                                          action=_PromptUserAction,
+                                          default='PROMPT',
+                                          type=str,
+                                          help=help_)
         self.actions.append(action)
         return self
 
     def milestoneTitle(self,
                        help_='Specify a title for the milestone changelog.'):
         action = self.parser.add_argument('-t', '--title',
-                                 dest='title',
-                                 action=_PromptUserAction,
-                                 default='PROMPT',
-                                 type=str,
-                                 help=help_)
+                                          dest='title',
+                                          action=_PromptUserAction,
+                                          default='PROMPT',
+                                          type=str,
+                                          help=help_)
         self.actions.append(action)
         return self
 
@@ -238,6 +239,5 @@ class Parser:
         for a in self.actions:
             if dic[a.dest] == a.default:
                 a(self.parser, ns, a.default) # call action
-        print ns
         import sys
         return self.parser.parse_args(sys.argv[1:],ns)
