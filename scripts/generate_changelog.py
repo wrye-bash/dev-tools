@@ -39,7 +39,7 @@ from helpers.html import h2, ul, bbList, size, markdownList
 
 def _title(title, authors=('Various community members',)):
     # TODO - get the authors from issues instead of passing them in
-    title = title + ' [' + date.today().strftime('%Y/%m/%d') + '] '
+    title = title + '[' + date.today().strftime('%Y/%m/%d') + '] '
     if not authors: return title
     return title + '[' + ", ".join(authors) + ']'
 

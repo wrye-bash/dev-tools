@@ -51,7 +51,7 @@ def strike(text):
     return '[s]' + text + '[/s]'
 
 def li(text):
-    return '[*]' + text
+    return '[*]' + text + '[/*]'
 
 def bbList(items, f=lambda x: x):
     yield '\n[list]'
