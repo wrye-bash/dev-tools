@@ -182,10 +182,13 @@ class Parser:
 
     def milestoneTitle(self,
                        help_='Specify a title for the milestone changelog.'):
-        self.parser.add_argument('-t', '--title',
+        action = self.parser.add_argument('-t', '--title',
                                  dest='title',
+                                 action=_PromptUserAction,
+                                 default='PROMPT',
                                  type=str,
                                  help=help_)
+        self.actions.append(action)
         return self
 
     def user(self):
