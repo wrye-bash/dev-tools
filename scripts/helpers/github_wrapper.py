@@ -182,7 +182,6 @@ class _IssueCache(object):
                 _IssueCache._update(repo, milestone, state, current)
                 return current
             # else fetch them...
-            print repo, milestone, state
             if milestone:  # FIXME - API won't let me specify None for all
                 # milestone=github.GithubObject.NotSet ...
                 current = repo.get_issues(milestone,
@@ -244,8 +243,6 @@ def getIssues(repo, milestone=None, keep_labels=set(), skip_labels=set(),
         return result
     elif keep_labels and skip_labels:
         keep_labels = keep_labels - skip_labels
-        print current
-        print keep_labels
         for issue in current:
             labels = set(x.name for x in issue.labels)
             if keep_labels & labels and not skip_labels & labels:

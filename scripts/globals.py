@@ -93,7 +93,8 @@ def hub(opts):
     repo = _getRepo(git)
     if not repo: return
     milestone = _getMiles(opts, repo)
-    if not milestone: return
+    if not milestone: return # FIXME when I close a milestone this is None
+    # so generate first posts won't run - grrr
     return repo, milestone
 
 # OUTPUT DIR =====================================
@@ -137,14 +138,6 @@ def templatePath(dir_=TEMPLATES_DIR, name=''):
 # Arguments Parser =====================================
 import argparse
 
-class _PromptUserAction(argparse.Action):
-
-    def __call__(self, parser, namespace, values, option_string=None):
-        if values == self.default:
-            print 'Please specify', self.dest
-            values = raw_input('>')
-        setattr(namespace, self.dest, values)
-
 class Parser:
     def __init__(self, desc, add_h=True):
         self.parser = argparse.ArgumentParser(description=desc, add_help=add_h,
@@ -174,7 +167,6 @@ class Parser:
     def milestone(self, help_='Specify the milestone for latest release.'):
         action = self.parser.add_argument('-m', '--milestone',
                                           dest='milestone',
-                                          action=_PromptUserAction,
                                           default='PROMPT',
                                           type=str,
                                           help=help_)
@@ -185,7 +177,6 @@ class Parser:
                        help_='Specify a title for the milestone changelog.'):
         action = self.parser.add_argument('-t', '--title',
                                           dest='title',
-                                          action=_PromptUserAction,
                                           default='PROMPT',
                                           type=str,
                                           help=help_)
@@ -234,10 +225,9 @@ class Parser:
         """
         args = self.parser.parse_args()
         # see: http://stackoverflow.com/a/21588198/281545
-        dic = vars(args)
-        ns = argparse.Namespace()
         for a in self.actions:
-            if dic[a.dest] == a.default:
-                a(self.parser, ns, a.default) # call action
-        import sys
-        return self.parser.parse_args(sys.argv[1:],ns)
+            if getattr(args, a.dest) == a.default:
+                print 'Please specify', a.dest
+                values = raw_input('>')
+                setattr(args, a.dest, values)
+        return args
