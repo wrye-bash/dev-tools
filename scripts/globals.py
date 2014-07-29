@@ -206,9 +206,8 @@ class Parser:
     def overwrite(self):
         self.parser.add_argument('-o', '--overwrite',
                                  dest='overwrite',
-                                 action='store_true',
-                                 default=False,
-                                 help='Overwrite existing file(s)')
+                                 action='store_false',
+                                 help='Do NOT overwrite existing file(s)')
         return self
 
     def editor(self, help_='Path to editor executable to launch.',
