@@ -44,7 +44,7 @@ DEV_LABELS = {'TODO', 'discussion', 'git', 'goal', 'question', 'wxPyGUI'}
 PROGRESS_LABELS = {'in progress', 'ready', 'svn'}
 GAME_LABELS = set(GAMES.keys()) | {'morrowind'}
 SKIP_LABELS = DEV_LABELS | REJECTED_LABELS
-ALL_LABELS = MAIN_LABELS, REJECTED_LABELS, DEV_LABELS, PROGRESS_LABELS, \
+ALL_LABELS = MAIN_LABELS | REJECTED_LABELS | DEV_LABELS | PROGRESS_LABELS | \
              GAME_LABELS
 
 URL_ISSUES = 'https://github.com/wrye-bash/wrye-bash/issues'
@@ -59,6 +59,8 @@ URL_BUGS = (
 URL_ENHANCEMENTS = (
     URL_ISSUES + '?q=is%3Aissue+is%3Aopen+label%3Aenhancement'
     )
+
+DEFAULT_MILESTONE_TITLE = 'Bug fixes and enhancements'
 
 # LOGIN ========================================
 from helpers import github_wrapper
@@ -145,7 +147,9 @@ def templatePath(dir_=TEMPLATES_DIR, name=''):
 # Arguments Parser =====================================
 import argparse
 
+PROMPT = 'PROMPT'
 class Parser:
+
     def __init__(self, desc, add_h=True):
         self.parser = argparse.ArgumentParser(description=desc, add_help=add_h,
                         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -174,7 +178,7 @@ class Parser:
     def milestone(self, help_='Specify the milestone for latest release.'):
         action = self.parser.add_argument('-m', '--milestone',
                                           dest='milestone',
-                                          default='PROMPT',
+                                          default=PROMPT,
                                           type=str,
                                           help=help_)
         self.actions.append(action)
@@ -184,7 +188,7 @@ class Parser:
                        help_='Specify a title for the milestone changelog.'):
         action = self.parser.add_argument('-t', '--title',
                                           dest='title',
-                                          default='PROMPT',
+                                          default=DEFAULT_MILESTONE_TITLE,
                                           type=str,
                                           help=help_)
         self.actions.append(action)
@@ -233,7 +237,7 @@ class Parser:
         args = self.parser.parse_args()
         # see: http://stackoverflow.com/a/21588198/281545
         for a in self.actions:
-            if getattr(args, a.dest) == a.default:
+            if getattr(args, a.dest) == a.default and a.default == PROMPT:
                 print 'Please specify', a.dest
                 values = raw_input('>')
                 setattr(args, a.dest, values)

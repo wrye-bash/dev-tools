@@ -72,21 +72,21 @@ def _changelog_markdown(issues, title, outFile):
 
 # API =========================================================================
 import os.path
-from globals import SKIP_LABELS, outPath, hub
+from globals import SKIP_LABELS, outPath, hub, DEFAULT_MILESTONE_TITLE
 from helpers.github_wrapper import getClosedIssues
 
 CHANGELOGS_DIR = '../ChangeLogs'
 
-def writeChangelog(repo, milestone, title=None, overwrite=False,
-                   extension=u'.txt', logic=_changelog_txt):
+def writeChangelog(repo,milestone,title=DEFAULT_MILESTONE_TITLE,
+                   overwrite=False,extension=u'.txt',logic=_changelog_txt):
     """Write 'Changelog - <milestone>.txt'"""
     if title: title = milestone.title + " " + title + " "
     else: title = milestone.title
     outFile = outPath(dir_=CHANGELOGS_DIR,
-                       name=u'Changelog - ' + milestone.title + extension)
+                      name=u'Changelog - ' + milestone.title + extension)
     if os.path.isfile(outFile) and not overwrite: return outFile
-    issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
-    return logic(issues, title, outFile)
+    issues = getClosedIssues(repo,milestone,skip_labels=SKIP_LABELS)
+    return logic(issues,title,outFile)
 
 def writeChangelogBBcode(repo, milestone, title=None, overwrite=False):
     """Write 'Changelog - <milestone>.bbcode.txt'"""
