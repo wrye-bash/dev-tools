@@ -36,7 +36,7 @@ def _parseArgs():
         helpAll='Show closed issues for all games.').overwrite(
     ).milestoneTitle().parse()
 
-from helpers.html import h2, ul, bbList, size, markdownList
+from helpers.html import h2, ul, bbList, size, markdownList, spoiler
 
 def _title(title, authors=('Various community members',)):
     # TODO - get the authors from issues instead of passing them in
@@ -49,9 +49,7 @@ from helpers.html import closedIssue
 def _changelog_bbcode(issues, title, outFile):
     with open(outFile, 'w') as out:
         out.write(size(CHANGELOG_TITLE_SIZE, _title(title)))
-        out.write('\n' + '[spoiler]')
-        out.write('\n'.join(bbList(issues, closedIssue)))
-        out.write('\n' + '[/spoiler]')
+        out.write('\n'.join(spoiler('\n'.join(bbList(issues, closedIssue)))))
         out.write('\n')
     return outFile
 

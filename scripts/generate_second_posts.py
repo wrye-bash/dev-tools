@@ -53,7 +53,7 @@
 
 # Imports ====================================================================
 from helpers.github_wrapper import *
-from helpers.html import color, COLOR_INTRO, url, formatIssue, bbList
+from helpers.html import color, COLOR_INTRO, url, formatIssue, bbList, spoiler
 
 # Globals ====================================================================
 from globals import outPath, Parser, URL_MILESTONE, URL_BUGS, \
@@ -83,6 +83,12 @@ def getSecondPostLine(ins):
             break
     return ''.join(lines)
 
+def _listOrNone(sues_, type_):
+    if sues_:
+        return '\n'.join(bbList(sues_, formatIssue, type_))
+    else:
+        return '\n'.join(bbList([None]))
+
 def writeSecondPost(gameTitle, milestone, issues):
     """Write 'Buglist thread Starter - <gameTitle>.txt'"""
     outFile = outPath(name=u'Buglist thread Starter - ' + gameTitle + u'.txt',
@@ -101,25 +107,14 @@ def writeSecondPost(gameTitle, milestone, issues):
             out.write('\n')
             for issueList, issueType in ((issues[0], 'Bug'), #TODO: bin the for
                                          (issues[1], 'Enhancement')):
-                out.write('\n'.join(bbList(issueList, formatIssue, issueType)))
-            out.write('\n')
+                out.write(_listOrNone(issueList, issueType))
             # Other known bugs
             out.write(url(URL_BUGS, getSecondPostLine(ins)))
-            out.write('\n[spoiler]')
-            if issues[2]:
-                out.write('\n'.join(bbList(issues[2], formatIssue, 'Bug')))
-            else:
-                out.write('\n'.join(bbList([None])))
-            out.write('[/spoiler]\n\n')
+            out.write('\n'.join(spoiler(_listOrNone(issues[2], 'Bug'))))
             # Other known feature requests
             out.write((url(URL_ENHANCEMENTS, getSecondPostLine(ins))))
-            out.write('\n[spoiler]')
-            if issues[3]:
-                out.write('\n'.join(bbList(issues[3], formatIssue,
-                                           'Enhancement')))
-            else:
-                out.write('\n'.join(bbList([None])))
-            out.write('[/spoiler]\n')
+            out.write('\n'.join(spoiler(_listOrNone(issues[3], 'Enhancement'))))
+            out.write('\n')
 
 def getIssuesForPosts(repo, milestone, gameLabel):
     """Return a tuple of applicable issues for the given game and milestone
