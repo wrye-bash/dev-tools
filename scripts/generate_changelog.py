@@ -25,7 +25,8 @@
 
 """This module generates the changelog for a milestone reading its metadata."""
 from datetime import date
-from globals import Parser
+from cli_parser import Parser
+
 CHANGELOG_TITLE_SIZE = 5
 
 # Functions ===================================================================

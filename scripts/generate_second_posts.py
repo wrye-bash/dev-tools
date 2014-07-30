@@ -56,8 +56,9 @@ from helpers.github_wrapper import *
 from helpers.html import color, COLOR_INTRO, url, formatIssue, bbList, spoiler
 
 # Globals ====================================================================
-from globals import outPath, Parser, URL_MILESTONE, URL_BUGS, \
+from globals import outPath, URL_MILESTONE, URL_BUGS, \
     URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, templatePath, hub
+from cli_parser import Parser
 
 TEMPLATE = templatePath(name=u'generate_second_posts_lines.txt')
 
