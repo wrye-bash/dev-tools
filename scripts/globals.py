@@ -47,11 +47,16 @@ SKIP_LABELS = DEV_LABELS | REJECTED_LABELS
 ALL_LABELS = MAIN_LABELS, REJECTED_LABELS, DEV_LABELS, PROGRESS_LABELS, \
              GAME_LABELS
 
-URL_MILESTONE = \
-    'https://github.com/wrye-bash/wrye-bash/issues?milestone=%i&state=open'
-URL_BUGS = 'https://github.com/wrye-bash/wrye-bash/issues?labels=bug'
-URL_ENHANCEMENTS = \
-    'https://github.com/wrye-bash/wrye-bash/issues?labels=enhancement'
+URL_ISSUES = 'https://github.com/wrye-bash/wrye-bash/issues'
+URL_MILESTONE = (
+    URL_ISSUES + '?q=milestone%3A305+is%3Aissue+is%3Aopen'
+    )
+URL_BUGS = (
+    URL_ISSUES + '?q=is%3Aissue+is%3Aopen+label%3Abug'
+    )
+URL_ENHANCEMENTS = (
+    URL_ISSUES + '?q=is%3Aissue+is%3Aopen+label%3Aenhancement'
+    )
 
 # LOGIN ========================================
 from helpers import github_wrapper
