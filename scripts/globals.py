@@ -48,8 +48,10 @@ ALL_LABELS = MAIN_LABELS, REJECTED_LABELS, DEV_LABELS, PROGRESS_LABELS, \
              GAME_LABELS
 
 URL_ISSUES = 'https://github.com/wrye-bash/wrye-bash/issues'
+# URL_MILESTONE is used in string formatting, '%' needs to be
+# escaped as '%%'
 URL_MILESTONE = (
-    URL_ISSUES + '?q=milestone%3A305+is%3Aissue+is%3Aopen'
+    URL_ISSUES + '?q=milestone%%3A%s+is%%3Aissue+is%%3Aopen'
     )
 URL_BUGS = (
     URL_ISSUES + '?q=is%3Aissue+is%3Aopen+label%3Abug'

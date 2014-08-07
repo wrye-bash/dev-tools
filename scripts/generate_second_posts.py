@@ -96,7 +96,7 @@ def writeSecondPost(gameTitle, milestone, issues):
             out.write('\n\n')
             # Upcoming release
             line = getSecondPostLine(ins)
-            out.write(url(URL_MILESTONE % milestone.id,
+            out.write(url(URL_MILESTONE % milestone.title,
                           line % milestone.title))
             out.write('\n[list]\n')
             for issueList, issueType in ((issues[0], 'Bug'),
