@@ -138,21 +138,16 @@ class _IssueCache(object):
     # value a list of issue labels for this repo - should be a set probably
 
     class IssueFilter(object):
-        def __init__(self, repo, milestone=None, state=DEFAULT_ISSUE_STATE):
+        def __init__(self, repo, milestone=None, state=None):
             self.repo = repo
             self.milestone = milestone
             self._state = state
 
         @property
         def state(self):
+            if not self._state:  # disallow None - API's fault
+                return DEFAULT_ISSUE_STATE
             return self._state
-
-        @state.setter
-        def state(self, value):  # disallow None - API's fault
-            if not value:
-                self._state = DEFAULT_ISSUE_STATE
-            else:
-                self._state = value
 
         def __key(self):  # http://stackoverflow.com/a/2909119/281545
             return self.repo, self.milestone, self.state
@@ -166,19 +161,34 @@ class _IssueCache(object):
         def __hash__(self):
             return hash(self.__key())
 
+        def __lt__(self, other):
+            if self.repo != other.repo: return False
+            if self.state != other.state and other.state != \
+                    DEFAULT_ISSUE_STATE: return False
+            if self.milestone != other.milestone and other.milestone:
+                return False
+            return True
+
     @staticmethod
     def hit(repo, milestone, state):
         issueFilter = _IssueCache.IssueFilter(repo, milestone, state)
         current = _IssueCache.CACHE.get(issueFilter)
         if not current:
-            # if I have state='all' in cache, filter here open or closed issues
-            # instead of fetching them from github
-            # TODO milestone cache
-            all_ = _IssueCache.CACHE.get(
-                _IssueCache.IssueFilter(repo, milestone, ALL_ISSUES))
-            if all_:
-                filter_state = issueFilter.state
-                current = [x for x in all_ if x.state == filter_state]
+            # search in the cache for some superset of issues already fetched
+            super_ = None
+            for key,issues in _IssueCache.CACHE.iteritems():
+                if issueFilter < key:
+                    super_ = issues
+                    break
+            if super_:
+                if not milestone and not state: current = super_
+                elif not milestone:
+                    current = [x for x in super_ if x.state == state]
+                elif not state:
+                    current = [x for x in super_ if x.milestone == milestone]
+                else:
+                    current = [x for x in super_ if
+                               x.state == state and x.milestone == milestone]
                 _IssueCache._update(repo, milestone, state, current)
                 return current
             # else fetch them...
@@ -209,7 +219,7 @@ class _IssueCache(object):
         return set(all_)
 
 def getIssues(repo, milestone=None, keep_labels=set(), skip_labels=set(),
-              state=DEFAULT_ISSUE_STATE):
+              state=None):
     """Return a _list_ of applicable issues for the given game and milestone
         repo: github.Repository object
         milestone: github.Milestone object
