@@ -133,6 +133,7 @@ def getIssuesForPosts(repo, milestone, gameLabel):
     """
     skip_labels = GAME_LABELS - {gameLabel}  # what if gameLabel is None
     skip_labels = skip_labels | SKIP_LABELS
+    getIssues(repo) # get all issues to fill the cache # FIXME delete this ?
     current_bug = getIssues(repo, milestone, keep_labels={'bug'},
                             skip_labels=skip_labels)
     current_enh = getIssues(repo, milestone, keep_labels={'enhancement'},

@@ -136,6 +136,7 @@ class _IssueCache(object):
     CACHE = {}  # key: an IssueFilter --> value: a list of issues
     ALL_LABELS = {}  # key is an IssueFilter (but only Repo matters, TODO) and
     # value a list of issue labels for this repo - should be a set probably
+    counter = 0
 
     class IssueFilter(object):
         def __init__(self, repo, milestone=None, state=None):
@@ -192,6 +193,8 @@ class _IssueCache(object):
                 _IssueCache._update(repo, milestone, state, current)
                 return current
             # else fetch them...
+            _IssueCache.counter += 1
+            print "Hitting github for", _IssueCache.counter, "time"
             if milestone:  # FIXME - API won't let me specify None for all
                 # milestone=github.GithubObject.NotSet ...
                 current = repo.get_issues(milestone,
