@@ -53,16 +53,29 @@ def strike(text):
 def li(text):
     return '[*]' + text + '[/*]'
 
-def bbList(items, f=lambda x: x):
-    yield '\n[LIST]'
-    for i in items:
-        yield li(f(i))
+def bbList(items, f=lambda x: x, *args):
+    yield '[LIST]'
+    if not args:
+        for i in items:
+            yield li(f(i))
+    else:
+        for i in items:
+            yield li(f(i, *args))
     yield '[/LIST]'
+
+def spoiler(text):
+    yield '[spoiler]'
+    yield text
+    yield '[/spoiler]'
 
 def size(num, text):
     return '[size=' + str(num) + ']' + text + '[/size]'
 
 def formatIssue(issue, issueType):
+    """Formats the issue striking it through if closed.
+
+    :rtype : str
+    """
     if issue.state == 'open':
         s = lambda x: x
     else:
@@ -73,9 +86,8 @@ def formatIssue(issue, issueType):
                              color('(' + assignee.login + ')', COLOR_ASSIGNEE))
     else:
         assignee = ''
-    return li(s(url(issue.html_url, issueType + ' %i' % issue.number) +
-                ': ' + issue.title)
-              + assignee)
+    return s(url(issue.html_url,issueType + ' %i' % issue.number) +
+             ': ' + issue.title) + assignee
 
 # HTML ========================================
 def h2(text):

@@ -31,8 +31,9 @@ hack."""
 
 # Functions ===================================================================
 from generate_changelog import writeChangelogBBcode
-from globals import Parser, templatePath
+from globals import templatePath
 from helpers import ini_parser
+from cli_parser import Parser
 
 def _parseArgs():
     return Parser.new(

@@ -40,8 +40,8 @@ use `-h` to display usage. Here are some quick notes to get you started.
 - Generate the changelogs - the milestone  is the _latest_ release:
 
         generate_changelog.py -m 304.4 -t "Move to git" -o
-  where the `-o` flag forces overwrite of existing changelogs for the specified
-milestone.
+  where the `-o` flag prevents overwrite of existing changelogs for the specified
+milestone. NB: by default the scripts _override their previous output if any_.
 
 - Generate the first posts:
 

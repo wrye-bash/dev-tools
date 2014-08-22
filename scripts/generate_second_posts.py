@@ -53,11 +53,12 @@
 
 # Imports ====================================================================
 from helpers.github_wrapper import *
-from helpers.html import color, COLOR_INTRO, url, formatIssue
+from helpers.html import color, COLOR_INTRO, url, formatIssue, bbList, spoiler
 
 # Globals ====================================================================
-from globals import outPath, Parser, URL_MILESTONE, URL_BUGS, \
+from globals import outPath, URL_MILESTONE, URL_BUGS, \
     URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, templatePath, hub
+from cli_parser import Parser
 
 TEMPLATE = templatePath(name=u'generate_second_posts_lines.txt')
 
@@ -83,12 +84,18 @@ def getSecondPostLine(ins):
             break
     return ''.join(lines)
 
+def _listOrNone(sues_, type_):
+    if sues_:
+        return '\n'.join(bbList(sues_, formatIssue, type_))
+    else:
+        return '\n'.join(bbList([None]))
+
 def writeSecondPost(gameTitle, milestone, issues):
     """Write 'Buglist thread Starter - <gameTitle>.txt'"""
     outFile = outPath(name=u'Buglist thread Starter - ' + gameTitle + u'.txt',
                       subdir='SecondPosts')
     with open(outFile, 'w') as out:
-        with open(TEMPLATE, 'r') as ins: # TODO use bbList and real template
+        with open(TEMPLATE, 'r') as ins: # TODO: real template
             # Intro paragraph
             line = getSecondPostLine(ins)
             out.write(color(line % milestone.title, COLOR_INTRO))
@@ -98,31 +105,17 @@ def writeSecondPost(gameTitle, milestone, issues):
             line = getSecondPostLine(ins)
             out.write(url(URL_MILESTONE % milestone.title,
                           line % milestone.title))
-            out.write('\n[list]\n')
-            for issueList, issueType in ((issues[0], 'Bug'),
+            out.write('\n')
+            for issueList, issueType in ((issues[0], 'Bug'), #TODO: bin the for
                                          (issues[1], 'Enhancement')):
-                for issue in issueList:
-                    out.write(formatIssue(issue, issueType))
-                    out.write('\n')
-            out.write('[/list]\n\n')
+                out.write(_listOrNone(issueList, issueType))
             # Other known bugs
             out.write(url(URL_BUGS, getSecondPostLine(ins)))
-            out.write('\n[spoiler][list]\n')
-            for issue in issues[2]:
-                out.write(formatIssue(issue, 'Bug'))
-                out.write('\n')
-            if not issues[2]:
-                out.write('None\n')
-            out.write('[/list][/spoiler]\n\n')
+            out.write('\n'.join(spoiler(_listOrNone(issues[2], 'Bug'))))
             # Other known feature requests
             out.write((url(URL_ENHANCEMENTS, getSecondPostLine(ins))))
-            out.write('\n[spoiler][list]\n')
-            for issue in issues[3]:
-                out.write(formatIssue(issue, 'Enhancement'))
-                out.write('\n')
-            if not issues[3]:
-                out.write('None')
-            out.write('[/list][/spoiler]\n')
+            out.write('\n'.join(spoiler(_listOrNone(issues[3], 'Enhancement'))))
+            out.write('\n')
 
 def getIssuesForPosts(repo, milestone, gameLabel):
     """Return a tuple of applicable issues for the given game and milestone
@@ -140,6 +133,7 @@ def getIssuesForPosts(repo, milestone, gameLabel):
     """
     skip_labels = GAME_LABELS - {gameLabel}  # what if gameLabel is None
     skip_labels = skip_labels | SKIP_LABELS
+    getIssues(repo) # get all issues to fill the cache # FIXME delete this ?
     current_bug = getIssues(repo, milestone, keep_labels={'bug'},
                             skip_labels=skip_labels)
     current_enh = getIssues(repo, milestone, keep_labels={'enhancement'},
