@@ -1,3 +1,4 @@
+#!/usr/env/bin python2-32
 # -*- coding: utf-8 -*-
 #
 # GPL License and Copyright Notice ============================================
@@ -22,25 +23,23 @@
 #
 # =============================================================================
 
-"""This module's Parse class is responsible for parsing teh command line
+"""This module's Parse class is responsible for parsing the command line
 arguments to the scripts. Default behavior of the scripts is defined in this
 class"""
 import argparse
+import os
 from globals import GAMES, DEFAULT_MILESTONE_TITLE
 
 PROMPT = 'PROMPT'
 
 class Parser:
 
-    def __init__(self, desc, add_h=True):
-        self.parser = argparse.ArgumentParser(description=desc, add_help=add_h,
+    def __init__(self, description, add_h=True):
+        self.parser = argparse.ArgumentParser(description=description,
+                        add_help=add_h,
                         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         # actions to be run on options if not specified
         self.actions = []
-
-    @staticmethod
-    def new(description, add_help=True):
-        return Parser(description, add_help)
 
     def games(self, help_='Show issues for a specific game only.',
               helpAll='Show issues for all games.'):
@@ -97,8 +96,10 @@ class Parser:
         editorGroup = self.parser.add_mutually_exclusive_group()
         editorGroup.add_argument('-e', '--editor',
                                  dest='editor',
-                                 default='C:\\Program '
-                                         'Files\\Notepad++\\notepad++.exe',
+                                 default=os.path.expandvars(
+                                     os.path.join(
+                                         u'%PROGRAMFILES%', u'Notepad++',
+                                         u'notepad++.exe')),
                                  type=str,
                                  help=help_)
         editorGroup.add_argument('-ne', '--no-editor',
@@ -107,6 +108,43 @@ class Parser:
                                  default=False,
                                  help=helpNoEditor)
         return self
+
+    @staticmethod
+    def getEditor(args):
+        """Handles default fallbacks for the --editor option"""
+        if not hasattr(args, 'editor'):
+            return
+        if os.path.exists(args.editor):
+            return
+        path = os.path.normcase(args.editor)
+        path = os.path.normpath(path)
+        path = os.path.expandvars(path)
+        parts = path.split(os.path.sep)
+        # If 'Program Files' was in the path, try 'Program Files (x86)',
+        # and vice versa
+        part1 = os.path.normcase(u'Program Files')
+        part2 = os.path.normcase(u'Program Files (x86)')
+        if part1 in parts:
+            idex = parts.find(part1)
+            parts[idex] = part2
+            check = os.path.join(*parts)
+            if os.path.exists(check):
+                args.editor = check
+                return
+        elif part2 in parts:
+            idex = parts.find(part2)
+            parts[idex] = part1
+            check = os.path.join(*parts)
+            if os.path.exists(check):
+                args.editor = check
+                return
+        print 'Specified editor does not exist, please enter a valid path:'
+        check = raw_input('>')
+        if not check:
+            args.no_editor = True
+        if not os.path.exists(check):
+            print 'Specified editor does not exists, assuming --no-editor'
+            args.no_editor = True
 
     def parse(self):
         """
@@ -122,4 +160,6 @@ class Parser:
                 print 'Please specify', a.dest
                 values = raw_input('>')
                 setattr(args, a.dest, values)
+        # Special handler for --editor:
+        Parser.getEditor(args)
         return args

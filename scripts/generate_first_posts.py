@@ -36,7 +36,7 @@ from helpers import ini_parser
 from cli_parser import Parser
 
 def _parseArgs():
-    return Parser.new(
+    return Parser(
         description='Generate first posts for Bethesda forums').user(
     ).milestone(
         help_='Specify the milestone for latest release.').editor().parse()
