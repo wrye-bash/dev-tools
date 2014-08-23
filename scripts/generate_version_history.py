@@ -29,11 +29,9 @@ changelog for a milestone. It then copies the Wrye Bash Version History.html to
  on the parent directory of the dir this script is run from."""
 
 from generate_changelog import writeChangelog
-from globals import templatePath, outPath, hub
+from globals import outPath, hub
 from cli_parser import Parser
 
-TEMPLATE_HEAD = templatePath(name=u'Wrye Bash Version History - head.txt')
-TEMPLATE_TAIL = templatePath(name=u'Wrye Bash Version History - tail.txt')
 
 # Functions ===================================================================
 def _parseArgs():
