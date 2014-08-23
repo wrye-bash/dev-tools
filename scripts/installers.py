@@ -10,7 +10,7 @@
 # missing files can be downloaded of course).
 #
 # Usage:
-#   dumpdata.py [input_file]
+#   installers.py [input_file]
 #
 #   input_file: defaults to 'Installers.dat'
 #
@@ -63,7 +63,7 @@ class Installer(object):
         'fileSizeCrcs','type','isActive','subNames','subActives',
         'dirty_sizeCrc','comments','readMe','packageDoc','packagePic',
         'src_sizeCrcDate','hasExtraData','skipVoices','espmNots','isSolid',
-        'blockSize','overrideSkips','remaps','skipRefresh')
+        'blockSize','overrideSkips','remaps','skipRefresh', 'fileRootIdex')
 
     def __setstate__(self,values):
         map(self.__setattr__,self.persistent,values)
