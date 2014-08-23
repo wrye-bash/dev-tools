@@ -120,7 +120,7 @@ def _cleanOutDir(path=OUT_DIR):
         except:
             pass
 
-def outPath(dir_=OUT_DIR, subdir='', name="out.txt"):
+def outPath(dir_=OUT_DIR, subdir=u'', name=u"out.txt"):
     """Returns a path joining the dir_ and name parameters. Will create the
     dirs in dir_ if not existing.
 
