@@ -1,4 +1,4 @@
-[size=5]305 Bug fixes and enhancements [2014/08/23] [Various community members][/size][/spoiler]
+[size=5]305 Bug fixes and enhancements [2014/08/23] [Various community members][/size][spoiler]
 [LIST]
 [*]Due to the change from the BOSS API to the LOOT API, and due to internal changes in the way the Standalone is created, [b]no[/b] MSVC redistributables are required for either Python or Standalone Wrye Bash.[/*]
 [*]Corrected the "Cannot load plugins before masters" error that many users were experiencing. [WrinklyNinja][/*]

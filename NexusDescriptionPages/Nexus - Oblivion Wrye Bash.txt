@@ -1,4 +1,4 @@
-[center][color=red][size=6]We only support Wrye Bash 304.4 or higher.[/size][/color][/center]
+[center][color=red][size=6]We only support Wrye Bash 305 or higher.[/size][/color][/center]
 
 [color=orange]Important: Wrye Bash's developers do not have much time to work on Wrye Bash. As such, development is slow.
 

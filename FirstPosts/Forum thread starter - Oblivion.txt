@@ -100,7 +100,7 @@ Currently we are looking for volunteers to contribute Wrye Bash. The main focus 
 [1] CBash is the exception in that it can be updated at any time as long as there is a volunteer to work on it.
 
 [size=5][color=#3366ff]Changelog for Latest Version:[/color][/size]
-[size=5]305 Bug fixes and enhancements [2014/08/23] [Various community members][/size][/spoiler]
+[size=5]305 Bug fixes and enhancements [2014/08/23] [Various community members][/size][spoiler]
 [LIST]
 [*]Due to the change from the BOSS API to the LOOT API, and due to internal changes in the way the Standalone is created, [b]no[/b] MSVC redistributables are required for either Python or Standalone Wrye Bash.[/*]
 [*]Corrected the "Cannot load plugins before masters" error that many users were experiencing. [WrinklyNinja][/*]

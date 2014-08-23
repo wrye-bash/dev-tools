@@ -1,5 +1,5 @@
 ﻿[center][color=red][size=6]We only support Skyrim version 1.9.32.0.8 and[/size][/color][/center]
-[center][color=red][size=6]Wrye Bash 304.4.[/size][/color][/center]
+[center][color=red][size=6]Wrye Bash 305.[/size][/color][/center]
 
 [center][color=red][size=6]When using ModOrganizer you have to launch Wrye Bash from MO as covered on their description page.[/size][/color][/center]
 
