@@ -38,14 +38,16 @@ GAMES = {
     'fnv': u'Fallout - New Vegas',
 }
 
-MAIN_LABELS = {'bug', 'docs', 'enhancement'}
+MAIN_LABELS = {'bug', 'enhancement'}
 REJECTED_LABELS = {'duplicate', 'rejected', 'wont fix', 'works for me'}
 DEV_LABELS = {'TODO', 'discussion', 'git', 'goal', 'question', 'wxPyGUI'}
-PROGRESS_LABELS = {'in progress', 'ready', 'svn'}
+PROGRESS_LABELS = {'review'}
+TAGGING_LABELS = {'docs', 'svn'}
 GAME_LABELS = set(GAMES.keys()) | {'morrowind'}
+# unions
 SKIP_LABELS = DEV_LABELS | REJECTED_LABELS
 ALL_LABELS = MAIN_LABELS | REJECTED_LABELS | DEV_LABELS | PROGRESS_LABELS | \
-             GAME_LABELS
+             GAME_LABELS | TAGGING_LABELS
 
 URL_ISSUES = 'https://github.com/wrye-bash/wrye-bash/issues'
 # URL_MILESTONE is used in string formatting, '%' needs to be
