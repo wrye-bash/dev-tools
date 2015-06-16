@@ -92,9 +92,9 @@ def _listOrNone(sues_, type_):
 
 def writeSecondPost(gameTitle, milestone, issues):
     """Write 'Buglist thread Starter - <gameTitle>.txt'"""
-    outFile = outPath(name=u'Buglist thread Starter - ' + gameTitle + u'.txt',
+    out_path = outPath(name=u'Buglist thread Starter - ' + gameTitle + u'.txt',
                       subdir='SecondPosts')
-    with open(outFile, 'w') as out:
+    with open(out_path, 'w') as out:
         with open(TEMPLATE, 'r') as ins: # TODO: real template
             # Intro paragraph
             line = getSecondPostLine(ins)

@@ -46,7 +46,7 @@ Then:
 [*]For Python versions, run by double-clicking on Wrye Bash Launcher.pyw[/*]
 [*]For WBSA (Wrye Bash StandAlone), run by double-clicking on Wrye Bash.exe[/*]
 [/LIST]
-Remember! In Windows Vista and up, don't install Oblivion in the Program Files folder due to User Account Control! See File Permissions.
+Remember! In Windows Vista and up, don't install Oblivion in the Program Files folder due to User Account Control!
 See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html#trouble-permissions]File Permissions[/url]
 
 [size=3][color=#3366ff]Version history:[/color][/size]

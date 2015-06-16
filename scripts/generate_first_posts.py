@@ -33,13 +33,13 @@ hack."""
 from generate_changelog import writeChangelogBBcode
 from globals import templatePath
 from helpers import ini_parser
-from cli_parser import Parser
+import cli_parser
 
 def _parseArgs():
-    return Parser(
+    return cli_parser.Parser(
         description='Generate first posts for Bethesda forums').user(
-    ).milestone(
-        help_='Specify the milestone for latest release.').editor().parse()
+    ).milestone(help_='Specify the milestone for latest release.').editor(
+    ).parse()
 
 class _Game(object):
     def __init__(self, display, nexusUrl, prev_thread, cur_thread):
@@ -71,11 +71,10 @@ def _thread_history(game):
             return threads.read()
 
 def _other_threads(label):
-    for _g, g in _GAMES.iteritems():
-        if _g != label:
-            yield ('[*]The Official [topic=' + str(g.cur_thread) +
-                   ']Wrye Bash for ' + g.display +
-                   ' thread[/topic].[/*]')
+    for gameName, game in _GAMES.iteritems():
+        if gameName != label:
+            yield ('[*]The Official [topic=' + str(game.cur_thread) +
+                   ']Wrye Bash for ' + game.display + ' thread[/topic].[/*]')
 
 import subprocess
 import string

@@ -39,10 +39,11 @@ GAMES = {
 }
 
 MAIN_LABELS = {'bug', 'enhancement'}
-REJECTED_LABELS = {'duplicate', 'rejected', 'wont fix', 'works for me'}
+REJECTED_LABELS = {'duplicate', 'rejected', 'wont fix', 'works for me',
+                   'backburner'}
 DEV_LABELS = {'TODO', 'discussion', 'git', 'goal', 'question', 'wxPyGUI'}
 PROGRESS_LABELS = {'review'}
-TAGGING_LABELS = {'docs', 'svn'}
+TAGGING_LABELS = {'docs', 'svn', 'patcher'}
 GAME_LABELS = set(GAMES.keys()) | {'morrowind'}
 # unions
 SKIP_LABELS = DEV_LABELS | REJECTED_LABELS
@@ -64,7 +65,7 @@ URL_ENHANCEMENTS = (
 
 DEFAULT_MILESTONE_TITLE = 'Bug fixes and enhancements'
 
-# LOGIN ========================================
+# LOGIN =======================================================================
 from helpers import github_wrapper
 
 def _login(opts):
@@ -108,7 +109,7 @@ def hub(opts):
     # so generate first posts won't run - grrr
     return repo, milestone
 
-# OUTPUT DIR =====================================
+# OUTPUT & TEMPLATES DIRs =====================================================
 import os, shutil
 
 OUT_DIR = u'out'

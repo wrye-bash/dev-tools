@@ -69,10 +69,10 @@ def getUser():
         print " 3) Exit"
         input_ = raw_input(">")
         if input_ == '1':
-            user = raw_input('user:')
-            password = raw_input('password:')
+            key = raw_input('token:').strip()
         elif input_ == '2':
-            key = raw_input('token:')
+            user = raw_input('user:').strip()
+            password = raw_input('password:').strip()
         else:
             return ()
         print
