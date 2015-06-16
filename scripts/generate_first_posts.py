@@ -80,7 +80,7 @@ import subprocess
 import string
 from globals import outPath, hub
 
-def writeFirstPosts(repo, milestone, editor):
+def writeFirstPosts(repo, milestone, editor, num):
     for label, game in _GAMES.iteritems():
         out_ = outPath(dir_=POSTS_DIR,
                         name=u'Forum thread starter - ' + game.display +
@@ -95,7 +95,7 @@ def writeFirstPosts(repo, milestone, editor):
                 data = template.read()  # reads file at once - should be OK
             data = data.decode('utf-8')  # NEEDED
             src = string.Template(data)
-            with open(writeChangelogBBcode(repo, milestone),
+            with open(writeChangelogBBcode(repo, milestone,num=num),
                       'r') as changelog_file:
                 changelog = changelog_file.read()
                 changelog = changelog.decode('utf-8')  # just in case changelog
@@ -117,10 +117,10 @@ def main():
         editor = None
     else:
         editor = opts.editor
-    git_ = hub(opts)
+    git_ = hub(opts, deadMilestone=True)
     if not git_: return
     repo, milestone = git_[0], git_[1]
-    writeFirstPosts(repo, milestone, editor)
+    writeFirstPosts(repo, milestone, editor, opts.milestone)
 
 if __name__ == '__main__':
     try:

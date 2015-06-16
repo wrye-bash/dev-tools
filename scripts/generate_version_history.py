@@ -47,7 +47,7 @@ import subprocess
 WRYE_BASH_REPO_DOCS_DIR = os.path.join(u'wrye-bash', u'Mopy', u'Docs')
 IO_REPO_DOCS_DIR = os.path.join(u'wrye-bash.github.io', u'docs')
 
-def writeVersionHistory(repo, milestone, editor):
+def writeVersionHistory(repo, milestone, editor, num):
     """Writes the html, copies it to the main repo and waits for you to
     manually edit it (and commit it) before it copies the edited file to the
     wrye-bash.github.io\\docs folder
@@ -77,7 +77,7 @@ def writeVersionHistory(repo, milestone, editor):
         print('Wrye Bash Version History.html is not present for editing.'
               '  The new changelog will be inserted into it.')
         return
-    latestChangelog = writeChangelog(repo, milestone)
+    latestChangelog = writeChangelog(repo, milestone, milestoneNumber=num)
     if editor:
         print('Please review the changelog (mind the date): '
               + str(latestChangelog))
@@ -119,10 +119,10 @@ def main():
         editor = None
     else:
         editor = opts.editor
-    git_ = hub(opts)
+    git_ = hub(opts, deadMilestone=True)
     if not git_: return
     repo, milestone = git_[0], git_[1]
-    writeVersionHistory(repo, milestone, editor)
+    writeVersionHistory(repo, milestone, editor, opts.milestone)
 
 if __name__ == '__main__':
     try:

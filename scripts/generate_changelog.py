@@ -88,14 +88,15 @@ from globals import SKIP_LABELS, outPath, hub, DEFAULT_MILESTONE_TITLE, \
 from helpers.github_wrapper import getClosedIssues
 
 CHANGELOGS_DIR = '../ChangeLogs'
-def writeChangelog(repo,milestone,title=DEFAULT_MILESTONE_TITLE,
-                   overwrite=False,extension=u'.txt',logic=_changelog_txt):
+def writeChangelog(repo, milestone, title=DEFAULT_MILESTONE_TITLE,
+                   overwrite=False, extension=u'.txt', logic=_changelog_txt,
+                   milestoneNumber=str(305)):
     """Write 'Changelog - <milestone>.txt'"""
-    if title: title = milestone.title + " " + title + " "
-    else: title = milestone.title
+    num = milestone.title if milestone else milestoneNumber
     outFile = outPath(dir_=CHANGELOGS_DIR,
-                      name=u'Changelog - ' + milestone.title + extension)
+                      name=u'Changelog - ' + num + extension)
     if os.path.isfile(outFile) and not overwrite: return outFile
+    title = num + " " + title + " " if title else num
     issues = getClosedIssues(repo,milestone,skip_labels=SKIP_LABELS)
     return logic(issues,title,outFile)
 
@@ -114,10 +115,12 @@ def writeChangelogMaster(repo, milestone, title=DEFAULT_MILESTONE_TITLE,
                                  keep_labels=DEV_LABELS)
     return logic(issues, dev_issues, title, outFile)
 
-def writeChangelogBBcode(repo, milestone, title=None, overwrite=False):
+def writeChangelogBBcode(repo, milestone, title=None, overwrite=False,
+                         num=str(305)):
     """Write 'Changelog - <milestone>.bbcode.txt'"""
     return writeChangelog(repo, milestone, title, overwrite,
-                          extension=u'.bbcode.txt', logic=_changelog_bbcode)
+                          extension=u'.bbcode.txt', logic=_changelog_bbcode,
+                          milestoneNumber=num)
 
 def writeChangelogMarkdown(repo, milestone, title=None, overwrite=False):
     """Write 'Changelog - <milestone>.markdown.txt'"""

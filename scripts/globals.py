@@ -98,15 +98,14 @@ def _getMiles(opts, repo):
         print 'Could not find milestone:', opts.milestone
     return milestone
 
-def hub(opts):
+def hub(opts, deadMilestone=False):
     # Login
     git = _login(opts)
     if not git: return
     repo = _getRepo(git)
     if not repo: return
     milestone = _getMiles(opts, repo)
-    if not milestone: return # FIXME when I close a milestone this is None
-    # so generate first posts won't run - grrr
+    if not milestone and not deadMilestone: return
     return repo, milestone
 
 # OUTPUT & TEMPLATES DIRs =====================================================
