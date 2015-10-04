@@ -64,6 +64,7 @@ URL_ENHANCEMENTS = (
     )
 
 DEFAULT_MILESTONE_TITLE = 'Bug fixes and enhancements'
+DEFAULT_AUTHORS = 'Various community members'
 
 # OUTPUT & TEMPLATES DIRs =====================================================
 import os, shutil

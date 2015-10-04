@@ -28,7 +28,7 @@ arguments to the scripts. Default behavior of the scripts is defined in this
 class"""
 import argparse
 import os
-from globals import GAMES, DEFAULT_MILESTONE_TITLE
+from globals import GAMES, DEFAULT_MILESTONE_TITLE, DEFAULT_AUTHORS
 
 PROMPT = 'PROMPT'
 
@@ -107,6 +107,16 @@ class Parser:
                                  action='store_true',
                                  default=False,
                                  help=helpNoEditor)
+        return self
+
+    def authors(self, help_='Specify the authors (comma separated strings as '
+                            'in: Me,"Some Others".'):
+        action = self.parser.add_argument('--authors',
+                                          dest='authors',
+                                          default=DEFAULT_AUTHORS,
+                                          type=str,
+                                          help=help_)
+        self.actions.append(action)
         return self
 
     @staticmethod

@@ -25,6 +25,7 @@
 
 """This module generates the changelog for a milestone reading its metadata."""
 from datetime import date
+from functools import partial
 from cli_parser import Parser
 
 CHANGELOG_TITLE_SIZE = 5
@@ -32,15 +33,14 @@ CHANGELOG_TITLE_SIZE = 5
 # Functions ===================================================================
 def _parseArgs():
     return Parser(description='Generate Changelog').user().milestone(
-        help_='Specify the milestone for latest release.').games(
+        help_='Specify the milestone for latest release.').authors().games(
         help_='Show closed issues for a specific game only.',
         helpAll='Show closed issues for all games.').overwrite(
     ).milestoneTitle().parse()
 
 from helpers.html import h2, ul, bbList, size, markdownList, spoiler
 
-def _title(title, authors=('Various community members',)):
-    # TODO - get the authors from issues instead of passing them in
+def _title(title, authors=None):
     title = title + '[' + date.today().strftime('%Y/%m/%d') + ']'
     if not authors: return title
     return title + ' [' + ", ".join(authors) + ']'
@@ -88,6 +88,8 @@ from globals import SKIP_LABELS, outPath, DEFAULT_MILESTONE_TITLE, \
 from github_login import hub
 from helpers.github_wrapper import getClosedIssues
 
+# def getClosedIssues(*args, **kwargs): return () # testing, don't hit github
+
 CHANGELOGS_DIR = '../ChangeLogs'
 def writeChangelog(repo, milestone, title=DEFAULT_MILESTONE_TITLE,
                    overwrite=False, extension=u'.txt', logic=_changelog_txt,
@@ -134,6 +136,7 @@ def main():
     if not git_: return
     repo, milestone = git_[0], git_[1]
     print 'Writing changelogs'
+    globals()['_title'] = partial(_title, authors=(opts.authors.split(',')))
     writeChangelog(repo, milestone, opts.title, opts.overwrite)
     writeChangelogMarkdown(repo, milestone, opts.title, opts.overwrite)
     writeChangelogBBcode(repo, milestone, opts.title, opts.overwrite)
