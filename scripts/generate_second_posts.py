@@ -100,7 +100,7 @@ def writeSecondPost(gameTitle, milestone, issues):
         with open(TEMPLATE, 'r') as ins: # TODO: real template
             # Intro paragraph
             line = getSecondPostLine(ins)
-            out.write(color(line % milestone.title, COLOR_INTRO))
+            out.write(color(COLOR_INTRO, line % milestone.title))
             out.write(getSecondPostLine(ins))
             out.write('\n\n')
             # Upcoming release
