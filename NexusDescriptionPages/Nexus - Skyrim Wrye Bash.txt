@@ -7,8 +7,7 @@
 
 If you are familiar with the Python programming language, please consider helping with development. We ported [url=https://github.com/wrye-bash/wrye-bash/]our repository[/url] to git at github to make contributing super easy.  [url=https://github.com/wrye-bash/wrye-bash/issues]Our bug tracker[/url] lists everything we're aware of at present.[/color]
 
-[center][/center][center][font=Comic Sans MS][color=#ff00ff][size=4]306-beta is out ! Please post feedback on the official[color=#9900ff] [/color][/size][/color][/font][color=#9900ff][url=http://forums.bethsoft.com/topic/1536340-wrye-bash-thread-105/][font=Comic Sans MS][color=#9900ff][size=4]Oblivion thread[/size][/color][/font]
-[/url][/color][/center]
+[center][font=Comic Sans MS][size=4][color=#ff00ff]306-beta is out ! Please post feedback on the official [/color][color=#9900ff][url=http://forums.bethsoft.com/topic/1536340-/]Oblivion thread[/url][/color][/size][/font][/center]
 
 [size=3][color=#3366ff]What does Wrye Bash do?[/color][/size]
 
@@ -21,13 +20,13 @@ If you are familiar with the Python programming language, please consider helpin
 
 [color=red]Note: Wrye Bash can not merge mods that add new records to Skyrim. It can only merge mods that overwrite a previous master. If a mod alters Skyrim.esm, or any other ESM from the Nexus, it can be merged into the Bash Patch. As an example a mod like Immersive Armors introduces new records to Skyrim and can not be merged.  However, just like Immersive Armors the vast majority of Skyrim mods add new records. This means there is no way to load 300, 400, or 500 mods and still be under the safe limit of 254 mods max. That number is 0 to 254 or, 255 mods. Skyrim.esm is always (00), Update.esm is always, (01) and so on.[/color]
 
-[size=3][color=#3366ff]Comments? Problems?[/color][/size]
+[size=3][color=#3366ff]Comments? Questions?[/color][/size]
 
-Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1536340-/]Oblivion[/url] and [url=http://forums.bethsoft.com/topic/1507008-/]Skyrim[/url].  If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed : )
-
-There is much more information in the OP of the Wrye Bash topic at the BethSoft forums: [url=http://forums.bethsoft.com/topic/1536340-/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1507008-/]Skyrim[/url], but here is some stuff to get you started:
+Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1536340-/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1505167-/]Skyrim[/url]. Be sure to read the first post of the relevant thread for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed 
 
 [size=3][color=#3366ff]Documentation[/color][/size]
+
+Basic information is in the OP of the Wrye Bash topic at the BethSoft forums linked to above. For more information visit:
 
 [list]
 [*][url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Technical%20Readme.html]Technical Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url] (also included in the download in the Mopy/Docs folder)[/*]
@@ -35,6 +34,9 @@ There is much more information in the OP of the Wrye Bash topic at the BethSoft 
 [*]Metallicow's BAIN [url=http://www.nexusmods.com/oblivion/mods/38857]Demo Wizard[/url][/*]
 [*]Translated documentation and guides: [url=http://guides.tesfans.org]简体中文[/url][/*]
 [/list]
+
+The General Readme can be launched from inside Bash by clicking the question mark icon on Bash's toolbar.
+
 [size=3][color=#3366ff]Requirements and Installation:[/color][/size]
 
 [size=2][color=#3366ff]Short version:[/color][/size]
@@ -60,8 +62,8 @@ See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.htm
 
 [size=3][color=#3366ff]Version history:[/color][/size]
 
-[color=#00BFFF]Version 305 contains the following changes:[/color]
-[list]
+[color=#00BFFF]305 Bug fixes and enhancements [2014/08/23] [Various community members][/color]
+[LIST]
 [*]Due to the change from the BOSS API to the LOOT API, and due to internal changes in the way the Standalone is created, [b]no[/b] MSVC redistributables are required for either Python or Standalone Wrye Bash.[/*]
 [*]Corrected the "Cannot load plugins before masters" error that many users were experiencing. [WrinklyNinja][/*]
 [*]Corrected the "'int' object has no attribute 'startswith'" error that often happened when using the Race Patcher. [jfpelland][/*]
@@ -81,6 +83,6 @@ See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.htm
 [*]BOSS launcher fixes. [WrinklyNinja][/*]
 [*]Updated SplashScreen so it no longer has a version number. [Sharlikran][/*]
 [*]Replaced BOSS API with LOOT API. [WrinklyNinja][/*]
-[/list]
+[/LIST]
 
-For changes from previous versions, see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url].
+For changes from all previous versions, see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url].
