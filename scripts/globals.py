@@ -40,10 +40,10 @@ GAMES = {
 
 MAIN_LABELS = {'bug', 'enhancement'}
 REJECTED_LABELS = {'duplicate', 'rejected', 'wont fix', 'works for me',
-                   'backburner'}
-DEV_LABELS = {'TODO', 'discussion', 'git', 'goal', 'question', 'wxPyGUI'}
+                   'backburner', 'invalid','regression', 'needinfo', }
+DEV_LABELS = {'TODO', 'discussion', 'git', 'goal', 'question'}
 PROGRESS_LABELS = {'review'}
-TAGGING_LABELS = {'docs', 'svn', 'patcher'}
+TAGGING_LABELS = {'docs', 'svn', 'patcher', 'wx', 'bain', 'wine'}
 GAME_LABELS = set(GAMES.keys()) | {'morrowind'}
 # unions
 SKIP_LABELS = DEV_LABELS | REJECTED_LABELS
