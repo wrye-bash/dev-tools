@@ -78,13 +78,15 @@ def _other_threads(label):
 
 import subprocess
 import string
-from globals import outPath, hub
+from globals import outPath
+import github_login
 
 def writeFirstPosts(repo, milestone, editor, num):
     for label, game in _GAMES.iteritems():
         out_ = outPath(dir_=POSTS_DIR,
                         name=u'Forum thread starter - ' + game.display +
                              u'.txt')
+        print out_
         with open(out_, 'w') as out:
             out.write(_previous_thread(game))
             out.write('\n\n')
@@ -117,7 +119,7 @@ def main():
         editor = None
     else:
         editor = opts.editor
-    git_ = hub(opts, deadMilestone=True)
+    git_ = github_login.hub(opts, deadMilestone=True)
     if not git_: return
     repo, milestone = git_[0], git_[1]
     writeFirstPosts(repo, milestone, editor, opts.milestone)

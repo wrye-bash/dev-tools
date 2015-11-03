@@ -65,49 +65,6 @@ URL_ENHANCEMENTS = (
 
 DEFAULT_MILESTONE_TITLE = 'Bug fixes and enhancements'
 
-# LOGIN =======================================================================
-from helpers import github_wrapper
-
-def _login(opts):
-    """Login to github . Return None if failed to login"""
-    if opts.user:
-        user = github_wrapper.getUser()
-    else:
-        user = (TOKEN,)
-    print "Logging in..."
-    git = github_wrapper.getGithub(*user)
-    if not git: return None
-    try:
-        print "User:", github_wrapper.getUserName(git)
-    except github_wrapper.GithubApiException as e:
-        print e.message
-        return None
-    return git
-
-def _getRepo(github):
-    print "Getting repository..."
-    repo = github_wrapper.getRepo(github, ORG_NAME, REPO_NAME)
-    if not repo:
-        print 'Could not find repository:', REPO_NAME
-    return repo
-
-def _getMiles(opts, repo):
-    print "Getting Milestone..."
-    milestone = github_wrapper.getMilestone(repo, opts.milestone)
-    if not milestone:
-        print 'Could not find milestone:', opts.milestone
-    return milestone
-
-def hub(opts, deadMilestone=False):
-    # Login
-    git = _login(opts)
-    if not git: return
-    repo = _getRepo(git)
-    if not repo: return
-    milestone = _getMiles(opts, repo)
-    if not milestone and not deadMilestone: return
-    return repo, milestone
-
 # OUTPUT & TEMPLATES DIRs =====================================================
 import os, shutil
 

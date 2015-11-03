@@ -29,7 +29,8 @@ changelog for a milestone. It then copies the Wrye Bash Version History.html to
  on the parent directory of the dir this script is run from."""
 
 from generate_changelog import writeChangelog
-from globals import outPath, hub
+from globals import outPath
+import github_login
 from cli_parser import Parser
 
 
@@ -119,7 +120,7 @@ def main():
         editor = None
     else:
         editor = opts.editor
-    git_ = hub(opts, deadMilestone=True)
+    git_ = github_login.hub(opts, deadMilestone=True)
     if not git_: return
     repo, milestone = git_[0], git_[1]
     writeVersionHistory(repo, milestone, editor, opts.milestone)

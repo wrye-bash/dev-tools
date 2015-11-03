@@ -83,8 +83,9 @@ def _changelog_master(issues, dev_issues, title, outFile):
 
 # API =========================================================================
 import os.path
-from globals import SKIP_LABELS, outPath, hub, DEFAULT_MILESTONE_TITLE, \
+from globals import SKIP_LABELS, outPath, DEFAULT_MILESTONE_TITLE, \
     REJECTED_LABELS, DEV_LABELS
+from github_login import hub
 from helpers.github_wrapper import getClosedIssues
 
 CHANGELOGS_DIR = '../ChangeLogs'

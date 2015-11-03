@@ -57,7 +57,8 @@ from helpers.html import color, COLOR_INTRO, url, formatIssue, bbList, spoiler
 
 # Globals ====================================================================
 from globals import outPath, URL_MILESTONE, URL_BUGS, \
-    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, templatePath, hub
+    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, templatePath
+import github_login
 from cli_parser import Parser
 
 TEMPLATE = templatePath(name=u'generate_second_posts_lines.txt')
@@ -95,6 +96,7 @@ def writeSecondPost(gameTitle, milestone, issues):
     out_path = outPath(name=u'Buglist thread Starter - ' + gameTitle + u'.txt',
                       subdir='SecondPosts')
     with open(out_path, 'w') as out:
+        print u'File:', os.path.abspath(out_path)
         with open(TEMPLATE, 'r') as ins: # TODO: real template
             # Intro paragraph
             line = getSecondPostLine(ins)
@@ -162,7 +164,7 @@ def main():
         games = {opts.game: GAMES[opts.game]}
     else:
         games = GAMES
-    git_ = hub(opts)
+    git_ = github_login.hub(opts)
     if not git_: return
     repo, milestone = git_[0], git_[1]
     for game in games:
