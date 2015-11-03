@@ -30,10 +30,8 @@ date and thread links). Also unicode and newlines support is very much a
 hack."""
 
 # Functions ===================================================================
-from collections import OrderedDict
 from generate_changelog import writeChangelogBBcode
-from globals import templatePath
-from helpers import ini_parser
+from globals import templatePath, GAMES
 from helpers.html import center, size, color, font
 import cli_parser
 
@@ -42,15 +40,6 @@ def _parseArgs():
         description='Generate Nexus description text').milestone(
         help_='Specify the milestone for latest release.').editor(
     ).parse()
-
-class _Game(object):
-    def __init__(self, display, cur_thread):
-        self.display = display
-        self.cur_thread = cur_thread
-
-OBLIVION = _Game(u'Oblivion', ini_parser.current_oblivion_thread())
-SKYRIM = _Game(u'Skyrim', ini_parser.current_skyrim_thread())
-_GAMES = OrderedDict([('oblivion', OBLIVION), ('skyrim', SKYRIM)])
 
 NEXUS_DIR = '../NexusDescriptionPages'
 TEMPLATE = templatePath(name=u'generate_nexus_description_lines.txt')
@@ -98,7 +87,7 @@ def _beth_url(num):
     return 'http://forums.bethsoft.com/topic/%s-/' % str(num)
 
 def _beta_headsup(latest='306-beta',
-                  _obThread=_beth_url(_GAMES['oblivion'].cur_thread)):
+                  _obThread=_beth_url(GAMES['oblivion'].cur_thread)):
     return center(font('Comic Sans MS', size(4,
         color('#ff00ff', "%s is out ! Please post feedback on the official ")
                                              % latest +
@@ -106,7 +95,7 @@ def _beta_headsup(latest='306-beta',
 
 def _beth_threads():
     threads = ['[url=%s]%s[/url]' % (_beth_url(g.cur_thread), g.display)
-               for g in _GAMES.values()]
+               for g in GAMES.values()]
     return ', '.join(threads)
 
 import subprocess
@@ -123,7 +112,7 @@ def _unspoil(text):
     return _patternAny.sub(lambda m: rep[re.escape(m.group(0))], text)
 
 def writeNexusDescription(num, editor):
-    for label, game in _GAMES.iteritems():
+    for label, game in GAMES.iteritems():
         out_ = outPath(dir_=NEXUS_DIR,
                        name=u'Nexus - ' + game.display + u' Wrye Bash.txt')
         print out_

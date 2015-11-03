@@ -31,8 +31,7 @@ hack."""
 
 # Functions ===================================================================
 from generate_changelog import writeChangelogBBcode
-from globals import templatePath
-from helpers import ini_parser
+from globals import templatePath, GAMES
 import cli_parser
 
 def _parseArgs():
@@ -40,23 +39,6 @@ def _parseArgs():
         description='Generate first posts for Bethesda forums').milestone(
         help_='Specify the milestone for latest release.').editor(
     ).parse()
-
-class _Game(object):
-    def __init__(self, display, nexusUrl, prev_thread, cur_thread):
-        self.display = display
-        self.nexusUrl = nexusUrl
-        self.prev_thread = prev_thread
-        self.cur_thread = cur_thread
-
-OBLIVION = _Game(u'Oblivion', u'[url=http://www.nexusmods'
-                              u'.com/oblivion/mods/22368]Oblivion Nexus[/url]',
-                 ini_parser.previous_oblivion_thread(),
-                 ini_parser.current_oblivion_thread())
-SKYRIM = _Game(u'Skyrim', u'[url=http://www.nexusmods'
-                          u'.com/skyrim/mods/1840]Skyrim Nexus[/url]',
-               ini_parser.previous_skyrim_thread(),
-               ini_parser.current_skyrim_thread())
-_GAMES = {'oblivion': OBLIVION, 'skyrim': SKYRIM}
 
 POSTS_DIR = '../FirstPosts'
 TEMPLATE = templatePath(name=u'generate_first_posts_lines.txt')
@@ -71,7 +53,7 @@ def _thread_history(game):
             return threads.read()
 
 def _other_threads(label):
-    for gameName, game in _GAMES.iteritems():
+    for gameName, game in GAMES.iteritems():
         if gameName != label:
             yield ('[*]The Official [topic=' + str(game.cur_thread) +
                    ']Wrye Bash for ' + game.display + ' thread[/topic].[/*]')
@@ -81,7 +63,7 @@ import string
 from globals import outPath
 
 def writeFirstPosts(milestone, editor):
-    for label, game in _GAMES.iteritems():
+    for label, game in GAMES.iteritems():
         out_ = outPath(dir_=POSTS_DIR,
                         name=u'Forum thread starter - ' + game.display +
                              u'.txt')

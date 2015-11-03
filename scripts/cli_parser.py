@@ -28,7 +28,7 @@ arguments to the scripts. Default behavior of the scripts is defined in this
 class"""
 import argparse
 import os
-from globals import GAMES, DEFAULT_MILESTONE_TITLE, DEFAULT_AUTHORS
+from globals import DEFAULT_MILESTONE_TITLE, DEFAULT_AUTHORS, ALL_GAMES
 
 PROMPT = 'PROMPT'
 
@@ -47,7 +47,7 @@ class Parser:
         gameGroup.add_argument('-g', '--game',
                                dest='game',
                                type=str,
-                               choices=GAMES.keys(),
+                               choices=ALL_GAMES.keys(),
                                help=help_)
         gameGroup.add_argument('-a', '--all',
                                dest='all',

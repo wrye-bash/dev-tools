@@ -57,7 +57,7 @@ from helpers.html import color, COLOR_INTRO, url, formatIssue, bbList, spoiler
 
 # Globals ====================================================================
 from globals import outPath, URL_MILESTONE, URL_BUGS, \
-    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, templatePath
+    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, templatePath, ALL_GAMES
 import github_login
 from cli_parser import Parser
 
@@ -161,17 +161,17 @@ def main():
     opts = parseArgs()
     # Figure out which games to do:
     if opts.game:
-        games = {opts.game: GAMES[opts.game]}
+        games = {opts.game: ALL_GAMES[opts.game]}
     else:
-        games = GAMES
+        games = ALL_GAMES
     git_ = github_login.hub(opts)
     if not git_: return
     repo, milestone = git_[0], git_[1]
-    for game in games:
-        print 'Getting Issues for:', games[game]
-        issues = getIssuesForPosts(repo, milestone, game)
+    for gameLabel, game in games.iteritems():
+        print 'Getting Issues for:', game.display
+        issues = getIssuesForPosts(repo, milestone, gameLabel)
         print 'Writing second post...'
-        writeSecondPost(games[game], milestone, issues)
+        writeSecondPost(game.display, milestone, issues)
     print 'Second post(s) generated.'
 
 if __name__ == '__main__':
