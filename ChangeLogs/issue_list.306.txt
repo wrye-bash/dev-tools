@@ -12,7 +12,7 @@ Ghosted Plugins Sorted after the Bash Patch [Utumno]
 Bash loads an invalid plugins.txt without notifying the user of the error. [Utumno]
 Mergeable plugins do not auto deactivate [Utumno]
 Error when applying BCF [Utumno]
-[Ini setting] re-add setting for BOSS executable location
+[Ini setting] re-add setting for BOSS executable location [Sharlikran]
 [Ini setting] Disable prompt for activating bashed patch [Utumno]
 skyrim_const.py is missing the 3rd hi-res DLC file in bethDataFiles array [jfpelland]
 Added a force UTF-8 option to plugin encodings. [Utumno]

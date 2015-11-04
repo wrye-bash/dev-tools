@@ -70,22 +70,9 @@ def _changelog_markdown(issues, title, outFile):
         out.write('\n')
     return outFile
 
-def _changelog_master(issues, dev_issues, title, outFile):
-    with open(outFile, 'w') as out:
-        out.write(_title(title, authors=None))
-        out.write('\n\n')
-        out.write('\n'.join(markdownList(issues)))
-        out.write('\n\n')
-        out.write('Internal issues fixed')
-        out.write('\n\n')
-        out.write('\n'.join(markdownList(dev_issues)))
-        out.write('\n')
-    return outFile
-
 # API =========================================================================
 import os.path
-from globals import SKIP_LABELS, outPath, DEFAULT_MILESTONE_TITLE, \
-    REJECTED_LABELS, DEV_LABELS
+from globals import SKIP_LABELS, outPath, DEFAULT_MILESTONE_TITLE
 import github_login
 from helpers.github_wrapper import getClosedIssues
 
@@ -97,7 +84,7 @@ def writeChangelog(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
                    overwrite=False, extension=u'.txt', logic=_changelog_txt):
     """Write 'Changelog - <milestone>.txt'"""
     if issue_list is None:
-        issue_list, _, _ = __get_issue_list(num)
+        issue_list, _ = __get_issue_list(num)
     outFile = outPath(dir_=CHANGELOGS_DIR,
                       name=u'Changelog - ' + num + extension)
     print outFile
@@ -105,25 +92,11 @@ def writeChangelog(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
     title = num + " " + title + " " if title else num
     return logic(issue_list, title, outFile)
 
-def writeChangelogMaster(issue_list, dev_issues, num,
-                         title=DEFAULT_MILESTONE_TITLE, overwrite=False,
-                         extension=u'.txt', logic=_changelog_master):
-    """Write 'Changelog - <milestone>.txt'"""
-    if issue_list is None:
-        issue_list, dev_issues, _ = __get_issue_list(num, dev=True)
-    if title: title = num + " " + title + " "
-    else: title = num
-    outFile = outPath(dir_=CHANGELOGS_DIR,
-                      name=u'Master Commit Changelog - ' + num + extension)
-    print outFile
-    if os.path.isfile(outFile) and not overwrite: return outFile
-    return logic(issue_list, dev_issues, title, outFile)
-
 def writeChangelogBBcode(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
                          overwrite=False):
     """Write 'Changelog - <milestone>.bbcode.txt'"""
     if issue_list is None:
-        issue_list, _, _ = __get_issue_list(num)
+        issue_list, _ = __get_issue_list(num)
     return writeChangelog(issue_list, num, title, overwrite,
                           extension=u'.bbcode.txt',
                           logic=_changelog_bbcode)
@@ -135,8 +108,8 @@ def _writeChangelogMarkdown(repo, milestone, title=DEFAULT_MILESTONE_TITLE, over
 
 def main():
     opts = _parseArgs()  # TODO per game # if opts.game:...
-    issue_list, dev_issue_list, milestone = __get_issue_list(
-        opts.milestone, opts.editor, opts if not opts.offline else None, dev=True)
+    issue_list, milestone = __get_issue_list(
+        opts.milestone, opts.editor, opts if not opts.offline else None)
     if issue_list is None: return
     num = milestone.title if milestone else opts.milestone
     print 'Writing changelogs'
@@ -144,13 +117,11 @@ def main():
     writeChangelog(issue_list, num, opts.title, opts.overwrite)
     _writeChangelogMarkdown(issue_list, num, opts.title, opts.overwrite)
     writeChangelogBBcode(issue_list, num, opts.title, opts.overwrite)
-    writeChangelogMaster(issue_list, dev_issue_list, num, opts.title, opts.overwrite)
     print 'Changelogs generated.'
 
-def __get_issue_list(milesNum, editor=None, opts=None, dev=False):
-    issue_list = dev_issue_list = milestone = None
+def __get_issue_list(milesNum, editor=None, opts=None):
+    issue_list = milestone = None
     issue_list_txt = u'issue_list.' + milesNum + u'.txt'
-    dev_issue_list_txt = u'dev_issue_list.' + milesNum + u'.txt'
     if opts: # get the issues from github and save them in a text file
         git_ = github_login.hub(opts.user, milesNum)
         if git_ is not None:
@@ -158,19 +129,10 @@ def __get_issue_list(milesNum, editor=None, opts=None, dev=False):
             issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
             issue_list = map(closedIssue, issues)
             issue_list = _dump_plain_issue_list(editor, issue_list, issue_list_txt)
-            if dev:
-                dev_issues = getClosedIssues(repo, milestone,
-                                             skip_labels=REJECTED_LABELS,
-                                             keep_labels=DEV_LABELS)
-                dev_issue_list = map(closedIssue, dev_issues)
-                dev_issue_list = _dump_plain_issue_list(editor, dev_issue_list,
-                                                        dev_issue_list_txt)
     else: # work offline, if it blows on you you get a black star for not RTM
         issue_list = _read_plain_issue_list(issue_list_txt)
         # print issue_list
-        if dev:
-            dev_issue_list = _read_plain_issue_list(dev_issue_list_txt)
-    return issue_list, dev_issue_list, milestone
+    return issue_list, milestone
 
 def _dump_plain_issue_list(editor, issue_list, txt_):
     with open(outPath(dir_=CHANGELOGS_DIR, name=txt_), 'w') as out:

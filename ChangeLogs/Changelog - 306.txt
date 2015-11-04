@@ -1,4 +1,4 @@
-<h2>306 Code refactoring, performance [2015/11/03] [Utumno]</h2>
+<h2>306 Code refactoring, performance [2015/11/07] [Utumno]</h2>
 <ul>
 <li>Option to list dependencies on a particular mod [Utumno]</li>
 <li>Optionally skip instead of ignoring Skyrim .BSL [Utumno]</li>
@@ -14,7 +14,7 @@
 <li>Bash loads an invalid plugins.txt without notifying the user of the error. [Utumno]</li>
 <li>Mergeable plugins do not auto deactivate [Utumno]</li>
 <li>Error when applying BCF [Utumno]</li>
-<li>[Ini setting] re-add setting for BOSS executable location</li>
+<li>[Ini setting] re-add setting for BOSS executable location [Sharlikran]</li>
 <li>[Ini setting] Disable prompt for activating bashed patch [Utumno]</li>
 <li>skyrim_const.py is missing the 3rd hi-res DLC file in bethDataFiles array [jfpelland]</li>
 <li>Added a force UTF-8 option to plugin encodings. [Utumno]</li>
