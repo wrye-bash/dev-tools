@@ -131,6 +131,8 @@ class Parser:
     def getEditor(args):
         """Handles default fallbacks for the --editor option"""
         if not hasattr(args, 'editor'):
+            if  hasattr(args, 'no_editor'):
+                args.editor = None
             return
         if os.path.exists(args.editor):
             return
@@ -142,20 +144,18 @@ class Parser:
         # and vice versa
         part1 = os.path.normcase(u'Program Files')
         part2 = os.path.normcase(u'Program Files (x86)')
+        check = u''
         if part1 in parts:
             idex = parts.index(part1)
             parts[idex] = part2
             check = os.path.join(*parts)
-            if os.path.exists(check):
-                args.editor = check
-                return
         elif part2 in parts:
             idex = parts.index(part2)
             parts[idex] = part1
             check = os.path.join(*parts)
-            if os.path.exists(check):
-                args.editor = check
-                return
+        if check and os.path.exists(check):
+            args.editor = check
+            return
         print 'Specified editor does not exist, please enter a valid path:'
         check = raw_input('>')
         if not check:
@@ -163,6 +163,7 @@ class Parser:
         if not os.path.exists(check):
             print 'Specified editor does not exists, assuming --no-editor'
             args.no_editor = True
+        if args.no_editor: args.editor = None
 
     def parse(self):
         """

@@ -113,11 +113,7 @@ def writeVersionHistory(milestone, editor):
 
 def main():
     opts = _parseArgs()
-    if opts.no_editor:
-        editor = None
-    else:
-        editor = opts.editor
-    writeVersionHistory(opts.milestone, editor)
+    writeVersionHistory(opts.milestone, opts.editor)
 
 if __name__ == '__main__':
     try:

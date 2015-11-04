@@ -135,12 +135,8 @@ def _writeChangelogMarkdown(repo, milestone, title=DEFAULT_MILESTONE_TITLE, over
 
 def main():
     opts = _parseArgs()  # TODO per game # if opts.game:...
-    if opts.no_editor: # I hate this code duplication
-        editor = None
-    else:
-        editor = opts.editor
     issue_list, dev_issue_list, milestone = __get_issue_list(
-        opts.milestone, editor, opts if not opts.offline else None, dev=True)
+        opts.milestone, opts.editor, opts if not opts.offline else None, dev=True)
     if issue_list is None: return
     num = milestone.title if milestone else opts.milestone
     print 'Writing changelogs'
