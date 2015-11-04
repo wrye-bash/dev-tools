@@ -164,7 +164,7 @@ def main():
         games = {opts.game: ALL_GAMES[opts.game]}
     else:
         games = ALL_GAMES
-    git_ = github_login.hub(opts)
+    git_ = github_login.hub(opts.user, opts.milestone)
     if not git_: return
     repo, milestone = git_[0], git_[1]
     for gameLabel, game in games.iteritems():

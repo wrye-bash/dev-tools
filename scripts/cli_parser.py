@@ -28,7 +28,8 @@ arguments to the scripts. Default behavior of the scripts is defined in this
 class"""
 import argparse
 import os
-from globals import DEFAULT_MILESTONE_TITLE, DEFAULT_AUTHORS, ALL_GAMES
+from globals import DEFAULT_MILESTONE_TITLE, DEFAULT_AUTHORS, ALL_GAMES, TOKEN
+from scripts.helpers import github_wrapper
 
 PROMPT = 'PROMPT'
 
@@ -165,6 +166,15 @@ class Parser:
             args.no_editor = True
         if args.no_editor: args.editor = None
 
+    @staticmethod
+    def getUser(args):
+        if hasattr(args, 'user') :
+            if args.user:
+                user = github_wrapper.getUser()
+            else:
+                user = (TOKEN,)
+            args.user = user
+
     def parse(self):
         """
         Return an object which can be used to get the arguments as in:
@@ -181,4 +191,5 @@ class Parser:
                 setattr(args, a.dest, values)
         # Special handler for --editor:
         Parser.getEditor(args)
+        Parser.getUser(args)
         return args

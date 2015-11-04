@@ -152,7 +152,7 @@ def __get_issue_list(milesNum, editor=None, opts=None, dev=False):
     issue_list_txt = u'issue_list.' + milesNum + u'.txt'
     dev_issue_list_txt = u'dev_issue_list.' + milesNum + u'.txt'
     if opts: # get the issues from github and save them in a text file
-        git_ = github_login.hub(opts)
+        git_ = github_login.hub(opts.user, milesNum)
         if git_ is not None:
             repo, milestone = git_[0], git_[1]
             issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)

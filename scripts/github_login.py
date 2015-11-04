@@ -21,15 +21,11 @@
 #  https://github.com/wrye-bash
 #
 # =============================================================================
-from globals import TOKEN, ORG_NAME, REPO_NAME
+from globals import ORG_NAME, REPO_NAME
 from helpers import github_wrapper
 
-def _login(opts):
+def _login(user):
     """Login to github . Return None if failed to login"""
-    if opts.user:
-        user = github_wrapper.getUser()
-    else:
-        user = (TOKEN,)
     print "Logging in..."
     git = github_wrapper.getGithub(*user)
     if not git: return None
@@ -48,24 +44,24 @@ def _getRepo(github):
         print 'Could not find repository:', REPO_NAME, ' - aborting'
     return repo
 
-def _getMiles(opts, repo):
+def _getMiles(milestoneNum, repo):
     print "Getting Milestone..."
-    milestone = github_wrapper.getMilestone(repo, opts.milestone)
+    milestone = github_wrapper.getMilestone(repo, milestoneNum)
     if not milestone:
-        print 'Could not find milestone:', opts.milestone, ' - aborting'
+        print 'Could not find milestone:', milestoneNum, ' - aborting'
     return milestone
 
-def hub(opts, deadMilestone=False):
+def hub(user, milestoneNum=None):
     # Login
-    git = _login(opts)
+    git = _login(user)
     if not git:
         print 'Failed to login, aborting'
         return
     repo = _getRepo(git)
     if not repo: return
     milestone = None
-    if not deadMilestone:
-        milestone = _getMiles(opts, repo)
+    if milestoneNum:
+        milestone = _getMiles(milestoneNum, repo)
         if not milestone: return
     return repo, milestone
 
@@ -74,7 +70,8 @@ from globals import ALL_LABELS
 from helpers.github_wrapper import allLabels
 
 if __name__ == '__main__':
-    git_ = hub(Parser('no desc').user().parse(), deadMilestone=True)
+    opts = Parser('no desc').user().parse()
+    git_ = hub(opts.user)
     labels = set(x.name for x in allLabels(git_[0])) # github.Label.Label
     print labels
     print ALL_LABELS
