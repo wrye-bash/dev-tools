@@ -44,7 +44,7 @@ def _parseArgs():
 NEXUS_DIR = '../NexusDescriptionPages'
 TEMPLATE = templatePath(name=u'generate_nexus_description_lines.txt')
 
-def _we_only_support(label, latest='306-beta'):
+def _we_only_support(label, latest='306'):
     if label == 'skyrim':
         blah = center(color('red', size(6,
                       'We only support Skyrim version 1.9.32.0.8+ and')))
@@ -86,7 +86,7 @@ is always, (01) and so on.""".splitlines()]))
 def _beth_url(num):
     return 'http://forums.bethsoft.com/topic/%s-/' % str(num)
 
-def _beta_headsup(latest='306-beta',
+def _beta_headsup(latest='306',
                   _obThread=_beth_url(GAMES['oblivion'].cur_thread)):
     return center(font('Comic Sans MS', size(4,
         color('#ff00ff', "%s is out ! Please post feedback on the official ")

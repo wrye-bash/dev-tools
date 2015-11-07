@@ -1,5 +1,5 @@
 [center][color=red][size=6]We only support Skyrim version 1.9.32.0.8+ and[/size][/color][/center]
-[center][color=red][size=6]Wrye Bash 306-beta.[/size][/color][/center]
+[center][color=red][size=6]Wrye Bash 306.[/size][/color][/center]
 
 [center][color=red][size=5]When using ModOrganizer you have to launch Wrye Bash from MO as covered on their description page.[/size][/color][/center]
 
@@ -7,7 +7,7 @@
 
 If you are familiar with the Python programming language, please consider helping with development. We ported [url=https://github.com/wrye-bash/wrye-bash/]our repository[/url] to git at github to make contributing super easy.  [url=https://github.com/wrye-bash/wrye-bash/issues]Our bug tracker[/url] lists everything we're aware of at present.[/color]
 
-[center][font=Comic Sans MS][size=4][color=#ff00ff]306-beta is out ! Please post feedback on the official [/color][color=#9900ff][url=http://forums.bethsoft.com/topic/1536340-/]Oblivion thread[/url][/color][/size][/font][/center]
+[center][font=Comic Sans MS][size=4][color=#ff00ff]306 is out ! Please post feedback on the official [/color][color=#9900ff][url=http://forums.bethsoft.com/topic/1536340-/]Oblivion thread[/url][/color][/size][/font][/center]
 
 [size=3][color=#3366ff]What does Wrye Bash do?[/color][/size]
 
@@ -22,7 +22,7 @@ If you are familiar with the Python programming language, please consider helpin
 
 [size=3][color=#3366ff]Comments? Questions?[/color][/size]
 
-Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1536340-/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1505167-/]Skyrim[/url]. Be sure to read the first post of the relevant thread for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed 
+Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1536340-/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1505167-/]Skyrim[/url]. Be sure to read the first post of the relevant thread for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed
 
 [size=3][color=#3366ff]Documentation[/color][/size]
 
@@ -62,27 +62,34 @@ See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.htm
 
 [size=3][color=#3366ff]Version history:[/color][/size]
 
-[color=#00BFFF]305 Bug fixes and enhancements [2014/08/23] [Various community members][/color]
+[color=#00BFFF]306 Code refactoring, performance [2015/11/07] [Utumno][/color]
 [LIST]
-[*]Due to the change from the BOSS API to the LOOT API, and due to internal changes in the way the Standalone is created, [b]no[/b] MSVC redistributables are required for either Python or Standalone Wrye Bash.[/*]
-[*]Corrected the "Cannot load plugins before masters" error that many users were experiencing. [WrinklyNinja][/*]
-[*]Corrected the "'int' object has no attribute 'startswith'" error that often happened when using the Race Patcher. [jfpelland][/*]
-[*]The Standalone no longer reads loose Python files.  This was originally a method to allow small updates, however it ends up causing problems if you have Python files from an older Wrye Bash along side a newer Stadnalone. [lojack5][/*]
-[*]Corrected an error when adding a shortcut to a batch script to the Apps folder. [jfpelland][/*]
-[*]Corrected errors with the DocBrowser when the set document file was missing. [lojack5][/*]
-[*]Corrected BAIN Regression: BAIN was not uninstalling all files.  This was affecting both uninstalling and annealling. [lojack5][/*]
-[*]Corrected a few rare Wizard exceptions. [lojack5][/*]
-[*]Corrected an error for some users with Backup Bash Settings. [jfpelland][/*]
-[*]Corrected an error in the Installers Tab after deleting a Save Game. [lojack5][/*]
-[*]Corrected an issue that caused the Bashed Patch Tweak Settings to be non-persistent. [lojack5][/*]
-[*]Fixed "Copy Conflicts to Project" [Utumno][/*]
-[*]Includes bluesky404's updates for Chinese Traditional and Simplified. [bluesky404/Sharlikran][/*]
-[*]Various Readme Updates. [Sharlikran][/*]
-[*]Updated taglist.yaml files (bundled Bash Tags list). [Sharlikran][/*]
-[*]Updated Oblivion record definitions. [Shalikran][/*]
-[*]BOSS launcher fixes. [WrinklyNinja][/*]
-[*]Updated SplashScreen so it no longer has a version number. [Sharlikran][/*]
-[*]Replaced BOSS API with LOOT API. [WrinklyNinja][/*]
+[*]Option to list dependencies on a particular mod [Utumno][/*]
+[*]Optionally skip instead of ignoring Skyrim .BSL [Utumno][/*]
+[*]Wine Compatibility [Utumno][/*]
+[*]Oblivion esm version swapping fixups [Utumno][/*]
+[*]Switching save profile does not activate mods for this save profile [Utumno][/*]
+[*]Master list fixups and enhancements [Utumno][/*]
+[*]UnicodeDecodeError on tmp dir creation when username contains non ascii chars [Utumno][/*]
+[*]Table.dat fixups [Utumno][/*]
+[*]Scroll position not set on startup (Installers, People and Screens tabs) [Utumno][/*]
+[*]Delete fixups [Utumno][/*]
+[*]Ghosted Plugins Sorted after the Bash Patch [Utumno][/*]
+[*]Bash loads an invalid plugins.txt without notifying the user of the error. [Utumno][/*]
+[*]Mergeable plugins do not auto deactivate [Utumno][/*]
+[*]Error when applying BCF [Utumno][/*]
+[*][Ini setting] re-add setting for BOSS executable location [Sharlikran][/*]
+[*][Ini setting] Disable prompt for activating bashed patch [Utumno][/*]
+[*]skyrim_const.py is missing the 3rd hi-res DLC file in bethDataFiles array [jfpelland][/*]
+[*]Added a force UTF-8 option to plugin encodings. [Utumno][/*]
+[*]Skyrim - New  GMST settings tweaks requests [jfpelland][/*]
+[*]Huge lag when switching back to mods tab from another application [Utumno][/*]
+[*]Menu item to load only selected mods [Utumno][/*]
+[*]Comments box forgets its size [Utumno][/*]
+[*]UnicodeDecodeError when importing a face to a save [Utumno][/*]
+[*]Rework Mod Groups - remove BALO [Utumno][/*]
+[*]Bash should send deleted files to the Recycle Bin [Utumno][/*]
+[*]Masters list displays incorrectly [Utumno][/*]
 [/LIST]
 
 For changes from all previous versions, see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url].
