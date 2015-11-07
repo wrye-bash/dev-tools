@@ -20,3 +20,11 @@ Upcoming release %s:
 Additional known bugs:
 
 Additional requested features:
+
+The bugs mentioned fixed are fixed in the stable development version, you can
+ download the python files from here: https://github.com/wrye-bash/wrye-bash/archive/dev.zip
+
+Bleeding edge code: https://github.com/wrye-bash/wrye-bash/archive/utumno-wip.zip
+
+We will soon update with links to executables for the stable and bleeding edge
+ 307 beta.

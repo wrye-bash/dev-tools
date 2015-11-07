@@ -117,7 +117,13 @@ def writeSecondPost(gameTitle, milestone, issues):
             # Other known feature requests
             out.write((url(URL_ENHANCEMENTS, getSecondPostLine(ins))))
             out.write('\n'.join(spoiler(_listOrNone(issues[3], 'Enhancement'))))
-            out.write('\n')
+            out.write('\n\n')
+            line = getSecondPostLine(ins)
+            out.write(line + '\n\n')
+            line = getSecondPostLine(ins)
+            out.write(line + '\n\n')
+            line = getSecondPostLine(ins)
+            out.write(line + '\n')
 
 def getIssuesForPosts(repo, milestone, gameLabel):
     """Return a tuple of applicable issues for the given game and milestone
