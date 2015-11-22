@@ -81,7 +81,7 @@ import string
 from globals import outPath
 import github_login
 
-def writeFirstPosts(repo, milestone, editor, num):
+def writeFirstPosts(milestone, editor):
     for label, game in _GAMES.iteritems():
         out_ = outPath(dir_=POSTS_DIR,
                         name=u'Forum thread starter - ' + game.display +
@@ -97,7 +97,7 @@ def writeFirstPosts(repo, milestone, editor, num):
                 data = template.read()  # reads file at once - should be OK
             data = data.decode('utf-8')  # NEEDED
             src = string.Template(data)
-            with open(writeChangelogBBcode(repo, milestone,num=num),
+            with open(writeChangelogBBcode(None, milestone),
                       'r') as changelog_file:
                 changelog = changelog_file.read()
                 changelog = changelog.decode('utf-8')  # just in case changelog
@@ -108,10 +108,10 @@ def writeFirstPosts(repo, milestone, editor, num):
             src_substitute = src.substitute(dictionary)
             src_substitute = src_substitute.encode('utf-8')  # NEEDED
             out.write(src_substitute)
-            if editor:
-                print('Please review (mind the release date and thread links):'
-                      + str(out))
-                subprocess.call([editor, out.name])  # TODO call_check
+        if editor:
+            print('Please review (mind the release date and thread links):'
+                  + str(out.name))
+            subprocess.call([editor, out.name])  # TODO call_check
 
 def main():
     opts = _parseArgs()
@@ -119,10 +119,7 @@ def main():
         editor = None
     else:
         editor = opts.editor
-    git_ = github_login.hub(opts, deadMilestone=True)
-    if not git_: return
-    repo, milestone = git_[0], git_[1]
-    writeFirstPosts(repo, milestone, editor, opts.milestone)
+    writeFirstPosts(opts.milestone, editor)
 
 if __name__ == '__main__':
     try:

@@ -1,0 +1,6 @@
+Some GitHub Readme info/media is outdated/broken [partially resolved] [Sharlikran]
+Game detection algorithm fixups [Utumno]
+Split game names into filesystem and display strings [WrinklyNinja]
+Tags point to the old rebased commits [Utumno]
+Remove the rest of IDE specific files and move them on meta [Utumno]
+Rip the patchers out of bosh [Utumno]

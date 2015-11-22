@@ -40,7 +40,7 @@ import cli_parser
 def _parseArgs():
     return cli_parser.Parser(
         description='Generate Nexus description text').user(
-    ).milestone(help_='Specify the milestone for latest release.' #).editor(
+    ).milestone(help_='Specify the milestone for latest release.').editor(
     ).parse()
 
 class _Game(object):
@@ -123,9 +123,7 @@ _patternAny = re.compile("|".join(rep.keys()), flags=re.I)
 def _unspoil(text):
     return _patternAny.sub(lambda m: rep[re.escape(m.group(0))], text)
 
-def writeNexusDescription(repo, milestone,
-                          # editor,
-                          num):
+def writeNexusDescription(num, editor):
     for label, game in _GAMES.iteritems():
         out_ = outPath(dir_=NEXUS_DIR,
                        name=u'Nexus - ' + game.display + u' Wrye Bash.txt')
@@ -137,7 +135,7 @@ def writeNexusDescription(repo, milestone,
                 data = template.read()  # reads file at once - should be OK
             data = data.decode('utf-8')  # NEEDED
             src = string.Template(data)
-            with open(writeChangelogBBcode(repo, milestone, num=num),
+            with open(writeChangelogBBcode(None, num, overwrite=False),
                       'r') as changelog_file:
                 changelog = changelog_file.read() # reads file at once
                 changelog = _unspoil(changelog).strip()
@@ -153,24 +151,20 @@ def writeNexusDescription(repo, milestone,
             src_substitute = src.substitute(dictionary)
             src_substitute = src_substitute.encode('utf-8')  # NEEDED
             out.write(src_substitute)
-            # if editor:
-            #     print('Please review (mind the release date and thread links):'
-            #           + str(out))
-            #     subprocess.call([editor, out.name])  # TODO call_check
+        if editor:
+            print('Please review (mind the release date and thread links):'
+                  + str(out.name))
+            subprocess.call([editor, out.name])  # TODO call_check
 
 def main():
     opts = _parseArgs()
-    # if opts.no_editor:
-    #     editor = None
-    # else:
-    #     editor = opts.editor
-    # git_ = hub(opts, deadMilestone=True)
-    # if not git_: return
-    # repo, milestone = git_[0], git_[1]
-    repo, milestone = [None] * 2
-    writeNexusDescription(repo, milestone,
-                    # editor,
-                    opts.milestone)
+    if opts.no_editor:
+        editor = None
+    else:
+        editor = opts.editor
+    git_ = github_login.hub(opts, deadMilestone=True)
+    if not git_: return
+    writeNexusDescription(opts.milestone, editor)
 
 if __name__ == '__main__':
     try:

@@ -91,6 +91,14 @@ class Parser:
                                  help='Do NOT overwrite existing file(s)')
         return self
 
+    def offline(self):
+        self.parser.add_argument('--offline',
+                                 dest='offline',
+                                 action='store_true',
+                                 help='Do not hit github - you must have the '
+                                      'issue list available offline')
+        return self
+
     def editor(self, help_='Path to editor executable to launch.',
                helpNoEditor='Never launch an editor'):
         editorGroup = self.parser.add_mutually_exclusive_group()
@@ -135,14 +143,14 @@ class Parser:
         part1 = os.path.normcase(u'Program Files')
         part2 = os.path.normcase(u'Program Files (x86)')
         if part1 in parts:
-            idex = parts.find(part1)
+            idex = parts.index(part1)
             parts[idex] = part2
             check = os.path.join(*parts)
             if os.path.exists(check):
                 args.editor = check
                 return
         elif part2 in parts:
-            idex = parts.find(part2)
+            idex = parts.index(part2)
             parts[idex] = part1
             check = os.path.join(*parts)
             if os.path.exists(check):

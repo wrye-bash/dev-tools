@@ -78,7 +78,7 @@ def writeVersionHistory(repo, milestone, editor, num):
         print('Wrye Bash Version History.html is not present for editing.'
               '  The new changelog will be inserted into it.')
         return
-    latestChangelog = writeChangelog(repo, milestone, milestoneNumber=num)
+    latestChangelog = writeChangelog(None, milestone)
     if editor:
         print('Please review the changelog (mind the date): '
               + str(latestChangelog))
