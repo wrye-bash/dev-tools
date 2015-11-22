@@ -30,14 +30,12 @@ changelog for a milestone. It then copies the Wrye Bash Version History.html to
 
 from generate_changelog import writeChangelog
 from globals import outPath
-import github_login
 from cli_parser import Parser
-
 
 # Functions ===================================================================
 def _parseArgs():
-    return Parser(description='Generate Wrye Bash Version '
-                              'History.html').user().milestone(
+    return Parser(
+        description='Generate Wrye Bash Version History.html').milestone(
         help_='Specify the milestone for latest release.').editor().parse()
 
 import shutil
@@ -48,11 +46,10 @@ import subprocess
 WRYE_BASH_REPO_DOCS_DIR = os.path.join(u'wrye-bash', u'Mopy', u'Docs')
 IO_REPO_DOCS_DIR = os.path.join(u'wrye-bash.github.io', u'docs')
 
-def writeVersionHistory(repo, milestone, editor, num):
+def writeVersionHistory(milestone, editor):
     """Writes the html, copies it to the main repo and waits for you to
     manually edit it (and commit it) before it copies the edited file to the
     wrye-bash.github.io\\docs folder
-    :param repo:
     :param milestone:
     """
     ## TODO: Currently this just copies the current version history
@@ -120,10 +117,7 @@ def main():
         editor = None
     else:
         editor = opts.editor
-    git_ = github_login.hub(opts, deadMilestone=True)
-    if not git_: return
-    repo, milestone = git_[0], git_[1]
-    writeVersionHistory(repo, milestone, editor, opts.milestone)
+    writeVersionHistory(opts.milestone, editor)
 
 if __name__ == '__main__':
     try:

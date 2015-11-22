@@ -39,8 +39,8 @@ import cli_parser
 
 def _parseArgs():
     return cli_parser.Parser(
-        description='Generate Nexus description text').user(
-    ).milestone(help_='Specify the milestone for latest release.').editor(
+        description='Generate Nexus description text').milestone(
+        help_='Specify the milestone for latest release.').editor(
     ).parse()
 
 class _Game(object):
@@ -112,7 +112,6 @@ def _beth_threads():
 import subprocess
 import string
 from globals import outPath
-import github_login
 import re
 
 # http://stackoverflow.com/a/6117124/281545 - HACK, smooth it out
@@ -162,8 +161,6 @@ def main():
         editor = None
     else:
         editor = opts.editor
-    git_ = github_login.hub(opts, deadMilestone=True)
-    if not git_: return
     writeNexusDescription(opts.milestone, editor)
 
 if __name__ == '__main__':

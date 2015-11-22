@@ -37,8 +37,8 @@ import cli_parser
 
 def _parseArgs():
     return cli_parser.Parser(
-        description='Generate first posts for Bethesda forums').user(
-    ).milestone(help_='Specify the milestone for latest release.').editor(
+        description='Generate first posts for Bethesda forums').milestone(
+        help_='Specify the milestone for latest release.').editor(
     ).parse()
 
 class _Game(object):
@@ -79,7 +79,6 @@ def _other_threads(label):
 import subprocess
 import string
 from globals import outPath
-import github_login
 
 def writeFirstPosts(milestone, editor):
     for label, game in _GAMES.iteritems():
