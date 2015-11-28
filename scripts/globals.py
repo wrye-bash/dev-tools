@@ -54,7 +54,8 @@ SKYRIM = _Game(u'Skyrim', u'[url=http://www.nexusmods'
 GAMES = OrderedDict([('oblivion', OBLIVION), ('skyrim', SKYRIM),])
 
 ALL_GAMES = OrderedDict([('oblivion', OBLIVION), ('skyrim', SKYRIM),
-                         ('fallout', _Game(u'Fallout 3')),
+                         ('fallout4', _Game(u'Falllout 4')),
+                         ('fallout3', _Game(u'Fallout 3')),
                          ('fnv', _Game(u'Fallout - New Vegas')), ])
 
 MAIN_LABELS = {'bug', 'enhancement'}
