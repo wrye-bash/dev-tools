@@ -33,7 +33,7 @@ CHANGELOG_TITLE_SIZE = 5
 
 # Functions ===================================================================
 def _parseArgs():
-    return Parser(description='Generate Changelog').user().editor().milestone(
+    return Parser(description='Generate Changelog').editor().milestone(
         help_='Specify the milestone for latest release.').authors().games(
         help_='Show closed issues for a specific game only.',
         helpAll='Show closed issues for all games.').offline().overwrite(
@@ -123,7 +123,7 @@ def __get_issue_list(milesNum, editor=None, opts=None):
     issue_list = milestone = None
     issue_list_txt = u'issue_list.' + milesNum + u'.txt'
     if opts: # get the issues from github and save them in a text file
-        git_ = github_login.hub(opts.user, milesNum)
+        git_ = github_login.hub(milesNum)
         if git_ is not None:
             repo, milestone = git_[0], git_[1]
             issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)

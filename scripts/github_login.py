@@ -24,22 +24,9 @@
 from globals import ORG_NAME, REPO_NAME
 from helpers import github_wrapper
 
-def _login(user):
-    """Login to github . Return None if failed to login"""
-    print "Logging in..."
-    git = github_wrapper.getGithub(*user)
-    if not git: return None
-    try:
-        pass
-        print "User:", github_wrapper.getUserName(git)
-    except github_wrapper.GithubApiException as e:
-        print e.message
-        return None
-    return git
-
-def _getRepo(github):
+def _getRepo():
     print "Getting repository..."
-    repo = github_wrapper.getRepo(github, ORG_NAME, REPO_NAME)
+    repo = github_wrapper.getRepo(ORG_NAME, REPO_NAME)
     if not repo:
         print 'Could not find repository:', REPO_NAME, ' - aborting'
     return repo
@@ -51,13 +38,8 @@ def _getMiles(milestoneNum, repo):
         print 'Could not find milestone:', milestoneNum, ' - aborting'
     return milestone
 
-def hub(user, milestoneNum=None):
-    # Login
-    git = _login(user)
-    if not git:
-        print 'Failed to login, aborting'
-        return
-    repo = _getRepo(git)
+def hub(milestoneNum=None):
+    repo = _getRepo()
     if not repo: return
     milestone = None
     if milestoneNum:
@@ -70,9 +52,9 @@ from globals import ALL_LABELS
 from helpers.github_wrapper import allLabels
 
 if __name__ == '__main__':
-    opts = Parser('no desc').user().parse()
-    git_ = hub(opts.user)
-    labels = set(x.name for x in allLabels(git_[0])) # github.Label.Label
-    print labels
-    print ALL_LABELS
-    print labels == ALL_LABELS
+    git_ = hub()
+    if git_ is not None:
+        labels = set(x.name for x in allLabels(git_[0])) # github.Label.Label
+        print labels
+        print ALL_LABELS
+        print labels == ALL_LABELS

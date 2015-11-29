@@ -2,9 +2,6 @@
 
 ## Repo specific ##
 
-# User settings file (has username/password/access token) - CAREFUL
-*.usr
-
 # Output from second post script
 scripts/out/
 

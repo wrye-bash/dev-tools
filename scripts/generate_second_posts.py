@@ -37,17 +37,6 @@
 
    Requires PyGithub installed: https://github.com/jacquev6/PyGithub
 
-   The script uses the 'wrye-bash-automoton' user on GitHub, which is a
-   read-only member of the wrye-bash repository.  A Personal Access Token
-   has been generated and is hard coded in this tool.
-
-   If you need or want to use your own user to pull the information, you
-   must pass '-u' on the command line, which will read
-   'generate_second_posts.usr' for your user/password or access token.AMPER
-   It is *highly recommended* to use an access token (requires 2-factor
-   authentication) so your password isn't stored in plain-text on your
-   computer.  See the wiki on wrye-bash/meta on how to set this up.
-
    Generated seconds posts will be output to ./out
    """
 
@@ -65,7 +54,7 @@ TEMPLATE = templatePath(name=u'generate_second_posts_lines.txt')
 
 # Functions ===================================================================
 def parseArgs():
-    return Parser(description='Generate Second Posts').user().games(
+    return Parser(description='Generate Second Posts').games(
         help_='Generate a second post for a specific game.',
         helpAll='Generate a second post for all games.').milestone(
         help_='Specify the milestone for filtering Issues.').parse()
@@ -170,7 +159,7 @@ def main():
         games = {opts.game: ALL_GAMES[opts.game]}
     else:
         games = ALL_GAMES
-    git_ = github_login.hub(opts.user, opts.milestone)
+    git_ = github_login.hub(opts.milestone)
     if not git_: return
     repo, milestone = git_[0], git_[1]
     for gameLabel, game in games.iteritems():

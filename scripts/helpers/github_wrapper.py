@@ -28,69 +28,11 @@
 import github
 import os
 
-USER_FILE = u'generate_second_posts.usr'
 ALL_ISSUES = 'all'
 DEFAULT_ISSUE_STATE = ALL_ISSUES
 DEFAULT_MILESTONE = None
 
-def getUser():
-    """Attempts to load 'generate_second_posts.user' to read in user data for
-       accessing GitHub API.  If the file is not present or the data invalid,
-       prompts the user to input his or her data, and asks if it should be
-       saved.
-         Return: tuple either of:
-             (username, password) - without 2 factor authentication
-             (key,) - with 2 factor authentication
-    """
-    user = None
-    password = None
-    key = None
-    if os.path.exists(USER_FILE):
-        try:
-            with open(USER_FILE) as ins:
-                lines = ins.readlines()
-            # filter out empty lines
-            lines = [line.strip() for line in lines if line and line.strip()]
-            if len(lines) == 1:
-                # 2-factor authentication
-                key = lines[0]
-            elif len(lines) == 2:
-                user, password = lines
-        except:
-            pass
-    if (not user or not password) and (not key):
-        # Invalid, prompt for input
-        print ("User settings file missing or invalid data present.  Please "
-               "input your information.  If you are using 2-factor"
-               "authentication on your account, please see our Wiki page on "
-               "setting up a Personal Access Token for this script.")
-        print " 1) Entering a Personal Access Token"
-        print " 2) Entering a user name and password"
-        print " 3) Exit"
-        input_ = raw_input(">")
-        if input_ == '1':
-            key = raw_input('token:').strip()
-        elif input_ == '2':
-            user = raw_input('user:').strip()
-            password = raw_input('password:').strip()
-        else:
-            return ()
-        print
-        save = raw_input("Would you like to save these settings to the user "
-                         "settings file? [Y/N]:")
-        if save in ('y', 'Y'):
-            with open(USER_FILE, 'w') as out:
-                if key:
-                    out.write(key)
-                else:
-                    out.write(user)
-                    out.write('\n')
-                    out.write(password)
-    if key:
-        return key,
-    return user, password
-
-def getRepo(git, orgName, repoName):
+def getRepo(orgName, repoName):
     """Get a githubapi repository object for the specified repository.
         git: github.Github object for the user
         orgName: display name of the orginizations for the repository
@@ -99,31 +41,17 @@ def getRepo(git, orgName, repoName):
                   None, assumes personal repos.
         repoName: name of the repository to get
     """
-    # Try repos in organizations you're in
-    if orgName:
-        for org in git.get_user().get_orgs():
-            if org.name == orgName:
-                for repo in org.get_repos():
-                    if repo.name == repoName:
-                        print "Got repository from", orgName, "organization."
-                        return repo
-    # Try repos you own
-    else:
-        for repo in git.get_user().get_repos():
-            if repo.name == repoName:
-                print "Got repository from personal account."
-                return repo
-    # Try starred repos
-    for repo in git.get_user().get_starred():
-        if repo.name == repoName:
-            print "Got repository from starred repositories."
-            return repo
-    # Try watched repos
-    for repo in git.get_user().get_watched():
-        if repo.name == repoName:
-            print "Got repository from watched repositories."
-            return repo
-    return None
+    git = github.Github()
+    repo = git.get_repo(orgName + '/' + repoName)
+    try:
+        # The github library returns a repo object even if the repo
+        # doesn't exist.  Test to see if it's a valid repository by
+        # attempting to access one of its attributes.  Then the
+        # github library will report the error.
+        repo.full_name
+        return repo
+    except github.UnknownObjectException as e:
+        return None
 
 def getMilestone(repo, milestoneTitle):
     """Returns the github.Milestone object for a specified milestone."""
@@ -283,15 +211,6 @@ def getClosedIssues(repo, milestone, keep_labels={'bug', 'enhancement'},
     return getIssues(repo, milestone, keep_labels=keep_labels,
                      skip_labels=skip_labels,
                      state='closed')
-
-def getGithub(*user):
-    return github.Github(*user)
-
-def getUserName(git):
-    try:
-        return git.get_user().name
-    except github.BadCredentialsException as e:
-        raise GithubApiException(e.message)
 
 def allLabels(repo):
     return _IssueCache.allLabels(repo)

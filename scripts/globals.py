@@ -27,11 +27,10 @@ posts. Those constants are special to the wrye-bash/wrye-bash repository. If
 the scripts are to be used for other repos too we need a repo factory here."""
 
 REPO_NAME = u'wrye-bash'
-ORG_NAME = u'Wrye Bash'
-TOKEN = '31ed03d9b3975325adf40cf9fc5ffacc39fc99f8'
+ORG_NAME = u'wrye-bash'
 
 # GAMES =======================================================================
-from scripts.helpers import ini_parser as _ini_parser
+from helpers import ini_parser as _ini_parser
 from collections import OrderedDict
 
 class _Game(object):
