@@ -35,17 +35,23 @@ def markdownList(items, f=lambda x: x):
         yield '- ' + f(i)
 
 # BBCODE ========================================
-def color(text, color_=None):
-    if color_:
-        return '[color=' + color_ + ']' + text + '[/color]'
+def color(colour, text):
+    if colour:
+        return '[color=' + colour + ']' + text + '[/color]'
     else:
         return text
+
+def font(daFont, text):
+    return '[font=' + daFont + ']' + text + '[/font]'
 
 def url(url_, title):
     return '[url=' + url_ + ']' + title + '[/url]'
 
 def bold(text):
     return '[b]' + text + '[/b]'
+
+def center(text):
+    return '[center]' + text + '[/center]'
 
 def strike(text):
     return '[s]' + text + '[/s]'
@@ -79,11 +85,11 @@ def formatIssue(issue, issueType):
     if issue.state == 'open':
         s = lambda x: x
     else:
-        s = lambda x: color(strike(x), COLOR_DONE)
+        s = lambda x: color(COLOR_DONE, strike(x))
     if issue.assignee:
         assignee = issue.assignee
         assignee = ' ' + url(assignee.url,
-                             color('(' + assignee.login + ')', COLOR_ASSIGNEE))
+                             color(COLOR_ASSIGNEE, '(' + assignee.login + ')'))
     else:
         assignee = ''
     return s(url(issue.html_url,issueType + ' %i' % issue.number) +

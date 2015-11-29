@@ -1,11 +1,13 @@
-﻿[center][color=red][size=6]We only support Skyrim version 1.9.32.0.8 and[/size][/color][/center]
-[center][color=red][size=6]Wrye Bash 305.[/size][/color][/center]
+[center][color=red][size=6]We only support Skyrim version 1.9.32.0.8+ and[/size][/color][/center]
+[center][color=red][size=6]Wrye Bash 306.[/size][/color][/center]
 
-[center][color=red][size=6]When using ModOrganizer you have to launch Wrye Bash from MO as covered on their description page.[/size][/color][/center]
+[center][color=red][size=5]When using ModOrganizer you have to launch Wrye Bash from MO as covered on their description page.[/size][/color][/center]
 
-[color=orange]Important: Wrye Bash's developers do not have much time to work on Wrye Bash. As such, development is slow.
+[color=orange]Important: Wrye Bash needs developers.
 
-If you are familiar with the Python programming language, please consider helping with development. We ported our repository to git at github to make contributing super easy. Many of Wrye Bash's features are unique to it, and it needs fixes to outstanding bugs.  [url=https://github.com/wrye-bash/wrye-bash/issues]Our bug tracker[/url] lists everything we're aware of at present.[/color]
+If you are familiar with the Python programming language, please consider helping with development. We ported [url=https://github.com/wrye-bash/wrye-bash/]our repository[/url] to git at github to make contributing super easy.  [url=https://github.com/wrye-bash/wrye-bash/issues]Our bug tracker[/url] lists everything we're aware of at present.[/color]
+
+[center][font=Comic Sans MS][size=4][color=#ff00ff]306 is out ! Please post feedback on the official [/color][color=#9900ff][url=http://forums.bethsoft.com/topic/1536340-/]Oblivion thread[/url][/color][/size][/font][/center]
 
 [size=3][color=#3366ff]What does Wrye Bash do?[/color][/size]
 
@@ -18,66 +20,76 @@ If you are familiar with the Python programming language, please consider helpin
 
 [color=red]Note: Wrye Bash can not merge mods that add new records to Skyrim. It can only merge mods that overwrite a previous master. If a mod alters Skyrim.esm, or any other ESM from the Nexus, it can be merged into the Bash Patch. As an example a mod like Immersive Armors introduces new records to Skyrim and can not be merged.  However, just like Immersive Armors the vast majority of Skyrim mods add new records. This means there is no way to load 300, 400, or 500 mods and still be under the safe limit of 254 mods max. That number is 0 to 254 or, 255 mods. Skyrim.esm is always (00), Update.esm is always, (01) and so on.[/color]
 
-[size=3][color=#3366ff]Comments? Problems?[/color][/size]
+[size=3][color=#3366ff]Comments? Questions?[/color][/size]
 
-Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1501046-wrye-bash-thread-100/]Oblivion[/url], and [url=http://forums.bethsoft.com/topic/1505167-relz-wrye-bash-thread-37/]Skyrim[/url].  If you are have having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed : )
-
-There is much more information in the OP of the Wrye Bash topic at the BethSoft forums: [url=http://forums.bethsoft.com/topic/1501046-wrye-bash-thread-100/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1505167-relz-wrye-bash-thread-37/]Skyrim[/url], but here is some stuff to get you started:
+Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1536340-/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1505167-/]Skyrim[/url]. Be sure to read the first post of the relevant thread for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed
 
 [size=3][color=#3366ff]Documentation[/color][/size]
 
-[LIST]
-[*][url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Technical%20Readme.html]Technical Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url] (also included in the download as "Wrye Bash General Readme.html" in the Mopy folder)[/*]
+Basic information is in the OP of the Wrye Bash topic at the BethSoft forums linked to above. For more information visit:
+
+[list]
+[*][url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Technical%20Readme.html]Technical Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url] (also included in the download in the Mopy/Docs folder)[/*]
 [*]alt3rn1ty's [url=http://www.nexusmods.com/oblivion/mods/35230]Wrye Bash Pictorial Guide[/url] (For Oblivion, new guide for Skyrim pending)[/*]
 [*]Metallicow's BAIN [url=http://www.nexusmods.com/oblivion/mods/38857]Demo Wizard[/url][/*]
 [*]Translated documentation and guides: [url=http://guides.tesfans.org]简体中文[/url][/*]
-[/LIST]
+[/list]
+
+The General Readme can be launched from inside Bash by clicking the question mark icon on Bash's toolbar.
+
 [size=3][color=#3366ff]Requirements and Installation:[/color][/size]
 
-[size=2][color=#3366ff]Short version:[/color][/size] 
- 
+[size=2][color=#3366ff]Short version:[/color][/size]
+
 Just use the installer and install to the Skyrim folder! When you install dependencies, just install them to their default locations.
- 
-[size=2][color=#3366ff]Long version:[/color][/size] 
+
+[size=2][color=#3366ff]Long version:[/color][/size]
 
 There are two versions available: the Python version and the Standalone version. They are functionally equivalent. Most people should run the Standalone version since it is slightly simpler (no external Python components to install). You don't need to install the Python version, however, you can if you want to be more involved with development or if you already have Python installed on your system for other reasons.
- 
+
 If you are using the Python version, dependency installation will be handled automatically by the installer. However, if you want or need to do things manually, see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url] for information, and the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url] for detailed instructions.
- 
+
 Note that the 32-bit versions are required even if you are on a 64-bit operating system
 
 Then:
-[LIST]
+[list]
 [*]For manual installations of either the Standalone or Python versions, extract the archive in your Skyrim game folder so that the Mopy directory appears in the Skyrim directory[/*]
 [*]For Python versions, run by double-clicking on Wrye Bash Launcher.pyw[/*]
 [*]For WBSA (Wrye Bash StandAlone), run by double-clicking on Wrye Bash.exe[/*]
-[/LIST]
+[/list]
 Remember! In Windows Vista and up, don't install Skyrim in the Program Files folder due to User Account Control!
 See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html#trouble-permissions]File Permissions[/url]
 
 [size=3][color=#3366ff]Version history:[/color][/size]
 
-[color=#00BFFF]Version 305 contains the following changes:[/color]
+[color=#00BFFF]306 Code refactoring, performance [2015/11/07] [Utumno][/color]
 [LIST]
-[*]Due to the change from the BOSS API to the LOOT API, and due to internal changes in the way the Standalone is created, [b]no[/b] MSVC redistributables are required for either Python or Standalone Wrye Bash.[/*]
-[*]Corrected the "Cannot load plugins before masters" error that many users were experiencing. [WrinklyNinja][/*]
-[*]Corrected the "'int' object has no attribute 'startswith'" error that often happened when using the Race Patcher. [jfpelland][/*]
-[*]The Standalone no longer reads loose Python files.  This was originally a method to allow small updates, however it ends up causing problems if you have Python files from an older Wrye Bash along side a newer Stadnalone. [lojack5][/*]
-[*]Corrected an error when adding a shortcut to a batch script to the Apps folder. [jfpelland][/*]
-[*]Corrected errors with the DocBrowser when the set document file was missing. [lojack5][/*]
-[*]Corrected BAIN Regression: BAIN was not uninstalling all files.  This was affecting both uninstalling and annealling. [lojack5][/*]
-[*]Corrected a few rare Wizard exceptions. [lojack5][/*]
-[*]Corrected an error for some users with Backup Bash Settings. [jfpelland][/*]
-[*]Corrected an error in the Installers Tab after deleting a Save Game. [lojack5][/*]
-[*]Corrected an issue that caused the Bashed Patch Tweak Settings to be non-persistent. [lojack5][/*]
-[*]Fixed "Copy Conflicts to Project" [Utumno][/*]
-[*]Includes bluesky404's updates for Chinese Traditional and Simplified. [bluesky404/Sharlikran][/*]
-[*]Various Readme Updates. [Sharlikran][/*]
-[*]Updated taglist.yaml files (bundled Bash Tags list). [Sharlikran][/*]
-[*]Updated Oblivion record definitions. [Shalikran][/*]
-[*]BOSS launcher fixes. [WrinklyNinja][/*]
-[*]Updated SplashScreen so it no longer has a version number. [Sharlikran][/*]
-[*]Replaced BOSS API with LOOT API. [WrinklyNinja][/*]
+[*]Option to list dependencies on a particular mod [Utumno][/*]
+[*]Optionally skip instead of ignoring Skyrim .BSL [Utumno][/*]
+[*]Wine Compatibility [Utumno][/*]
+[*]Oblivion esm version swapping fixups [Utumno][/*]
+[*]Switching save profile does not activate mods for this save profile [Utumno][/*]
+[*]Master list fixups and enhancements [Utumno][/*]
+[*]UnicodeDecodeError on tmp dir creation when username contains non ascii chars [Utumno][/*]
+[*]Table.dat fixups [Utumno][/*]
+[*]Scroll position not set on startup (Installers, People and Screens tabs) [Utumno][/*]
+[*]Delete fixups [Utumno][/*]
+[*]Ghosted Plugins Sorted after the Bash Patch [Utumno][/*]
+[*]Bash loads an invalid plugins.txt without notifying the user of the error. [Utumno][/*]
+[*]Mergeable plugins do not auto deactivate [Utumno][/*]
+[*]Error when applying BCF [Utumno][/*]
+[*][Ini setting] re-add setting for BOSS executable location [Sharlikran][/*]
+[*][Ini setting] Disable prompt for activating bashed patch [Utumno][/*]
+[*]skyrim_const.py is missing the 3rd hi-res DLC file in bethDataFiles array [jfpelland][/*]
+[*]Added a force UTF-8 option to plugin encodings. [Utumno][/*]
+[*]Skyrim - New  GMST settings tweaks requests [jfpelland][/*]
+[*]Huge lag when switching back to mods tab from another application [Utumno][/*]
+[*]Menu item to load only selected mods [Utumno][/*]
+[*]Comments box forgets its size [Utumno][/*]
+[*]UnicodeDecodeError when importing a face to a save [Utumno][/*]
+[*]Rework Mod Groups - remove BALO [Utumno][/*]
+[*]Bash should send deleted files to the Recycle Bin [Utumno][/*]
+[*]Masters list displays incorrectly [Utumno][/*]
 [/LIST]
 
-For changes from previous versions, see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url].
+For changes from all previous versions, see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url].

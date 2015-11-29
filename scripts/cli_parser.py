@@ -28,7 +28,8 @@ arguments to the scripts. Default behavior of the scripts is defined in this
 class"""
 import argparse
 import os
-from globals import GAMES, DEFAULT_MILESTONE_TITLE
+from globals import DEFAULT_MILESTONE_TITLE, DEFAULT_AUTHORS, ALL_GAMES, TOKEN
+from scripts.helpers import github_wrapper
 
 PROMPT = 'PROMPT'
 
@@ -47,7 +48,7 @@ class Parser:
         gameGroup.add_argument('-g', '--game',
                                dest='game',
                                type=str,
-                               choices=GAMES.keys(),
+                               choices=ALL_GAMES.keys(),
                                help=help_)
         gameGroup.add_argument('-a', '--all',
                                dest='all',
@@ -91,6 +92,14 @@ class Parser:
                                  help='Do NOT overwrite existing file(s)')
         return self
 
+    def offline(self):
+        self.parser.add_argument('--offline',
+                                 dest='offline',
+                                 action='store_true',
+                                 help='Do not hit github - you must have the '
+                                      'issue list available offline')
+        return self
+
     def editor(self, help_='Path to editor executable to launch.',
                helpNoEditor='Never launch an editor'):
         editorGroup = self.parser.add_mutually_exclusive_group()
@@ -109,10 +118,22 @@ class Parser:
                                  help=helpNoEditor)
         return self
 
+    def authors(self, help_='Specify the authors (comma separated strings as '
+                            'in: Me,"Some Others".'):
+        action = self.parser.add_argument('--authors',
+                                          dest='authors',
+                                          default=DEFAULT_AUTHORS,
+                                          type=str,
+                                          help=help_)
+        self.actions.append(action)
+        return self
+
     @staticmethod
     def getEditor(args):
         """Handles default fallbacks for the --editor option"""
         if not hasattr(args, 'editor'):
+            if  hasattr(args, 'no_editor'):
+                args.editor = None
             return
         if os.path.exists(args.editor):
             return
@@ -124,20 +145,18 @@ class Parser:
         # and vice versa
         part1 = os.path.normcase(u'Program Files')
         part2 = os.path.normcase(u'Program Files (x86)')
+        check = u''
         if part1 in parts:
-            idex = parts.find(part1)
+            idex = parts.index(part1)
             parts[idex] = part2
             check = os.path.join(*parts)
-            if os.path.exists(check):
-                args.editor = check
-                return
         elif part2 in parts:
-            idex = parts.find(part2)
+            idex = parts.index(part2)
             parts[idex] = part1
             check = os.path.join(*parts)
-            if os.path.exists(check):
-                args.editor = check
-                return
+        if check and os.path.exists(check):
+            args.editor = check
+            return
         print 'Specified editor does not exist, please enter a valid path:'
         check = raw_input('>')
         if not check:
@@ -145,6 +164,16 @@ class Parser:
         if not os.path.exists(check):
             print 'Specified editor does not exists, assuming --no-editor'
             args.no_editor = True
+        if args.no_editor: args.editor = None
+
+    @staticmethod
+    def getUser(args):
+        if hasattr(args, 'user') :
+            if args.user:
+                user = github_wrapper.getUser()
+            else:
+                user = (TOKEN,)
+            args.user = user
 
     def parse(self):
         """
@@ -162,4 +191,5 @@ class Parser:
                 setattr(args, a.dest, values)
         # Special handler for --editor:
         Parser.getEditor(args)
+        Parser.getUser(args)
         return args

@@ -30,13 +30,32 @@ REPO_NAME = u'wrye-bash'
 ORG_NAME = u'Wrye Bash'
 TOKEN = '31ed03d9b3975325adf40cf9fc5ffacc39fc99f8'
 
-GAMES = {
-    # Convert to display names
-    'skyrim': u'Skyrim',
-    'oblivion': u'Oblivion',
-    'fallout': u'Fallout 3',
-    'fnv': u'Fallout - New Vegas',
-}
+# GAMES =======================================================================
+from scripts.helpers import ini_parser as _ini_parser
+from collections import OrderedDict
+
+class _Game(object):
+    def __init__(self, display, nexusUrl=None, prev_thread=None,
+                 cur_thread=None):
+        self.display = display
+        self.nexusUrl = nexusUrl
+        self.prev_thread = prev_thread
+        self.cur_thread = cur_thread
+
+OBLIVION = _Game(u'Oblivion', u'[url=http://www.nexusmods'
+                              u'.com/oblivion/mods/22368]Oblivion Nexus[/url]',
+                 _ini_parser.previous_oblivion_thread(),
+                 _ini_parser.current_oblivion_thread())
+SKYRIM = _Game(u'Skyrim', u'[url=http://www.nexusmods'
+                          u'.com/skyrim/mods/1840]Skyrim Nexus[/url]',
+               _ini_parser.previous_skyrim_thread(),
+               _ini_parser.current_skyrim_thread())
+
+GAMES = OrderedDict([('oblivion', OBLIVION), ('skyrim', SKYRIM),])
+
+ALL_GAMES = OrderedDict([('oblivion', OBLIVION), ('skyrim', SKYRIM),
+                         ('fallout', _Game(u'Fallout 3')),
+                         ('fnv', _Game(u'Fallout - New Vegas')), ])
 
 MAIN_LABELS = {'bug', 'enhancement'}
 REJECTED_LABELS = {'duplicate', 'rejected', 'wont fix', 'works for me',
@@ -44,7 +63,7 @@ REJECTED_LABELS = {'duplicate', 'rejected', 'wont fix', 'works for me',
 DEV_LABELS = {'TODO', 'discussion', 'git', 'goal', 'question'}
 PROGRESS_LABELS = {'review'}
 TAGGING_LABELS = {'docs', 'svn', 'patcher', 'wx', 'bain', 'wine'}
-GAME_LABELS = set(GAMES.keys()) | {'morrowind'}
+GAME_LABELS = set(ALL_GAMES.keys()) | {'morrowind'}
 # unions
 SKIP_LABELS = DEV_LABELS | REJECTED_LABELS
 ALL_LABELS = MAIN_LABELS | REJECTED_LABELS | DEV_LABELS | PROGRESS_LABELS | \
@@ -64,49 +83,7 @@ URL_ENHANCEMENTS = (
     )
 
 DEFAULT_MILESTONE_TITLE = 'Bug fixes and enhancements'
-
-# LOGIN =======================================================================
-from helpers import github_wrapper
-
-def _login(opts):
-    """Login to github . Return None if failed to login"""
-    if opts.user:
-        user = github_wrapper.getUser()
-    else:
-        user = (TOKEN,)
-    print "Logging in..."
-    git = github_wrapper.getGithub(*user)
-    if not git: return None
-    try:
-        print "User:", github_wrapper.getUserName(git)
-    except github_wrapper.GithubApiException as e:
-        print e.message
-        return None
-    return git
-
-def _getRepo(github):
-    print "Getting repository..."
-    repo = github_wrapper.getRepo(github, ORG_NAME, REPO_NAME)
-    if not repo:
-        print 'Could not find repository:', REPO_NAME
-    return repo
-
-def _getMiles(opts, repo):
-    print "Getting Milestone..."
-    milestone = github_wrapper.getMilestone(repo, opts.milestone)
-    if not milestone:
-        print 'Could not find milestone:', opts.milestone
-    return milestone
-
-def hub(opts, deadMilestone=False):
-    # Login
-    git = _login(opts)
-    if not git: return
-    repo = _getRepo(git)
-    if not repo: return
-    milestone = _getMiles(opts, repo)
-    if not milestone and not deadMilestone: return
-    return repo, milestone
+DEFAULT_AUTHORS = 'Various community members'
 
 # OUTPUT & TEMPLATES DIRs =====================================================
 import os, shutil

@@ -1,0 +1,57 @@
+[center][color=red][size=5]When using ModOrganizer you have to launch Wrye Bash from MO as covered on their description page.[/size][/color][/center]
+
+[color=orange]Important: Wrye Bash needs developers.
+
+If you are familiar with the Python programming language, please consider helping with development. We ported [url=https://github.com/wrye-bash/wrye-bash/]our repository[/url] to git at github to make contributing super easy.  [url=https://github.com/wrye-bash/wrye-bash/issues]Our bug tracker[/url] lists everything we're aware of at present.[/color]
+
+$beta_headsup
+
+[size=3][color=#3366ff]What does Wrye Bash do?[/color][/size]$what_bash_does
+
+$skyrim_note
+
+[size=3][color=#3366ff]Comments? Questions?[/color][/size]
+
+Feel free to join the discussion at the current official threads: $beth_threads. Be sure to read the first post of the relevant thread for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed 
+
+[size=3][color=#3366ff]Documentation[/color][/size]
+
+Basic information is in the OP of the Wrye Bash topic at the BethSoft forums linked to above. For more information visit:
+
+[list]
+[*][url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Technical%20Readme.html]Technical Readme[/url], [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url] (also included in the download in the Mopy/Docs folder)[/*]
+[*]alt3rn1ty's [url=http://www.nexusmods.com/oblivion/mods/35230]Wrye Bash Pictorial Guide[/url] (For Oblivion, new guide for Skyrim pending)[/*]
+[*]Metallicow's BAIN [url=http://www.nexusmods.com/oblivion/mods/38857]Demo Wizard[/url][/*]
+[*]Translated documentation and guides: [url=http://guides.tesfans.org]简体中文[/url][/*]
+[/list]
+
+The General Readme can be launched from inside Bash by clicking the question mark icon on Bash's toolbar.
+
+[size=3][color=#3366ff]Requirements and Installation:[/color][/size]
+
+[size=2][color=#3366ff]Short version:[/color][/size]
+
+Just use the installer and install to the $game folder! When you install dependencies, just install them to their default locations.
+
+[size=2][color=#3366ff]Long version:[/color][/size]
+
+There are two versions available: the Python version and the Standalone version. They are functionally equivalent. Most people should run the Standalone version since it is slightly simpler (no external Python components to install). You don't need to install the Python version, however, you can if you want to be more involved with development or if you already have Python installed on your system for other reasons.
+
+If you are using the Python version, dependency installation will be handled automatically by the installer. However, if you want or need to do things manually, see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url] for information, and the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url] for detailed instructions.
+
+Note that the 32-bit versions are required even if you are on a 64-bit operating system
+
+Then:
+[list]
+[*]For manual installations of either the Standalone or Python versions, extract the archive in your $game game folder so that the Mopy directory appears in the $game directory[/*]
+[*]For Python versions, run by double-clicking on Wrye Bash Launcher.pyw[/*]
+[*]For WBSA (Wrye Bash StandAlone), run by double-clicking on Wrye Bash.exe[/*]
+[/list]
+Remember! In Windows Vista and up, don't install $game in the Program Files folder due to User Account Control!
+See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html#trouble-permissions]File Permissions[/url]
+
+[size=3][color=#3366ff]Version history:[/color][/size]
+
+$latest_changelog
+
+For changes from all previous versions, see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Version%20History.html]Version History[/url].

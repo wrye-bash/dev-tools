@@ -29,14 +29,13 @@ changelog for a milestone. It then copies the Wrye Bash Version History.html to
  on the parent directory of the dir this script is run from."""
 
 from generate_changelog import writeChangelog
-from globals import outPath, hub
+from globals import outPath
 from cli_parser import Parser
-
 
 # Functions ===================================================================
 def _parseArgs():
-    return Parser(description='Generate Wrye Bash Version '
-                              'History.html').user().milestone(
+    return Parser(
+        description='Generate Wrye Bash Version History.html').milestone(
         help_='Specify the milestone for latest release.').editor().parse()
 
 import shutil
@@ -47,11 +46,10 @@ import subprocess
 WRYE_BASH_REPO_DOCS_DIR = os.path.join(u'wrye-bash', u'Mopy', u'Docs')
 IO_REPO_DOCS_DIR = os.path.join(u'wrye-bash.github.io', u'docs')
 
-def writeVersionHistory(repo, milestone, editor, num):
+def writeVersionHistory(milestone, editor):
     """Writes the html, copies it to the main repo and waits for you to
     manually edit it (and commit it) before it copies the edited file to the
     wrye-bash.github.io\\docs folder
-    :param repo:
     :param milestone:
     """
     ## TODO: Currently this just copies the current version history
@@ -77,7 +75,7 @@ def writeVersionHistory(repo, milestone, editor, num):
         print('Wrye Bash Version History.html is not present for editing.'
               '  The new changelog will be inserted into it.')
         return
-    latestChangelog = writeChangelog(repo, milestone, milestoneNumber=num)
+    latestChangelog = writeChangelog(None, milestone)
     if editor:
         print('Please review the changelog (mind the date): '
               + str(latestChangelog))
@@ -115,14 +113,7 @@ def writeVersionHistory(repo, milestone, editor, num):
 
 def main():
     opts = _parseArgs()
-    if opts.no_editor:
-        editor = None
-    else:
-        editor = opts.editor
-    git_ = hub(opts, deadMilestone=True)
-    if not git_: return
-    repo, milestone = git_[0], git_[1]
-    writeVersionHistory(repo, milestone, editor, opts.milestone)
+    writeVersionHistory(opts.milestone, opts.editor)
 
 if __name__ == '__main__':
     try:

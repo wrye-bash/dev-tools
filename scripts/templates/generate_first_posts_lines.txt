@@ -52,28 +52,43 @@ The project is hosted at [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url
 [size=5][color=#3366ff]Reporting Bugs:[/color][/size] Try to give us enough information to diagnose your problem. The following information is useful to us:
 [spoiler]
 [LIST]
-[*]What version of Wrye Bash are you using? If you're using a development version, be sure to include the commit SHA.[/*]
-[*]What are all the symptoms? Be sure to include what you did (step-by-step is helpful), what you expected, and what happened.[/*]
-[*]What do you see? Error messages are very valuable to us.[/*]
-[*]What version of Windows are you using? Is UAC enabled and is $game in the default directory? (If it is, please install it somewhere else. This can cause lots of problems)[/*]
-[*]Are you using a bash.ini? If so, include its contents (in spoiler tags, please!)[/*]
-[*]Is the problem related to the Bashed Patch? If so include the following:
+[*][b]Your operating system![/b] If on windows and UAC is enabled and the game is in the default directory (ex C:\Program Files (x86)\Bethesda Softworks\Oblivion) [i]please[/i] install it somewhere else. This can cause lots of problems.[/*]
+[*][b]Wrye Bash version![/b] Also specify if you are using Python Wrye Bash, or Wrye Bash StandAlone exe (WBSA). If you're using a development version, be sure to include the commit SHA.[/*]
+[*][b]Bug description[/b] - be sure to include:
 [LIST]
-[*]Your Load Order (in spoiler tags). Get this by right clicking on a column header in the Mods tab, and selecting 'List Mods...'[/*]
-[*]Your Bashed Tags (in spoiler tags). Get this by right clicking on a column header in the Mods tab, and selecting 'List Bash Tags...'[/*]
-[*]Your Bashed Patch config (in spoiler tags). Get this by right clicking on the Bashed Patch and selecting 'List Patch Config...'[/*]
+[*]what you did ([i]step-by-step[/i]),[/*]
+[*]what you expected, and[/*]
+[*]what happened.[/*]
 [/LIST]
 [/*]
-[*]If you're using the WBSA, things are a bit trickier. There are currently a few known issues:
-[LIST=1]
-[*]Wrye Bash wont work correctly if you launch it from the command line (DOS). Always launch by double clicking the exe or a shortcut to it.[/*]
-[*]Due to issue #1, no debug mode is available. Some errors that happen will still be printed either to a "Wrye Bash.exe.txt" file, or to the "stdout/stderr" window that shows up with errors sometimes.[/*]
+[*]Any and every [b]error message[/b] you encounter. `stdout/stderr` window that pops up with errors is especially useful - but if you produced a bugdump you won't see this - the errors will go to the bugdump (preferred).[/*]
+[*]Are you using a [b]bash.ini[/b] ? If so, include its contents (in spoiler tags, please!).[/*]
+[*]Is the problem related to the [b]Bashed Patch[/b] ? If so include the following:
+[LIST]
+[*]Your Load Order (in spoiler tags). Right click on a column header in the Mods tab > 'List Mods...'.[/*]
+[*]Your Bashed Tags (in spoiler tags). Right click on a column header in the Mods tab > 'List Bash Tags...'.[/*]
+[*]Your Bashed Patch config (in spoiler tags). Right click on a column header in the Mods tab > 'List Patch Config...'.[/*]
 [/LIST]
 [/*]
-[*]If you think you've found an error in the WBSA, be sure to uninstall ALL python components and test it again first, to be sure we get an accurate report. Having python installed can sometimes trick the WBSA into thinking that it has all of the files it requires, even if it really doesn't.[/*]
+[*]If you think you've found an error using WBSA, be sure to uninstall ALL python components and test it again first, to be sure we get an accurate report. Having python installed can sometimes trick the WBSA into thinking that it has all of the files it requires, even if it really doesn't.[/*]
+[*][b]The bashbugdump.log[/b]
+
+The `bashbugdump.log` contains precious information on your python install, encodings etc - [i]you must add this to your report.[/i] To generate it:
+[LIST]
+[*]Python version
+Launch `Wrye Bash Debug.bat` (recommended) or fire up a command prompt, navigate to Mopy and issue
+
+[code=auto:0]C:\path\to\Mopy>c:\path\to\Python27\python.exe "Wrye Bash Launcher.pyw" -d[/code]
+C:\path\to\Mopy>"Wrye Bash Launcher.pyw" -d won't work.[/*]
+[*]WBSA version: Fire up a command prompt, navigate to Mopy and issue:
+[code=auto:0]C:\path\to\Mopy>"Wrye Bash.exe" -d[/code]
+[/*]
+[/LIST]
+This way the output will be redirected to Mopy/bashbugdump.log and no more stdout/stderr windows will pop up.[/*]
 [/LIST]
 [/spoiler]
-You can see all the known bugs in the [url=https://github.com/wrye-bash/wrye-bash/issues]bug tracker[/url].
+You can see all the known bugs in the [url=https://github.com/wrye-bash/wrye-bash/issues]bug tracker[/url], and more info on reporting a bug and Bash's logs
+on our [url=https://github.com/wrye-bash/wrye-bash/wiki/[github]-Reporting-a-bug]Reporting a bug[/url] wiki page
 
 [size=5][color=#3366ff]Linking:[/color][/size] If you'd like to link to Bash from somewhere else, please do! But be sure to link to either $nexus_url or [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url]. Don't link to the actual download file, since that changes fairly frequently.
 
@@ -89,13 +104,12 @@ Currently we are looking for volunteers to contribute Wrye Bash. The main focus 
 
 [size=5][color=#3366ff]The updates that are needed:[/color][/size]
 
-1) Refactor out just the patcher routines and then update them so Wrye Bash can process Skyrim's files as it does for Oblivion
-2) Refactor all of Wrye Bashes code so that bugs can be worked on and resolved the first time. Currently some bug fixes are just temporary workarounds.
-3) Properly solve all UTF8 implementation
-4) Update to a newer version of Python
-5) Update things on a case by case basis such as the UI or CBash[1].
+1) Update patchers so Wrye Bash can process Skyrim's files as it does for Oblivion
+2) Finalize the code refactoring that started with 305 and 306 - mainly refactor BAIN and freeze the layout of the patchers package
+3) Finalize the UI refactoring so we can move on to newer python/wx python versions
+4) Update CBash. CBash is the exception in that it can be updated at any time as long as there is a volunteer to work on it.
 
-[1] CBash is the exception in that it can be updated at any time as long as there is a volunteer to work on it.
+Please see the [url=https://github.com/wrye-bash/wrye-bash#contributing]contributing section[/url] in our repo readme.
 
 [size=5][color=#3366ff]Changelog for Latest Version:[/color][/size]
 $latest_changelog

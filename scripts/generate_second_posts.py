@@ -57,7 +57,8 @@ from helpers.html import color, COLOR_INTRO, url, formatIssue, bbList, spoiler
 
 # Globals ====================================================================
 from globals import outPath, URL_MILESTONE, URL_BUGS, \
-    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, GAMES, templatePath, hub
+    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, templatePath, ALL_GAMES
+import github_login
 from cli_parser import Parser
 
 TEMPLATE = templatePath(name=u'generate_second_posts_lines.txt')
@@ -95,10 +96,11 @@ def writeSecondPost(gameTitle, milestone, issues):
     out_path = outPath(name=u'Buglist thread Starter - ' + gameTitle + u'.txt',
                       subdir='SecondPosts')
     with open(out_path, 'w') as out:
+        print u'File:', os.path.abspath(out_path)
         with open(TEMPLATE, 'r') as ins: # TODO: real template
             # Intro paragraph
             line = getSecondPostLine(ins)
-            out.write(color(line % milestone.title, COLOR_INTRO))
+            out.write(color(COLOR_INTRO, line % milestone.title))
             out.write(getSecondPostLine(ins))
             out.write('\n\n')
             # Upcoming release
@@ -115,7 +117,13 @@ def writeSecondPost(gameTitle, milestone, issues):
             # Other known feature requests
             out.write((url(URL_ENHANCEMENTS, getSecondPostLine(ins))))
             out.write('\n'.join(spoiler(_listOrNone(issues[3], 'Enhancement'))))
-            out.write('\n')
+            out.write('\n\n')
+            line = getSecondPostLine(ins)
+            out.write(line + '\n\n')
+            line = getSecondPostLine(ins)
+            out.write(line + '\n\n')
+            line = getSecondPostLine(ins)
+            out.write(line + '\n')
 
 def getIssuesForPosts(repo, milestone, gameLabel):
     """Return a tuple of applicable issues for the given game and milestone
@@ -159,17 +167,17 @@ def main():
     opts = parseArgs()
     # Figure out which games to do:
     if opts.game:
-        games = {opts.game: GAMES[opts.game]}
+        games = {opts.game: ALL_GAMES[opts.game]}
     else:
-        games = GAMES
-    git_ = hub(opts)
+        games = ALL_GAMES
+    git_ = github_login.hub(opts.user, opts.milestone)
     if not git_: return
     repo, milestone = git_[0], git_[1]
-    for game in games:
-        print 'Getting Issues for:', games[game]
-        issues = getIssuesForPosts(repo, milestone, game)
+    for gameLabel, game in games.iteritems():
+        print 'Getting Issues for:', game.display
+        issues = getIssuesForPosts(repo, milestone, gameLabel)
         print 'Writing second post...'
-        writeSecondPost(games[game], milestone, issues)
+        writeSecondPost(game.display, milestone, issues)
     print 'Second post(s) generated.'
 
 if __name__ == '__main__':
