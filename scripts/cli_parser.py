@@ -29,11 +29,10 @@ class"""
 import argparse
 import os
 from globals import DEFAULT_MILESTONE_TITLE, DEFAULT_AUTHORS, ALL_GAMES
-from helpers import github_wrapper
 
 PROMPT = 'PROMPT'
 
-class Parser:
+class Parser(object):
 
     def __init__(self, description, add_h=True):
         self.parser = argparse.ArgumentParser(description=description,

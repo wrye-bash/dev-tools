@@ -41,6 +41,7 @@
    """
 
 # Imports ====================================================================
+import os
 from helpers.github_wrapper import *
 from helpers.html import color, COLOR_INTRO, url, formatIssue, bbList, spoiler
 
@@ -74,9 +75,9 @@ def getSecondPostLine(ins):
             break
     return ''.join(lines)
 
-def _listOrNone(sues_, type_):
-    if sues_:
-        return '\n'.join(bbList(sues_, formatIssue, type_))
+def _listOrNone(issues, issue_type):
+    if issues:
+        return '\n'.join(bbList(issues, formatIssue, issue_type))
     else:
         return '\n'.join(bbList([None]))
 

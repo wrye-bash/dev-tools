@@ -47,7 +47,6 @@ def hub(milestoneNum=None):
         if not milestone: return
     return repo, milestone
 
-from cli_parser import Parser
 from globals import ALL_LABELS
 from helpers.github_wrapper import allLabels
 

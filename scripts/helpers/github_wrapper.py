@@ -26,7 +26,6 @@
  Do not import from globals here !"""
 
 import github
-import os
 
 ALL_ISSUES = 'all'
 DEFAULT_ISSUE_STATE = ALL_ISSUES
@@ -48,9 +47,10 @@ def getRepo(orgName, repoName):
         # doesn't exist.  Test to see if it's a valid repository by
         # attempting to access one of its attributes.  Then the
         # github library will report the error.
+        # noinspection PyStatementEffect
         repo.full_name
         return repo
-    except github.UnknownObjectException as e:
+    except github.UnknownObjectException:
         return None
 
 def getMilestone(repo, milestoneTitle):

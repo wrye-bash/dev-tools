@@ -96,7 +96,7 @@ def _cleanOutDir(path=OUT_DIR):
     if os.path.exists(path):
         try:
             shutil.rmtree(path)
-        except:
+        except OSError:
             pass
 
 def outPath(dir_=OUT_DIR, subdir=u'', name=u"out.txt"):
