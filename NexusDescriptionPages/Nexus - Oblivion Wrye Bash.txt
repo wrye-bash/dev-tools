@@ -6,7 +6,7 @@
 
 If you are familiar with the Python programming language, please consider helping with development. We ported [url=https://github.com/wrye-bash/wrye-bash/]our repository[/url] to git at github to make contributing super easy.  [url=https://github.com/wrye-bash/wrye-bash/issues]Our bug tracker[/url] lists everything we're aware of at present.[/color]
 
-[center][font=Comic Sans MS][size=4][color=#ff00ff]306 is out ! Please post feedback on the official [/color][color=#9900ff][url=http://forums.bethsoft.com/topic/1570906-/]Oblivion thread[/url][/color][/size][/font][/center]
+[center][font=Comic Sans MS][size=4][color=#ff00ff]306 is out ! Please post feedback on the official [/color][color=#9900ff][url=http://forums.bethsoft.com/topic/1599816-/]Oblivion thread[/url][/color][/size][/font][/center]
 
 [size=3][color=#3366ff]What does Wrye Bash do?[/color][/size]
 
@@ -20,7 +20,7 @@ If you are familiar with the Python programming language, please consider helpin
 
 [size=3][color=#3366ff]Comments? Questions?[/color][/size]
 
-Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1570906-/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1505167-/]Skyrim[/url]. Be sure to read the first post of the relevant thread for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed 
+Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1599816-/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1505167-/]Skyrim[/url], [url=http://forums.bethsoft.com/topic/None-/]Fallout 4[/url]. Be sure to read the first post of the relevant thread for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed 
 
 [size=3][color=#3366ff]Documentation[/color][/size]
 

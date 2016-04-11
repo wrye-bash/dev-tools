@@ -1,5 +1,4 @@
-[center][color=red][size=6]We only support Skyrim version 1.9.32.0.8+ and[/size][/color][/center]
-[center][color=red][size=6]Wrye Bash 306.[/size][/color][/center]
+[center][color=red][size=6]We only support Wrye Bash 306 or higher.[/size][/color][/center]
 
 [center][color=red][size=5]When using ModOrganizer you have to launch Wrye Bash from MO as covered on their description page.[/size][/color][/center]
 
@@ -16,9 +15,7 @@ If you are familiar with the Python programming language, please consider helpin
 [*]It makes more mods compatible with each other by importing information from different mods into a "bashed patch"
 [/list]
 
-[size=3][color=#3366ff]Can Wrye Bash merge Mods?[/color][/size]
 
-[color=red]Note: Wrye Bash can not merge mods that add new records to Skyrim. It can only merge mods that overwrite a previous master. If a mod alters Skyrim.esm, or any other ESM from the Nexus, it can be merged into the Bash Patch. As an example a mod like Immersive Armors introduces new records to Skyrim and can not be merged.  However, just like Immersive Armors the vast majority of Skyrim mods add new records. This means there is no way to load 300, 400, or 500 mods and still be under the safe limit of 254 mods max. That number is 0 to 254 or, 255 mods. Skyrim.esm is always (00), Update.esm is always, (01) and so on.[/color]
 
 [size=3][color=#3366ff]Comments? Questions?[/color][/size]
 
@@ -41,7 +38,7 @@ The General Readme can be launched from inside Bash by clicking the question mar
 
 [size=2][color=#3366ff]Short version:[/color][/size]
 
-Just use the installer and install to the Skyrim folder! When you install dependencies, just install them to their default locations.
+Just use the installer and install to the Fallout 4 folder! When you install dependencies, just install them to their default locations.
 
 [size=2][color=#3366ff]Long version:[/color][/size]
 
@@ -53,11 +50,11 @@ Note that the 32-bit versions are required even if you are on a 64-bit operating
 
 Then:
 [list]
-[*]For manual installations of either the Standalone or Python versions, extract the archive in your Skyrim game folder so that the Mopy directory appears in the Skyrim directory[/*]
+[*]For manual installations of either the Standalone or Python versions, extract the archive in your Fallout 4 game folder so that the Mopy directory appears in the Fallout 4 directory[/*]
 [*]For Python versions, run by double-clicking on Wrye Bash Launcher.pyw[/*]
 [*]For WBSA (Wrye Bash StandAlone), run by double-clicking on Wrye Bash.exe[/*]
 [/list]
-Remember! In Windows Vista and up, don't install Skyrim in the Program Files folder due to User Account Control!
+Remember! In Windows Vista and up, don't install Fallout 4 in the Program Files folder due to User Account Control!
 See Also [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html#trouble-permissions]File Permissions[/url]
 
 [size=3][color=#3366ff]Version history:[/color][/size]

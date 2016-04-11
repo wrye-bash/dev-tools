@@ -41,19 +41,22 @@ class _Game(object):
         self.prev_thread = prev_thread
         self.cur_thread = cur_thread
 
-OBLIVION = _Game(u'Oblivion', u'[url=http://www.nexusmods'
-                              u'.com/oblivion/mods/22368]Oblivion Nexus[/url]',
+OBLIVION = _Game(u'Oblivion', u'[url=http://www.nexusmods.com/'
+                              u'oblivion/mods/22368]Oblivion Nexus[/url]',
                  _ini_parser.previous_oblivion_thread(),
                  _ini_parser.current_oblivion_thread())
-SKYRIM = _Game(u'Skyrim', u'[url=http://www.nexusmods'
-                          u'.com/skyrim/mods/1840]Skyrim Nexus[/url]',
+SKYRIM = _Game(u'Skyrim', u'[url=http://www.nexusmods.com/'
+                          u'skyrim/mods/1840]Skyrim Nexus[/url]',
                _ini_parser.previous_skyrim_thread(),
                _ini_parser.current_skyrim_thread())
+FALLOUT4 = _Game(u'Fallout 4', u'[url=http://www.nexusmods.com/'
+                               u'fallout4/mods/3699]Fallout 4 Nexus[/url]')
 
-GAMES = OrderedDict([('oblivion', OBLIVION), ('skyrim', SKYRIM),])
+GAMES = OrderedDict(
+    [('oblivion', OBLIVION), ('skyrim', SKYRIM), ('fallout4', FALLOUT4), ])
 
 ALL_GAMES = OrderedDict([('oblivion', OBLIVION), ('skyrim', SKYRIM),
-                         ('fallout4', _Game(u'Falllout 4')),
+                         ('fallout4', _Game(u'Fallout 4')),
                          ('fallout3', _Game(u'Fallout 3')),
                          ('fnv', _Game(u'Fallout - New Vegas')), ])
 
