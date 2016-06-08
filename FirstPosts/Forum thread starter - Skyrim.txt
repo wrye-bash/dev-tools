@@ -135,7 +135,7 @@ on our [url=https://github.com/wrye-bash/wrye-bash/wiki/[github]-Reporting-a-bug
 
 [size=5][color=#3366ff]Related Projects:[/color][/size]
 [LIST]
-[*]The Official [topic=1599816]Wrye Bash for Oblivion thread[/topic].[/*]
+[*]The Official [topic=1602198]Wrye Bash for Oblivion thread[/topic].[/*]
 [*]Load orders should be managed with [url=http://boss-developers.github.io/]BOSS for Skyrim[/url], which also supplies updated lists of tags used for importing (though even if you don't use BOSS, a basic taglist is shipped with each version of Wrye Bash)[/*]
 [*]Valda ported and maintains Wrye Bash for Fallout3 ([topic=1211142]Wrye Flash[/topic]) and Fallout3 New Vegas ([topic=1234195]Wrye Flash NV[/topic]). These are in the process of being re-integrated into Wrye Bash proper.[/*]
 [/LIST]

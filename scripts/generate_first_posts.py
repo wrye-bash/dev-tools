@@ -54,7 +54,7 @@ def _thread_history(game):
 
 def _other_threads(label):
     for gameName, game in GAMES.iteritems():
-        if gameName != label:
+        if gameName != label and game.cur_thread is not None:
             yield ('[*]The Official [topic=' + str(game.cur_thread) +
                    ']Wrye Bash for ' + game.display + ' thread[/topic].[/*]')
 
