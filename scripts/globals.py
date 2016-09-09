@@ -56,16 +56,16 @@ GAMES = OrderedDict(
     [('oblivion', OBLIVION), ('skyrim', SKYRIM), ('fallout4', FALLOUT4), ])
 
 ALL_GAMES = OrderedDict([('oblivion', OBLIVION), ('skyrim', SKYRIM),
-                         ('fallout4', _Game(u'Fallout 4')),
+                         ('fallout4', FALLOUT4),
                          ('fallout3', _Game(u'Fallout 3')),
                          ('fnv', _Game(u'Fallout - New Vegas')), ])
 
 MAIN_LABELS = {'bug', 'enhancement'}
 REJECTED_LABELS = {'duplicate', 'rejected', 'wont fix', 'works for me',
-                   'backburner', 'invalid','regression', 'needinfo', }
+                   'backburner', 'invalid','regression', }
 DEV_LABELS = {'TODO', 'discussion', 'git', 'goal', 'question'}
 PROGRESS_LABELS = {'review'}
-TAGGING_LABELS = {'docs', 'svn', 'patcher', 'wx', 'bain', 'wine'}
+TAGGING_LABELS = {'docs', 'svn', 'patcher', 'wx', 'bain', 'wine', 'needinfo'}
 GAME_LABELS = set(ALL_GAMES.keys()) | {'morrowind'}
 # unions
 SKIP_LABELS = DEV_LABELS | REJECTED_LABELS
