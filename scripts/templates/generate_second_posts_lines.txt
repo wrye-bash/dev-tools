@@ -24,7 +24,6 @@ Additional requested features:
 The bugs mentioned fixed are fixed in the stable development version, you can
  download the python files from here: https://github.com/wrye-bash/wrye-bash/archive/dev.zip
 
-Bleeding edge code: https://github.com/wrye-bash/wrye-bash/archive/utumno-wip.zip
+[url=https://github.com/wrye-bash/wrye-bash/archive/utumno-wip.zip]Bleeding edge python code[/url] based on branch [url=https://github.com/wrye-bash/wrye-bash/tree/utumno-wip]https://github.com/wrye-bash/wrye-bash/tree/utumno-wip[/url]
 
-We will soon update with links to executables for the stable and bleeding edge
- 307 beta.
+[url=https://www.dropbox.com/sh/7b5ily482re0khs/AAD3vAWMVJNIpuS30tsdVte5a?dl=0]307 WB wip standalone[/url]
