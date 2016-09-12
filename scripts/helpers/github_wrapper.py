@@ -167,8 +167,7 @@ def getIssues(repo, milestone=None, keep_labels=set(), skip_labels=set(),
                 issue.labels = [] // skipped
         state: open or closed - by default 'all'
        return: a list of issues
-        :rtype: :class:`github.PaginatedList.PaginatedList` of
-        :class:`github.Issue.Issue`
+        :rtype: github.PaginatedList.PaginatedList[github.Issue.Issue]
     TODO: add sort, direction as needed, list comprehensions
     """
     current = _IssueCache.hit(repo, milestone, state)

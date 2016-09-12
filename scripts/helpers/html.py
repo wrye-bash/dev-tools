@@ -25,10 +25,6 @@
 """This module exports formatting functions for the forums and the doc files we
 are generating."""
 
-COLOR_INTRO = 'orange'
-COLOR_ASSIGNEE = '#00FF00'
-COLOR_DONE = 'orange'
-
 # MARKDOWN ========================================
 def markdownList(items, f=lambda x: x):
     for i in items:
@@ -77,24 +73,6 @@ def spoiler(text):
 def size(num, text):
     return '[size=' + str(num) + ']' + text + '[/size]'
 
-def formatIssue(issue, issueType):
-    """Formats the issue striking it through if closed.
-
-    :rtype : str
-    """
-    if issue.state == 'open':
-        s = lambda x: x
-    else:
-        s = lambda x: color(COLOR_DONE, strike(x))
-    if issue.assignee:
-        assignee = issue.assignee
-        assignee = ' ' + url(assignee.url,
-                             color(COLOR_ASSIGNEE, '(' + assignee.login + ')'))
-    else:
-        assignee = ''
-    return s(url(issue.html_url,issueType + ' %i' % issue.number) +
-             ': ' + issue.title) + assignee
-
 # HTML ========================================
 def h2(text):
     return '<h2>' + text + '</h2>'
@@ -104,18 +82,3 @@ def ul(items, f=lambda x: x):
     for i in items:
         yield '<li>' + f(i) + '</li>'
     yield '</ul>'
-
-# Display =====================================
-def closedIssue(issue):
-    """String representation of a closed issue with assignee."""
-    if issue.assignee:
-        assignee = issue.assignee
-        assignee = ' ' + '[' + assignee.login + ']'
-    else:
-        assignee = ''
-    return issue.title + assignee
-
-def closedIssueLabels(issue):
-    """String representation (see closedIssue()) plus labels"""
-    return closedIssue(issue) + ' - ' + str(
-        set(x.name for x in issue.get_labels()))

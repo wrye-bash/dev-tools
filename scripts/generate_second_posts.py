@@ -42,22 +42,26 @@
 
 # Imports ====================================================================
 import os
+import re
+# Internal
 from helpers.github_wrapper import *
-from helpers.html import color, COLOR_INTRO, url, formatIssue, bbList, spoiler
+from helpers.html import color, url, bbList, spoiler, strike
 
 # Globals ====================================================================
-from globals import outPath, URL_MILESTONE, URL_BUGS, \
-    URL_ENHANCEMENTS, GAME_LABELS, SKIP_LABELS, templatePath, ALL_GAMES
+from globals import outPath, URL_MILESTONE, URL_BUGS, URL_ENHANCEMENTS, \
+    SKIP_LABELS, templatePath, ALL_GAMES
 import github_login
 from cli_parser import Parser
 
 TEMPLATE = templatePath(name=u'generate_second_posts_lines.txt')
 
+COLOR_INTRO = 'orange'
+COLOR_ASSIGNEE = '#00FF00'
+COLOR_DONE = 'orange'
+
 # Functions ===================================================================
 def parseArgs():
-    return Parser(description='Generate Second Posts').games(
-        help_='Generate a second post for a specific game.',
-        helpAll='Generate a second post for all games.').milestone(
+    return Parser(description='Generate Second Posts').milestone(
         help_='Specify the milestone for filtering Issues.').parse()
 
 def getSecondPostLine(ins):
@@ -98,9 +102,9 @@ def writeSecondPost(gameTitle, milestone, issues):
             out.write(url(URL_MILESTONE % milestone.title,
                           line % milestone.title))
             out.write('\n')
-            for issueList, issueType in ((issues[0], 'Bug'), #TODO: bin the for
-                                         (issues[1], 'Enhancement')):
-                out.write(_listOrNone(issueList, issueType))
+            # Write those damn issues
+            out.write(_listOrNone(issues[0], 'Bug'))
+            out.write(_listOrNone(issues[1], 'Enhancement'))
             # Other known bugs
             out.write(url(URL_BUGS, getSecondPostLine(ins)))
             out.write('\n'.join(spoiler(_listOrNone(issues[2], 'Bug'))))
@@ -115,7 +119,7 @@ def writeSecondPost(gameTitle, milestone, issues):
             line = getSecondPostLine(ins)
             out.write(line + '\n')
 
-def getIssuesForPosts(repo, milestone, gameLabel):
+def _getIssuesForPosts(repo, milestone):
     """Return a tuple of applicable issues for the given game and milestone
         repo: github.Repository object
         milestone: github.Milestone object
@@ -129,8 +133,7 @@ def getIssuesForPosts(repo, milestone, gameLabel):
           other_bug: Issues tagged `bug`, but not for this milestone
           other_enh: Issues tagged `enhancement`, but not for this milestone
     """
-    skip_labels = GAME_LABELS - {gameLabel}  # what if gameLabel is None
-    skip_labels = skip_labels | SKIP_LABELS
+    skip_labels = SKIP_LABELS
     getIssues(repo) # get all issues to fill the cache # FIXME delete this ?
     current_bug = getIssues(repo, milestone, keep_labels={'bug'},
                             skip_labels=skip_labels)
@@ -152,23 +155,55 @@ def getIssuesForPosts(repo, milestone, gameLabel):
     current_enh = [x for x in current_enh if x.state in ('open', 'closed')]
     return current_bug, current_enh, other_bug, other_enh
 
+# Display =====================================
+def closedIssue(issue):
+    """String representation of a closed issue with assignee."""
+    if issue.assignee:
+        assignee = issue.assignee
+        assignee = ' ' + '[' + assignee.login + ']'
+    else:
+        assignee = ''
+    return issue.title + assignee
+
+def closedIssueLabels(issue):
+    """String representation (see closedIssue()) plus labels"""
+    return closedIssue(issue) + ' - ' + str(
+        set(x.name for x in issue.get_labels()))
+
+def formatIssue(issue, issueType):
+    """Formats the issue striking it through if closed.
+
+    :rtype : str
+    """
+    if issue.state == 'open':
+        s = lambda x: x
+    else:
+        s = lambda x: color(COLOR_DONE, strike(x))
+    if issue.assignee:
+        assignee = issue.assignee
+        assignee = ' ' + url(assignee.url,
+                             color(COLOR_ASSIGNEE, '(' + assignee.login + ')'))
+    else:
+        assignee = ''
+    game_labels= set(ALL_GAMES) & set(issue.labels)
+    games = []
+    for game in game_labels:
+        if not re.search(game, issue.title, re.I):
+            games.append(ALL_GAMES[game].display)
+    games = ', '.join(games)
+    return s(url(issue.html_url,issueType + ' %i' % issue.number) + ': ' + (
+    '[' + games + '] ' if games else '') + issue.title) + assignee
+
 def main():
     """Start everything off"""
     opts = parseArgs()
-    # Figure out which games to do:
-    if opts.game:
-        games = {opts.game: ALL_GAMES[opts.game]}
-    else:
-        games = ALL_GAMES
     git_ = github_login.hub(opts.milestone)
     if not git_: return
     repo, milestone = git_[0], git_[1]
-    for gameLabel, game in games.iteritems():
-        print 'Getting Issues for:', game.display
-        issues = getIssuesForPosts(repo, milestone, gameLabel)
-        print 'Writing second post...'
-        writeSecondPost(game.display, milestone, issues)
-    print 'Second post(s) generated.'
+    issues = _getIssuesForPosts(repo, milestone)
+    print 'Writing second post...'
+    writeSecondPost(u'Oblivion', milestone, issues)
+    print 'Second post generated.'
 
 if __name__ == '__main__':
     try:
