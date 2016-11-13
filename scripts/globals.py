@@ -58,7 +58,9 @@ GAMES = OrderedDict(
 ALL_GAMES = OrderedDict([('oblivion', OBLIVION), ('skyrim', SKYRIM),
                          ('fallout4', FALLOUT4),
                          ('fallout3', _Game(u'Fallout 3')),
-                         ('fnv', _Game(u'Fallout - New Vegas')), ])
+                         ('fnv', _Game(u'Fallout - New Vegas')),
+                         ('skyrim-se', _Game(u'Skyrim Special Edition')),
+                         ])
 
 MAIN_LABELS = {'bug', 'enhancement'}
 REJECTED_LABELS = {'duplicate', 'rejected', 'wont fix', 'works for me',
