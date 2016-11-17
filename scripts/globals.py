@@ -46,9 +46,7 @@ OBLIVION = _Game(u'Oblivion', u'[url=http://www.nexusmods.com/'
                  _ini_parser.previous_oblivion_thread(),
                  _ini_parser.current_oblivion_thread())
 SKYRIM = _Game(u'Skyrim', u'[url=http://www.nexusmods.com/'
-                          u'skyrim/mods/1840]Skyrim Nexus[/url]',
-               _ini_parser.previous_skyrim_thread(),
-               _ini_parser.current_skyrim_thread())
+                          u'skyrim/mods/1840]Skyrim Nexus[/url]')
 FALLOUT4 = _Game(u'Fallout 4', u'[url=http://www.nexusmods.com/'
                                u'fallout4/mods/3699]Fallout 4 Nexus[/url]')
 

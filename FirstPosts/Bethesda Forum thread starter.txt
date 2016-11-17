@@ -1,44 +1,5 @@
-Continuing from the [topic=1497553]previous thread[/topic]...
+Continuing from the [topic=1602198]previous thread[/topic]...
 
-[size=5][color=#3366ff]Threads:[/color][/size]
-[spoiler]
-[topic=1497553]Thread 36[/topic]
-[topic=1485637]Thread 35[/topic]
-[topic=1483836]Thread 34[/topic]
-[topic=1471586]Thread 33[/topic]
-[topic=1465301]Thread 32[/topic]
-[topic=1459790]Thread 31[/topic]
-[topic=1451039]Thread 30[/topic]
-[topic=1446107]Thread 29[/topic]
-[topic=1441714]Thread 28[/topic]
-[topic=1436327]Thread 27[/topic]
-[topic=1431552]Thread 26[/topic]
-[topic=1424272]Thread 25[/topic]
-[topic=1421484]Thread 24[/topic]
-[topic=1418237]Thread 23[/topic]
-[topic=1412088]Thread 22[/topic]
-[topic=1403337]Thread 21[/topic]
-[topic=1399559]Thread 20[/topic]
-[topic=1395353]Thread 19[/topic]
-[topic=1394012]Thread 18[/topic]
-[topic=1392055]Thread 17[/topic]
-[topic=1387231]Thread 16[/topic]
-[topic=1384740]Thread 15[/topic]
-[topic=1380497]Thread 14[/topic]
-[topic=1378796]Thread 13[/topic]
-[topic=1376871]Thread 12[/topic]
-[topic=1373846]Thread 11[/topic]
-[topic=1369968]Thread 10[/topic]
-[topic=1368366]Thread 9[/topic]
-[topic=1364422]Thread 8[/topic]
-[topic=1356741]Thread 7[/topic]
-[topic=1346866]Thread 6[/topic]
-[topic=1338421]Thread 5[/topic]
-[topic=1333968]Thread 4[/topic]
-[topic=1317086]Thread 3[/topic]
-[topic=1294281]Thread 2[/topic]
-[topic=1256835]Thread 1[/topic]
-[/spoiler]
 [size=5][color=#3366ff]What does Wrye Bash do?[/color][/size]
 [LIST]
 [*]It makes it safe to try out new mods because it will restore everything to the way it was when you uninstall a mod[/*]
@@ -72,7 +33,12 @@ Continuing from the [topic=1497553]previous thread[/topic]...
 [/*]
 [/LIST]
 [/spoiler]
-[size=5][color=#3366ff]Download:[/color][/size] [url=http://www.nexusmods.com/skyrim/mods/1840]Skyrim Nexus[/url] and, of course, [url=https://github.com/wrye-bash/wrye-bash/releases]GitHub[/url].
+[size=5][color=#3366ff]Download:[/color][/size] [LIST]
+[*][url=https://github.com/wrye-bash/wrye-bash/releases]GitHub[/url][/*]
+[*][url=http://www.nexusmods.com/oblivion/mods/22368]Oblivion Nexus[/url][/*]
+[*][url=http://www.nexusmods.com/skyrim/mods/1840]Skyrim Nexus[/url][/*]
+[*][url=http://www.nexusmods.com/fallout4/mods/3699]Fallout 4 Nexus[/url][/*]
+[/LIST]
 
 [size=5][color=#3366ff]Documentation:[/color][/size]
 [LIST]
@@ -131,11 +97,10 @@ This way the output will be redirected to Mopy/bashbugdump.log and no more stdou
 You can see all the known bugs in the [url=https://github.com/wrye-bash/wrye-bash/issues]bug tracker[/url], and more info on reporting a bug and Bash's logs
 on our [url=https://github.com/wrye-bash/wrye-bash/wiki/[github]-Reporting-a-bug]Reporting a bug[/url] wiki page
 
-[size=5][color=#3366ff]Linking:[/color][/size] If you'd like to link to Bash from somewhere else, please do! But be sure to link to either [url=http://www.nexusmods.com/skyrim/mods/1840]Skyrim Nexus[/url] or [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url]. Don't link to the actual download file, since that changes fairly frequently.
+[size=5][color=#3366ff]Linking:[/color][/size] If you'd like to link to Bash from somewhere else, please do! But be sure to link to either one of the Nexus site urls or [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url]. Don't link to the actual download file, since that changes fairly frequently.
 
 [size=5][color=#3366ff]Related Projects:[/color][/size]
 [LIST]
-[*]The Official [topic=1604190]Wrye Bash for Oblivion thread[/topic].[/*]
 [*]Load orders should be managed with [url=http://boss-developers.github.io/]BOSS for Skyrim[/url], which also supplies updated lists of tags used for importing (though even if you don't use BOSS, a basic taglist is shipped with each version of Wrye Bash)[/*]
 [*]Valda ported and maintains Wrye Bash for Fallout3 ([topic=1211142]Wrye Flash[/topic]) and Fallout3 New Vegas ([topic=1234195]Wrye Flash NV[/topic]). These are in the process of being re-integrated into Wrye Bash proper.[/*]
 [/LIST]

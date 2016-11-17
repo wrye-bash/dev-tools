@@ -32,6 +32,7 @@ hack."""
 # Functions ===================================================================
 from generate_changelog import writeChangelogBBcode
 from globals import templatePath, GAMES
+from helpers.html import bbList
 import cli_parser
 
 def _parseArgs():
@@ -43,56 +44,45 @@ def _parseArgs():
 POSTS_DIR = '../FirstPosts'
 TEMPLATE = templatePath(name=u'generate_first_posts_lines.txt')
 
-def _previous_thread(game):
+def _download_links():
+    links = [
+        '[url=https://github.com/wrye-bash/wrye-bash/releases]GitHub[/url]']
+    for game in GAMES.itervalues():
+        if game.nexusUrl: links.append(game.nexusUrl)
+    return '\n'.join(bbList(links))
+
+def _previous_thread():
     return 'Continuing from the [topic=' + str(
-        game.prev_thread) + ']previous thread[/topic]...'
-
-def _thread_history(game):
-    if game == 'skyrim':
-        with open(templatePath(name="Thread History.txt"), "r") as threads:
-            return threads.read()
-
-def _other_threads(label):
-    for gameName, game in GAMES.iteritems():
-        if gameName != label and game.cur_thread is not None:
-            yield ('[*]The Official [topic=' + str(game.cur_thread) +
-                   ']Wrye Bash for ' + game.display + ' thread[/topic].[/*]')
+        GAMES['oblivion'].prev_thread) + ']previous thread[/topic]...'
 
 import subprocess
 import string
 from globals import outPath
 
 def writeFirstPosts(milestone, editor):
-    for label, game in GAMES.iteritems():
-        out_ = outPath(dir_=POSTS_DIR,
-                        name=u'Forum thread starter - ' + game.display +
-                             u'.txt')
-        print out_
-        with open(out_, 'w') as out:
-            out.write(_previous_thread(game))
-            out.write('\n\n')
-            history = _thread_history(label)
-            if history:
-                out.write(history)
-            with open(TEMPLATE, 'r') as template:
-                data = template.read()  # reads file at once - should be OK
-            data = data.decode('utf-8')  # NEEDED
-            src = string.Template(data)
-            with open(writeChangelogBBcode(None, milestone),
-                      'r') as changelog_file:
-                changelog = changelog_file.read()
-                changelog = changelog.decode('utf-8')  # just in case changelog
-                # contains unicode chars  # reads file at once - should be OK
-            dictionary = {'game': game.display, 'nexus_url': game.nexusUrl,
-                          'game_threads': '\n'.join(_other_threads(label)),
-                          'latest_changelog': changelog}
-            src_substitute = src.substitute(dictionary)
-            src_substitute = src_substitute.encode('utf-8')  # NEEDED
-            out.write(src_substitute)
-        if editor:
-            print('Please review (mind the release date and thread links):'
-                  + str(out.name))
-            subprocess.call([editor, out.name])  # TODO call_check
+    out_ = outPath(dir_=POSTS_DIR, name=u'Bethesda Forum thread starter.txt')
+    print out_
+    with open(out_, 'w') as out:
+        out.write(_previous_thread())
+        out.write('\n\n')
+        with open(TEMPLATE, 'r') as template:
+            data = template.read()  # reads file at once - should be OK
+        data = data.decode('utf-8')  # NEEDED
+        src = string.Template(data)
+        with open(writeChangelogBBcode(None, milestone),
+                  'r') as changelog_file:
+            changelog = changelog_file.read()
+            changelog = changelog.decode('utf-8')  # just in case changelog
+            # contains unicode chars
+        dictionary = {'download_links': _download_links(),
+                      'latest_changelog': changelog}
+        src_substitute = src.substitute(dictionary)
+        src_substitute = src_substitute.encode('utf-8')  # NEEDED
+        out.write(src_substitute)
+    if editor:
+        print('Please review (mind the release date and thread links):' + str(
+            out.name))
+        subprocess.call([editor, out.name])  # TODO call_check
 
 def main():
     opts = _parseArgs()

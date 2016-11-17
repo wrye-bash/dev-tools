@@ -31,7 +31,8 @@
 [/*]
 [/LIST]
 [/spoiler]
-[size=5][color=#3366ff]Download:[/color][/size] $nexus_url and, of course, [url=https://github.com/wrye-bash/wrye-bash/releases]GitHub[/url].
+[size=5][color=#3366ff]Download:[/color][/size]
+$download_links
 
 [size=5][color=#3366ff]Documentation:[/color][/size]
 [LIST]
@@ -90,11 +91,10 @@ This way the output will be redirected to Mopy/bashbugdump.log and no more stdou
 You can see all the known bugs in the [url=https://github.com/wrye-bash/wrye-bash/issues]bug tracker[/url], and more info on reporting a bug and Bash's logs
 on our [url=https://github.com/wrye-bash/wrye-bash/wiki/[github]-Reporting-a-bug]Reporting a bug[/url] wiki page
 
-[size=5][color=#3366ff]Linking:[/color][/size] If you'd like to link to Bash from somewhere else, please do! But be sure to link to either $nexus_url or [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url]. Don't link to the actual download file, since that changes fairly frequently.
+[size=5][color=#3366ff]Linking:[/color][/size] If you'd like to link to Bash from somewhere else, please do! But be sure to link to either one of the Nexus site urls or [url=https://github.com/wrye-bash/wrye-bash]GitHub[/url]. Don't link to the actual download file, since that changes fairly frequently.
 
 [size=5][color=#3366ff]Related Projects:[/color][/size]
 [LIST]
-$game_threads
 [*]Load orders should be managed with [url=http://boss-developers.github.io/]BOSS for Skyrim[/url], which also supplies updated lists of tags used for importing (though even if you don't use BOSS, a basic taglist is shipped with each version of Wrye Bash)[/*]
 [*]Valda ported and maintains Wrye Bash for Fallout3 ([topic=1211142]Wrye Flash[/topic]) and Fallout3 New Vegas ([topic=1234195]Wrye Flash NV[/topic]). These are in the process of being re-integrated into Wrye Bash proper.[/*]
 [/LIST]
