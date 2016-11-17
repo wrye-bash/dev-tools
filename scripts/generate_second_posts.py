@@ -45,7 +45,7 @@ import os
 import re
 # Internal
 from helpers.github_wrapper import *
-from helpers.html import color, url, bbList, spoiler, strike
+from helpers.html import color, url, bbList, spoiler, strike, closedIssue
 
 # Globals ====================================================================
 from globals import outPath, URL_MILESTONE, URL_BUGS, URL_ENHANCEMENTS, \
@@ -156,15 +156,6 @@ def _getIssuesForPosts(repo, milestone):
     return current_bug, current_enh, other_bug, other_enh
 
 # Display =====================================
-def closedIssue(issue):
-    """String representation of a closed issue with assignee."""
-    if issue.assignee:
-        assignee = issue.assignee
-        assignee = ' ' + '[' + assignee.login + ']'
-    else:
-        assignee = ''
-    return issue.title + assignee
-
 def closedIssueLabels(issue):
     """String representation (see closedIssue()) plus labels"""
     return closedIssue(issue) + ' - ' + str(

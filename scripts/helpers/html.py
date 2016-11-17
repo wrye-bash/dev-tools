@@ -82,3 +82,12 @@ def ul(items, f=lambda x: x):
     for i in items:
         yield '<li>' + f(i) + '</li>'
     yield '</ul>'
+
+def closedIssue(issue):
+    """String representation of a closed issue with assignee."""
+    if issue.assignee:
+        assignee = issue.assignee
+        assignee = ' ' + '[' + assignee.login + ']'
+    else:
+        assignee = ''
+    return issue.title + assignee
