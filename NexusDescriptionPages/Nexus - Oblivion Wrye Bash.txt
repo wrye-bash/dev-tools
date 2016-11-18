@@ -1,4 +1,5 @@
-[center][color=red][size=6]We only support Wrye Bash 306 or higher.[/size][/color][/center]
+[center][color=red][size=6]We only support Oblivion version 1.2.0416+ and
+Wrye Bash 306 or higher.[/size][/color][/center]
 
 [center][color=red][size=5]When using ModOrganizer you have to launch Wrye Bash from MO as covered on their description page.[/size][/color][/center]
 
@@ -6,7 +7,7 @@
 
 If you are familiar with the Python programming language, please consider helping with development. We ported [url=https://github.com/wrye-bash/wrye-bash/]our repository[/url] to git at github to make contributing super easy.  [url=https://github.com/wrye-bash/wrye-bash/issues]Our bug tracker[/url] lists everything we're aware of at present.[/color]
 
-[center][font=Comic Sans MS][size=4][color=#ff00ff]306 is out ! Please post feedback on the official [/color][color=#9900ff][url=http://forums.bethsoft.com/topic/1599816-/]Oblivion thread[/url][/color][/size][/font][/center]
+[center][font=Comic Sans MS][size=4][color=#ff00ff]307.beta1 is out ! Please post feedback on the official [/color][color=#9900ff][url=http://forums.bethsoft.com/topic/1604190-/]Oblivion thread[/url][/color][/size][/font][/center]
 
 [size=3][color=#3366ff]What does Wrye Bash do?[/color][/size]
 
@@ -16,11 +17,9 @@ If you are familiar with the Python programming language, please consider helpin
 [*]It allows you to exceed the 255 mod threshold by automatically merging mods for you
 [/list]
 
-
-
 [size=3][color=#3366ff]Comments? Questions?[/color][/size]
 
-Feel free to join the discussion at the current official threads: [url=http://forums.bethsoft.com/topic/1599816-/]Oblivion[/url], [url=http://forums.bethsoft.com/topic/1505167-/]Skyrim[/url], [url=http://forums.bethsoft.com/topic/None-/]Fallout 4[/url]. Be sure to read the first post of the relevant thread for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed 
+Feel free to join the discussion at the current official thread: [url=http://forums.bethsoft.com/topic/1604190-/]Oblivion[/url]. Be sure to read the first post for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed.
 
 [size=3][color=#3366ff]Documentation[/color][/size]
 
@@ -43,9 +42,9 @@ Just use the installer and install to the Oblivion folder! When you install depe
 
 [size=2][color=#3366ff]Long version:[/color][/size]
 
-There are two versions available: the Python version and the Standalone version. They are functionally equivalent. Most people should run the Standalone version since it is slightly simpler (no external Python components to install). You don't need to install the Python version, however, you can if you want to be more involved with development or if you already have Python installed on your system for other reasons.
+There are two versions available: the Python version and the Standalone version. They are functionally equivalent. Most people should run the Standalone version since it is slightly simpler (no external Python components to install). The Python version, however, allows you to follow the rapidly developed code and is therefore preferred.
 
-If you are using the Python version, dependency installation will be handled automatically by the installer. However, if you want or need to do things manually, see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url] for information, and the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url] for detailed instructions.
+Dependency installation for the Python version will be handled automatically by the installer. However, if you want or need to do things manually, see the installation sections on the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html#install]General Readme[/url] for information, and the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html#install]Advanced Readme[/url] for detailed instructions.
 
 Note that the 32-bit versions are required even if you are on a 64-bit operating system
 

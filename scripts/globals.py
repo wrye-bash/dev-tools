@@ -32,23 +32,50 @@ ORG_NAME = u'wrye-bash'
 # GAMES =======================================================================
 from helpers import ini_parser as _ini_parser
 from collections import OrderedDict
+from scripts.helpers.html import size, color
+
+LATEST_BASH = '306'
 
 class _Game(object):
-    def __init__(self, display, nexusUrl=None, prev_thread=None,
-                 cur_thread=None):
+    def __init__(self, display, patch=None, nexusUrl=None, prev_thread=None,
+                 cur_thread=None, game_nexus_notes='',
+                 minimum_bash_version=LATEST_BASH):
         self.display = display
+        self.patch = patch
         self.nexusUrl = nexusUrl
         self.prev_thread = prev_thread
         self.cur_thread = cur_thread
+        self.game_nexus_notes = game_nexus_notes
+        self.minimum_bash_version = minimum_bash_version
 
-OBLIVION = _Game(u'Oblivion', u'[url=http://www.nexusmods.com/'
-                              u'oblivion/mods/22368]Oblivion Nexus[/url]',
+OBLIVION = _Game(u'Oblivion', '1.2.0416',
+    u'[url=http://www.nexusmods.com/oblivion/mods/22368]Oblivion Nexus[/url]',
                  _ini_parser.previous_oblivion_thread(),
                  _ini_parser.current_oblivion_thread())
-SKYRIM = _Game(u'Skyrim', u'[url=http://www.nexusmods.com/'
-                          u'skyrim/mods/1840]Skyrim Nexus[/url]')
-FALLOUT4 = _Game(u'Fallout 4', u'[url=http://www.nexusmods.com/'
-                               u'fallout4/mods/3699]Fallout 4 Nexus[/url]')
+
+SKYRIM = _Game(u'Skyrim', '1.9.32.0.8',
+    u'[url=http://www.nexusmods.com/skyrim/mods/1840]Skyrim Nexus[/url]',
+               game_nexus_notes=
+    size(3, color('#3366ff', """Can Wrye Bash merge Mods?""")) + '\n\n' +
+    color('red', ' '. join([line.strip() for line in
+"""Note: Wrye Bash can not merge mods that add new records to Skyrim. It can
+only merge mods that overwrite a previous master. If a mod alters
+Skyrim.esm, or any other ESM from the Nexus, it can be merged into the Bash
+Patch. As an example a mod like Immersive Armors introduces new records to
+Skyrim and can not be merged.  However, just like Immersive Armors the vast
+majority of Skyrim mods add new records. This means there is no way to load
+300, 400, or 500 mods and still be under the safe limit of 254 mods max.
+That number is 0 to 254 or, 255 mods. Skyrim.esm is always (00), Update.esm
+is always, (01) and so on.""".splitlines()])))
+
+FALLOUT4 = _Game(u'Fallout 4', '1.8.7.0',
+    u'[url=http://www.nexusmods.com/fallout4/mods/20032]Fallout 4 Nexus[/url]',
+                 minimum_bash_version='307.beta1')
+
+SKYRIMSE = _Game(u'Skyrim Special Edition', '1.2.39.0.8',
+    u'[url=http://www.nexusmods.com/fallout4/mods/3699]Fallout 4 Nexus[/url]',
+                 minimum_bash_version='307.beta1')
+
 
 GAMES = OrderedDict(
     [('oblivion', OBLIVION), ('skyrim', SKYRIM), ('fallout4', FALLOUT4), ])
@@ -57,7 +84,7 @@ ALL_GAMES = OrderedDict([('oblivion', OBLIVION), ('skyrim', SKYRIM),
                          ('fallout4', FALLOUT4),
                          ('fallout3', _Game(u'Fallout 3')),
                          ('fnv', _Game(u'Fallout - New Vegas')),
-                         ('skyrim-se', _Game(u'Skyrim Special Edition')),
+                         ('skyrim-se', SKYRIMSE),
                          ])
 
 MAIN_LABELS = {'bug', 'enhancement'}

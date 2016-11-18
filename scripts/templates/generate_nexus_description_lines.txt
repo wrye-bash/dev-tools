@@ -7,12 +7,10 @@ If you are familiar with the Python programming language, please consider helpin
 $beta_headsup
 
 [size=3][color=#3366ff]What does Wrye Bash do?[/color][/size]$what_bash_does
-
-$skyrim_note
-
+$game_notes
 [size=3][color=#3366ff]Comments? Questions?[/color][/size]
 
-Feel free to join the discussion at the current official threads: $beth_threads. Be sure to read the first post of the relevant thread for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed 
+Feel free to join the discussion at the current official thread: $beth_thread. Be sure to read the first post for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed.
 
 [size=3][color=#3366ff]Documentation[/color][/size]
 
@@ -35,9 +33,9 @@ Just use the installer and install to the $game folder! When you install depende
 
 [size=2][color=#3366ff]Long version:[/color][/size]
 
-There are two versions available: the Python version and the Standalone version. They are functionally equivalent. Most people should run the Standalone version since it is slightly simpler (no external Python components to install). You don't need to install the Python version, however, you can if you want to be more involved with development or if you already have Python installed on your system for other reasons.
+There are two versions available: the Python version and the Standalone version. They are functionally equivalent. Most people should run the Standalone version since it is slightly simpler (no external Python components to install). The Python version, however, allows you to follow the rapidly developed code and is therefore preferred.
 
-If you are using the Python version, dependency installation will be handled automatically by the installer. However, if you want or need to do things manually, see the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html]General Readme[/url] for information, and the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html]Advanced Readme[/url] for detailed instructions.
+Dependency installation for the Python version will be handled automatically by the installer. However, if you want or need to do things manually, see the installation sections on the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20General%20Readme.html#install]General Readme[/url] for information, and the [url=http://wrye-bash.github.io/docs/Wrye%20Bash%20Advanced%20Readme.html#install]Advanced Readme[/url] for detailed instructions.
 
 Note that the 32-bit versions are required even if you are on a 64-bit operating system
 

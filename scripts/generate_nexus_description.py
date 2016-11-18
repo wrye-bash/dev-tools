@@ -44,15 +44,10 @@ def _parseArgs():
 NEXUS_DIR = '../NexusDescriptionPages'
 TEMPLATE = templatePath(name=u'generate_nexus_description_lines.txt')
 
-def _we_only_support(label, latest='306'):
-    if label == 'skyrim':
-        blah = center(color('red', size(6,
-                      'We only support Skyrim version 1.9.32.0.8+ and')))
-        blah += '\n' + center(color('red', size(6, 'Wrye Bash %s.' % latest)))
-    else:
-        blah = center(color('red', size(6,
-                            'We only support Wrye Bash %s or higher.' % latest)))
-    return blah
+def _we_only_support(game):
+    return center(color('red', size(6, 'We only support ' + game.display +
+        ' version ' + game.patch + '+ and\nWrye Bash %s or higher.'
+                                    % game.minimum_bash_version)))
 
 def _what_bash_does(label):
     bullets = """\n\n[list]\n"""
@@ -66,36 +61,19 @@ def _what_bash_does(label):
     bullets += """[/list]"""
     return bullets
 
-def _skyrim_note(label):
-    if label == 'skyrim':
-        blah = size(3, color('#3366ff', """Can Wrye Bash merge Mods?""")) \
-               + '\n\n'
-        blah += color('red', ' '. join([line.strip() for line in
-"""Note: Wrye Bash can not merge mods that add new records to Skyrim. It can
-only merge mods that overwrite a previous master. If a mod alters
-Skyrim.esm, or any other ESM from the Nexus, it can be merged into the Bash
-Patch. As an example a mod like Immersive Armors introduces new records to
-Skyrim and can not be merged.  However, just like Immersive Armors the vast
-majority of Skyrim mods add new records. This means there is no way to load
-300, 400, or 500 mods and still be under the safe limit of 254 mods max.
-That number is 0 to 254 or, 255 mods. Skyrim.esm is always (00), Update.esm
-is always, (01) and so on.""".splitlines()]))
-    else: blah = ''
-    return blah
-
 def _beth_url(num):
     return 'http://forums.bethsoft.com/topic/%s-/' % str(num)
 
-def _beta_headsup(latest='306',
+def _beta_headsup(beta='307.beta1',
                   _obThread=_beth_url(GAMES['oblivion'].cur_thread)):
     return center(font('Comic Sans MS', size(4,
         color('#ff00ff', "%s is out ! Please post feedback on the official ")
-                                             % latest +
+                                             % beta +
         color('#9900ff', "[url=%s]Oblivion thread[/url]" % _obThread))))
 
-def _beth_threads():
+def _beth_thread():
     threads = ['[url=%s]%s[/url]' % (_beth_url(g.cur_thread), g.display)
-               for g in GAMES.values()]
+               for g in GAMES.values() if g.cur_thread]
     return ', '.join(threads)
 
 import subprocess
@@ -103,7 +81,7 @@ import string
 from globals import outPath
 import re
 
-# http://stackoverflow.com/a/6117124/281545 - HACK, smooth it out
+# http://stackoverflow.com/a/6117124/281545 - hack to convert changelog format
 rep = {'[spoiler]': "", '[/spoiler]': "", "size=5": "color=#00BFFF",
        "/size": '/color'}
 rep = dict((re.escape(k), v) for k, v in rep.iteritems())
@@ -117,7 +95,7 @@ def writeNexusDescription(num, editor):
                        name=u'Nexus - ' + game.display + u' Wrye Bash.txt')
         print out_
         with open(out_, 'w') as out:
-            out.write(_we_only_support(label))
+            out.write(_we_only_support(game))
             out.write('\n\n')
             with open(TEMPLATE, 'r') as template:
                 data = template.read()  # reads file at once - should be OK
@@ -129,11 +107,13 @@ def writeNexusDescription(num, editor):
                 changelog = _unspoil(changelog).strip()
                 changelog = changelog.decode('utf-8')  # just in case changelog
                 # contains unicode chars
+            notes = game.game_nexus_notes
+            game_notes = notes if not notes else '\n' + notes + '\n'
             dictionary = {'game': game.display,
-                          'skyrim_note': _skyrim_note(label),
+                          'game_notes': game_notes,
                           'what_bash_does': _what_bash_does(label),
                           'latest_changelog': changelog,
-                          'beth_threads': _beth_threads(),
+                          'beth_thread': _beth_thread(),
                           'beta_headsup': _beta_headsup(),
                           }
             src_substitute = src.substitute(dictionary)
