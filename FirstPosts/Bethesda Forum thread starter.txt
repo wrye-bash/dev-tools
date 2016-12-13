@@ -1,4 +1,4 @@
-Continuing from the [topic=1602198]previous thread[/topic]...
+Continuing from the [topic=1606578]previous thread[/topic]...
 
 [size=5][color=#3366ff]What does Wrye Bash do?[/color][/size]
 [LIST]
@@ -33,11 +33,11 @@ Continuing from the [topic=1602198]previous thread[/topic]...
 [/*]
 [/LIST]
 [/spoiler]
-[size=5][color=#3366ff]Download:[/color][/size] [LIST]
+[size=5][color=#3366ff]Download:[/color][/size]
+[LIST]
 [*][url=https://github.com/wrye-bash/wrye-bash/releases]GitHub[/url][/*]
 [*][url=http://www.nexusmods.com/oblivion/mods/22368]Oblivion Nexus[/url][/*]
 [*][url=http://www.nexusmods.com/skyrim/mods/1840]Skyrim Nexus[/url][/*]
-[*][url=http://www.nexusmods.com/fallout4/mods/3699]Fallout 4 Nexus[/url][/*]
 [/LIST]
 
 [size=5][color=#3366ff]Documentation:[/color][/size]
