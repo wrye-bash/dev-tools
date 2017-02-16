@@ -73,12 +73,14 @@ FALLOUT4 = _Game(u'Fallout 4', '1.8.7.0',
                  minimum_bash_version='307.beta1')
 
 SKYRIMSE = _Game(u'Skyrim Special Edition', '1.2.39.0.8',
-    u'[url=http://www.nexusmods.com/fallout4/mods/3699]Fallout 4 Nexus[/url]',
+    u'[url=http://www.nexusmods.com/skyrimspecialedition/mods/6837]'
+    u'Skyrim Special Edition Nexus[/url]',
                  minimum_bash_version='307.beta1')
 
 
-GAMES = OrderedDict(
-    [('oblivion', OBLIVION), ('skyrim', SKYRIM), ('fallout4', FALLOUT4), ])
+GAMES = OrderedDict([
+    ('oblivion', OBLIVION), ('skyrim', SKYRIM), ('fallout4', FALLOUT4),
+    ('skyrim-se', SKYRIMSE), ])
 
 ALL_GAMES = OrderedDict([('oblivion', OBLIVION), ('skyrim', SKYRIM),
                          ('fallout4', FALLOUT4),

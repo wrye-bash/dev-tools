@@ -1,4 +1,4 @@
-Continuing from the [topic=1612572]previous thread[/topic]...
+Continuing from the [topic=1614408]previous thread[/topic]...
 
 [size=5][color=#3366ff]What does Wrye Bash do?[/color][/size]
 [LIST]
@@ -38,6 +38,8 @@ Continuing from the [topic=1612572]previous thread[/topic]...
 [*][url=https://github.com/wrye-bash/wrye-bash/releases]GitHub[/url][/*]
 [*][url=http://www.nexusmods.com/oblivion/mods/22368]Oblivion Nexus[/url][/*]
 [*][url=http://www.nexusmods.com/skyrim/mods/1840]Skyrim Nexus[/url][/*]
+[*][url=http://www.nexusmods.com/fallout4/mods/20032]Fallout 4 Nexus[/url][/*]
+[*][url=http://www.nexusmods.com/skyrimspecialedition/mods/6837]Skyrim Special Edition Nexus[/url][/*]
 [/LIST]
 
 [size=5][color=#3366ff]Documentation:[/color][/size]
@@ -93,7 +95,8 @@ This way the output will be redirected to Mopy/bashbugdump.log and no more stdou
 [/LIST]
 [/*]
 [*]If you think you've found an error using WBSA, be sure to uninstall ALL python components and test it again first, to be sure we get an accurate report. Having python installed can sometimes trick the WBSA into thinking that it has all of the files it requires, even if it really doesn't.[/*]
-[/LIST][/spoiler]
+[/LIST]
+[/spoiler]
 You can see all the known bugs in the [url=https://github.com/wrye-bash/wrye-bash/issues]bug tracker[/url], and more info on reporting a bug and Bash's logs
 on our [url=https://github.com/wrye-bash/wrye-bash/wiki/[github]-Reporting-a-bug]Reporting a bug[/url] wiki page
 
@@ -106,15 +109,19 @@ on our [url=https://github.com/wrye-bash/wrye-bash/wiki/[github]-Reporting-a-bug
 [/LIST]
 [size=5][color=#3366ff]Join the Wrye Bash Team:[/color][/size]
 
-Currently we are looking for volunteers to contribute Wrye Bash. The main focus is updating Wrye Bash's code so that it can handle more than just leveled lists for Skyrim. However, that does not mean that the Oblivion version will be ignored. Wrye Bash is written in Python but does use some external C++ files. For that reason we need Python programmers primarily but could use anyone with C++ experience to update the external libraries that Wrye Bash uses. If you would like to volunteer please PM me. Your help will be greatly appreciated.
+Currently we are looking for volunteers to contribute Wrye Bash. The main focus is updating Wrye Bash's code so that it can handle more than just leveled lists for Skyrim and Fallout4. Wrye Bash is written in Python but does use C++ for CBash. For that reason we need Python programmers primarily but could use anyone with C++ experience to update CBash. If you would like to volunteer please PM me. Your help will be greatly appreciated.
 
 [size=5][color=#3366ff]The updates that are needed:[/color][/size]
 
-1) Update patchers so Wrye Bash can process Skyrim's files as it does for Oblivion
-2) Finalize the code refactoring that started with 305 and 306 - mainly refactor BAIN and freeze the layout of the patchers package
-3) Finalize the UI refactoring so we can move on to newer python/wx python versions
-4) Update CBash. CBash is the exception in that it can be updated at any time as long as there is a volunteer to work on it.
-
+[LIST=1]
+[*]Update patchers so Wrye Bash can process Skyrim's and Fallout4 files as it does for Oblivion[/*]
+[*]Add tests for patchers package - we are setting up a test repo here: https://github.com/wrye-bash/test_bash[/*]
+[*]Add tests for other sensitive areas (load order, refresh, BAIN etc)[/*]
+[*]Move on to newer python/wx python versions, initially wx classic 3.02[/*]
+[*]Update cosave code to work with script extenders other than OBSE[/*]
+[*]Update save files editing code for games other than Oblivion[/*]
+[*]Update CBash for games other than Oblivion. CBash repo: https://github.com/wrye-bash/CBash[/*]
+[/LIST]
 Please see the [url=https://github.com/wrye-bash/wrye-bash#contributing]contributing section[/url] in our repo readme.
 
 [size=5][color=#3366ff]Changelog for Latest Version:[/color][/size]
