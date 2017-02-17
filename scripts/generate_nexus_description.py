@@ -45,7 +45,7 @@ NEXUS_DIR = '../NexusDescriptionPages'
 TEMPLATE = templatePath(name=u'generate_nexus_description_lines.txt')
 
 def _we_only_support(game):
-    return center(color('red', size(6, 'We only support ' + game.display +
+    return center(color('#6d9eeb', size(5, 'We only support ' + game.display +
         ' version ' + game.patch + '+ and\nWrye Bash %s or higher.'
                                     % game.minimum_bash_version)))
 
