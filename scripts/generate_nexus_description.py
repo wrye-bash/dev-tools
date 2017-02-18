@@ -49,18 +49,6 @@ def _we_only_support(game):
         ' version ' + game.patch + '+ and\nWrye Bash %s or higher.'
                                     % game.minimum_bash_version)))
 
-def _what_bash_does(label):
-    bullets = """\n\n[list]\n"""
-    bullets += (
-        '[*]It makes it safe to try out new mods because it will restore '
-        'everything to the way it was when you uninstall a mod\n'
-        '[*]It makes more mods compatible with each other by importing '
-        'information from different mods into a "bashed patch"\n')
-    if label == 'oblivion': bullets += "[*]It allows you to exceed the 255" + \
-    " mod threshold by automatically merging mods for you\n"
-    bullets += """[/list]"""
-    return bullets
-
 def _beth_url(num):
     return 'http://forums.bethsoft.com/topic/%s-/' % str(num)
 
@@ -72,7 +60,7 @@ def _beta_headsup(beta='307.beta1',
         color('#9900ff', "[url=%s]Oblivion thread[/url]" % _obThread))))
 
 def _beth_thread():
-    threads = ['[url=%s]%s[/url]' % (_beth_url(g.cur_thread), g.display)
+    threads = ['[url=%s]%s thread[/url]' % (_beth_url(g.cur_thread), g.display)
                for g in GAMES.values() if g.cur_thread]
     return ', '.join(threads)
 
@@ -111,7 +99,7 @@ def writeNexusDescription(num, editor):
             game_notes = notes if not notes else '\n' + notes + '\n'
             dictionary = {'game': game.display,
                           'game_notes': game_notes,
-                          'what_bash_does': _what_bash_does(label),
+                          # 'what_bash_does': _what_bash_does(label),
                           'latest_changelog': changelog,
                           'beth_thread': _beth_thread(),
                           'beta_headsup': _beta_headsup(),

@@ -14,14 +14,18 @@ Important: Wrye Bash needs developers[/size]. [/color][color=#f4f4f4]If you are 
 [size=3][color=#3366ff]What does Wrye Bash do?[/color][/size]
 
 [list]
+[*]Wrye Bash is a powerful mod management utility for TES IV: Oblivion, TES V: Skyrim, Fallout 4 and TES V Skyrim SE.
+[*]Its a mod installation and file conflict manager
+[*]A plugin load order manager
+[*]Screenshot manager
+[*].ini and settings files tweak management.
 [*]It makes it safe to try out new mods because it will restore everything to the way it was when you uninstall a mod
-[*]It makes more mods compatible with each other by importing information from different mods into a "bashed patch"
-[*]It allows you to exceed the 255 mod threshold by automatically merging mods for you
+[*]It makes more mods compatible with each other by importing information from different mods into a "bashed patch" .. and many more features
 [/list]
 
-[size=3][color=#3366ff]Comments? Questions?[/color][/size]
+[size=3][color=#3366ff]Feedback? Comments? Questions?[/color][/size]
 
-Feel free to join the discussion at the current official thread: [url=http://forums.bethsoft.com/topic/1615914-/]Oblivion[/url]. Be sure to read the first post for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed.
+Please give feedback and feel free to join the discussion at the current official thread: [url=http://forums.bethsoft.com/topic/1615914-/]Oblivion thread[/url]. Be sure to read the first post for information on installation, troubleshooting, reporting bugs etc. If you are having trouble, you'll find many friendly people there who can help.  Check out the 2nd post to see the list of known bugs, and, more importantly, whether the bug has already been fixed.
 
 [size=3][color=#3366ff]Documentation[/color][/size]
 
