@@ -1,9 +1,7 @@
 [center][color=#6d9eeb][size=5]We only support Oblivion version 1.2.0416+ and
 Wrye Bash 306 or higher.[/size][/color][/center]
 
-[center][size=4][color=#6d9eeb]If you use [b]Mod Organizer[/b] launch Wrye Bash from MO as covered on their description page.
-Any questions / problems with Wrye Bash while using MO or MO2, ask at the[/color] [url=http://forum.step-project.com/forum/62-mod-organizer-support/][color=#ffff00]S.T.E.P. Forum[/color][/url][/size]
-[color=#3c78d8][size=4][u][b]We can not help with NMM / MO / MO2 related problems[/b][/u][/size][/color][/center]
+[center][color=#3c78d8][size=4][u][b]We can not help with NMM / MO / MO2 related problems[/b][/u][/size][/color][/center]
 [center][color=#ffa500][size=4]
 Important: Wrye Bash needs developers[/size]. [/color][color=#f4f4f4]If you are familiar with the Python programming language, please consider helping with development. We ported[/color][color=orange] [url=https://github.com/wrye-bash/wrye-bash/]our repository[/url] [/color][color=#f4f4f4]to git at github to make contributing super easy.[/color][color=orange]  [url=https://github.com/wrye-bash/wrye-bash/issues]Our bug tracker[/url] [/color][color=#f4f4f4]lists everything we're aware of at present.[/color][/center]
 
