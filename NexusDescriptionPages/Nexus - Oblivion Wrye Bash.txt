@@ -1,5 +1,5 @@
 [center][color=#6d9eeb][size=5]We only support Oblivion version 1.2.0416+ and
-Wrye Bash 306 or higher.[/size][/color][/center]
+Wrye Bash 307.beta1 or higher.[/size][/color][/center]
 
 [center][color=#3c78d8][size=4][u][b]We can not help with NMM / MO / MO2 related problems[/b][/u][/size][/color][/center]
 [center][color=#ffa500][size=4]
