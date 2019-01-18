@@ -1,0 +1,2 @@
+recursive-include wx *
+recursive-include wxPython *
