@@ -1,9 +1,0 @@
-* text=auto
-
-*.html text
-*.txt text
-*.py text diff=python
-
-# git files - have them with LF to edit them via the shell (echo etc)
-*.gitignore text eol=lf
-*.gitattributes text eol=lf
