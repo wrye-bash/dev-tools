@@ -199,7 +199,7 @@ def getUnlabeledIssues(repo, milestone=None, state=DEFAULT_ISSUE_STATE):
     return getIssues(repo, milestone, state=state,
                      skip_labels=_IssueCache.allLabels(repo))
 
-def getClosedIssues(repo, milestone, keep_labels={'bug', 'enhancement'},
+def getClosedIssues(repo, milestone, keep_labels={'C-bug', 'C-enhancement'},
                     skip_labels=set()): # TODO move to globals.py
     """Return a list of closed issues for the given milestone
         repo: github.Repository object

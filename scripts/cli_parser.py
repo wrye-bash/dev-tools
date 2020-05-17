@@ -28,7 +28,7 @@ arguments to the scripts. Default behavior of the scripts is defined in this
 class"""
 import argparse
 import os
-from globals import DEFAULT_MILESTONE_TITLE, DEFAULT_AUTHORS, ALL_GAMES
+from globals import DEFAULT_MILESTONE_TITLE, DEFAULT_AUTHORS
 
 PROMPT = 'PROMPT'
 
@@ -40,21 +40,6 @@ class Parser(object):
                         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         # actions to be run on options if not specified
         self.actions = []
-
-    def games(self, help_='Show issues for a specific game only.',
-              helpAll='Show issues for all games.'):
-        gameGroup = self.parser.add_mutually_exclusive_group()
-        gameGroup.add_argument('-g', '--game',
-                               dest='game',
-                               type=str,
-                               choices=ALL_GAMES.keys(),
-                               help=help_)
-        gameGroup.add_argument('-a', '--all',
-                               dest='all',
-                               action='store_true',
-                               default=False,
-                               help=helpAll)
-        return self
 
     def milestone(self, help_='Specify the milestone for latest release.'):
         action = self.parser.add_argument('-m', '--milestone',

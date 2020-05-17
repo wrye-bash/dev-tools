@@ -86,7 +86,7 @@ def writeVersionHistory(milestone, editor):
         with open(out_, 'wb') as outfile:
             for line in ins:
                 line = unicode(line, 'utf-8')
-                if not inserted and line.strip().startswith(u'<h2>'):
+                if not inserted and line.strip().startswith(u'<h3>'):
                     # Found the start of the first version, insert our new
                     # changelog here
                     with open(latestChangelog) as readfile:

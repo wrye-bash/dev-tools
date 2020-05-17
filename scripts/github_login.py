@@ -46,14 +46,3 @@ def hub(milestoneNum=None):
         milestone = _getMiles(milestoneNum, repo)
         if not milestone: return
     return repo, milestone
-
-from globals import ALL_LABELS
-from helpers.github_wrapper import allLabels
-
-if __name__ == '__main__':
-    git_ = hub()
-    if git_ is not None:
-        labels = set(x.name for x in allLabels(git_[0])) # github.Label.Label
-        print labels
-        print ALL_LABELS
-        print labels == ALL_LABELS

@@ -34,12 +34,10 @@ CHANGELOG_TITLE_SIZE = 5
 # Functions ===================================================================
 def _parseArgs():
     return Parser(description='Generate Changelog').editor().milestone(
-        help_='Specify the milestone for latest release.').authors().games(
-        help_='Show closed issues for a specific game only.',
-        helpAll='Show closed issues for all games.').offline().overwrite(
-    ).milestoneTitle().parse()
+        help_='Specify the milestone for latest release.').authors(
+    ).offline().overwrite().milestoneTitle().parse()
 
-from helpers.html import h2, ul, bbList, size, markdownList, spoiler
+from helpers.html import h3, ul, bbList, size, markdownList, spoiler
 
 def _title(title, authors=None):
     title = title + '[' + date.today().strftime('%Y/%m/%d') + ']'
@@ -57,7 +55,7 @@ def _changelog_bbcode(issues, title, outFile):
 
 def _changelog_txt(issues, title, outFile):
     with open(outFile, 'w') as out:
-        out.write(h2(_title(title)))
+        out.write(h3(_title(title)))
         out.write('\n'.join(ul(issues)))
         out.write('\n\n')  # needs blank line for Version History.html
     return outFile

@@ -74,8 +74,8 @@ def size(num, text):
     return '[size=' + str(num) + ']' + text + '[/size]'
 
 # HTML ========================================
-def h2(text):
-    return '<h2>' + text + '</h2>'
+def h3(text):
+    return '<h3>' + text + '</h3>'
 
 def ul(items, f=lambda x: x):
     yield '\n<ul>'
