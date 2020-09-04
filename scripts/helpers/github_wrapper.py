@@ -25,6 +25,9 @@
 """This module wraps github API calls. Features caching.
  Do not import from globals here !"""
 
+from ConfigParser import ConfigParser, NoOptionError, NoSectionError
+import os
+
 import github
 
 ALL_ISSUES = 'all'
@@ -40,7 +43,17 @@ def getRepo(orgName, repoName):
                   None, assumes personal repos.
         repoName: name of the repository to get
     """
-    git = github.Github()
+    access_token = None
+    try:
+        # Look if we've got a token to use
+        parser = ConfigParser()
+        parser.read(os.path.join(os.getcwd(), u'github.ini'))
+        token = parser.get('OAuth', 'token')
+        if token != u'CHANGEME':
+            access_token = token
+    except (NoOptionError, NoSectionError, OSError):
+        pass # File is invalid or could not be found, proceed without token
+    git = github.Github(access_token)
     repo = git.get_repo(orgName + '/' + repoName)
     try:
         # The github library returns a repo object even if the repo
