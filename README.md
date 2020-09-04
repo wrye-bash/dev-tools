@@ -5,4 +5,4 @@ So:
 - Good: `python scripts/generate_changelog.py`
 - Bad:  `cd scripts; python generate_changelog.py`
 
-[Licensed under the GPLv2](LICENSE.md) or any later version, just like the rest of Wrye Bash.
+[Licensed under the GPLv2](LICENSE) or any later version, just like the rest of Wrye Bash.
