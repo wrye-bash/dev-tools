@@ -76,7 +76,9 @@ from helpers.github_wrapper import getClosedIssues
 
 # def getClosedIssues(*args, **kwargs): return () # testing, don't hit github
 
-CHANGELOGS_DIR = '../ChangeLogs'
+CHANGELOGS_DIR = os.path.join(os.getcwd(), u'ChangeLogs')
+print(u'Current working directory is %s' % os.getcwd())
+print(u'Changelogs will be placed in %s' % CHANGELOGS_DIR)
 
 def writeChangelog(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
                    overwrite=False, extension=u'.txt', logic=_changelog_txt):
