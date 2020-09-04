@@ -38,6 +38,7 @@ def _parseArgs():
         description='Generate Wrye Bash Version History.html').milestone(
         help_='Specify the milestone for latest release.').editor().parse()
 
+import io
 import shutil
 import os.path
 import subprocess
@@ -56,7 +57,7 @@ def writeVersionHistory(milestone, editor):
     ## from the user's local repo.  For a more reliable method, we
     ## can get the recent version from git itself.
     localSrc = u'Wrye Bash Version History.html'
-    mainSrc = os.path.join(u'..', u'..',
+    mainSrc = os.path.join(os.path.dirname(os.getcwd()),
                            WRYE_BASH_REPO_DOCS_DIR,
                            localSrc)
     out_ = outPath(name=localSrc)
@@ -64,7 +65,7 @@ def writeVersionHistory(milestone, editor):
     if not os.path.isfile(mainSrc):
         print('Wrye Bash Version History.html not found in the wrye-bash '
               'repository.  Please copy it to '
-              'meta/scripts/Wrye Bash VersionHistory.html for editing.')
+              'dev-tools/scripts/Wrye Bash Version History.html for editing.')
         raw_input('Press Enter when ready to continue')
     else:
         if os.path.isfile(localSrc):
@@ -75,21 +76,19 @@ def writeVersionHistory(milestone, editor):
         print('Wrye Bash Version History.html is not present for editing.'
               '  The new changelog will be inserted into it.')
         return
-    latestChangelog = writeChangelog(None, milestone)
+    lc = writeChangelog(None, milestone)
     if editor:
-        print('Please review the changelog (mind the date): '
-              + str(latestChangelog))
-        subprocess.call([editor, str(latestChangelog)])  # TODO call_check
+        print('Please review the changelog (mind the date): ' + str(lc))
+        subprocess.call([editor, str(lc)])  # TODO call_check
     # Write new HTML with inserted changelog
     inserted = False
-    with open(localSrc, 'rb') as ins:
-        with open(out_, 'wb') as outfile:
+    with io.open(localSrc, u'r', encoding=u'utf-8') as ins:
+        with io.open(out_, u'w', encoding=u'utf-8') as outfile:
             for line in ins:
-                line = unicode(line, 'utf-8')
                 if not inserted and line.strip().startswith(u'<h3>'):
                     # Found the start of the first version, insert our new
                     # changelog here
-                    with open(latestChangelog) as readfile:
+                    with io.open(lc, u'r', encoding=u'utf-8') as readfile:
                         shutil.copyfileobj(readfile, outfile)
                     outfile.write(u'\n')
                     inserted = True
@@ -100,10 +99,12 @@ def writeVersionHistory(milestone, editor):
             'It will then be copied to the main repository for you to commit')
         subprocess.call([editor, str(out_)])  # TODO call_check
     raw_input('Press Enter to copy the html to the main and io repos.')
-    docsDir = os.path.join(os.path.abspath('../..'), WRYE_BASH_REPO_DOCS_DIR)
+    docsDir = os.path.join(os.path.dirname(os.getcwd()),
+        WRYE_BASH_REPO_DOCS_DIR)
     print('Copying to ' + str(docsDir))
     shutil.copy(out_, docsDir)
-    docsDir = os.path.join(os.path.abspath('../..'), IO_REPO_DOCS_DIR)
+    docsDir = os.path.join(os.path.dirname(os.getcwd()),
+        IO_REPO_DOCS_DIR)
     # TODO: launch git gui & to inspect the diff - GitPython
     # TODO soft link instead of copying
     print('Copying to ' + str(docsDir))

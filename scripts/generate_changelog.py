@@ -26,7 +26,9 @@
 """This module generates the changelog for a milestone reading its metadata."""
 from datetime import date
 from functools import partial
+from html import escape as html_escape
 import subprocess
+
 from cli_parser import Parser
 
 CHANGELOG_TITLE_SIZE = 5
@@ -37,7 +39,8 @@ def _parseArgs():
         help_='Specify the milestone for latest release.').authors(
     ).offline().overwrite().milestoneTitle().parse()
 
-from helpers.html import h3, ul, bbList, size, markdownList, spoiler
+from helpers.html import h3, ul, bbList, size, markdownList, spoiler, a, \
+    markdown_link, markdown_escape
 
 def _title(title, authors=None):
     title = title + '[' + date.today().strftime('%Y/%m/%d') + ']'
@@ -47,25 +50,36 @@ def _title(title, authors=None):
 from helpers.html import closedIssue
 
 def _changelog_bbcode(issues, title, outFile):
-    with open(outFile, 'w') as out:
+    with open(outFile, u'w') as out:
         out.write(size(CHANGELOG_TITLE_SIZE, _title(title)))
-        out.write('\n'.join(spoiler('\n'.join(bbList(issues)))))
-        out.write('\n')
+        out.write(u'\n'.join(spoiler('\n'.join(bbList(issues)))))
+        out.write(u'\n')
     return outFile
 
 def _changelog_txt(issues, title, outFile):
-    with open(outFile, 'w') as out:
-        out.write(h3(_title(title)))
-        out.write('\n'.join(ul(issues)))
-        out.write('\n\n')  # needs blank line for Version History.html
+    issue_template = u'https://github.com/wrye-bash/wrye-bash/issues/%u'
+    def add_link(issue_line):
+        issue_num, issue_rest = issue_line.split(u':', 1)
+        issue_link = a(issue_num, href=issue_template % int(issue_num[1:]))
+        return issue_link + u':' + html_escape(issue_rest)
+    with open(outFile, u'w') as out:
+        out.write(h3(html_escape(_title(title))))
+        out.write(u'\n'.join(ul(issues, f=add_link)))
+        out.write(u'\n\n')  # needs blank line for Version History.html
     return outFile
 
 def _changelog_markdown(issues, title, outFile):
-    with open(outFile, 'w') as out:
-        out.write(_title(title))
-        out.write('\n\n')
-        out.write('\n'.join(markdownList(issues)))
-        out.write('\n')
+    issue_template = u'https://github.com/wrye-bash/wrye-bash/issues/%u'
+    def add_link(issue_line):
+        issue_num, issue_rest = issue_line.split(u':', 1)
+        issue_link = markdown_link(issue_num,
+            href=issue_template % int(issue_num[1:]))
+        return issue_link + u':' + markdown_escape(issue_rest)
+    with open(outFile, u'w') as out:
+        out.write(markdown_escape(_title(title)))
+        out.write(u'\n\n')
+        out.write(u'\n'.join(markdownList(issues, f=add_link)))
+        out.write(u'\n')
     return outFile
 
 # API =========================================================================
@@ -104,7 +118,7 @@ def writeChangelogBBcode(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
 def _writeChangelogMarkdown(repo, milestone, title=DEFAULT_MILESTONE_TITLE, overwrite=False):
     """Write 'Changelog - <milestone>.markdown.txt'"""
     return writeChangelog(repo, milestone, title, overwrite,
-                          extension=u'.markdown', logic=_changelog_markdown)
+                          extension=u'.md', logic=_changelog_markdown)
 
 def main():
     opts = _parseArgs()  # TODO per game # if opts.game:...

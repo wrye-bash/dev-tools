@@ -25,69 +25,100 @@
 """This module exports formatting functions for the forums and the doc files we
 are generating."""
 
+from collections import OrderedDict
+
 # MARKDOWN ========================================
 def markdownList(items, f=lambda x: x):
     for i in items:
-        yield '- ' + f(i)
+        yield u'- ' + f(i)
+
+def markdown_link(text, href):
+    return u'[%s](%s)' % (text, href)
+
+ # https://www.markdownguide.org/basic-syntax/#escaping-characters
+_md_escapes = OrderedDict([
+    (u'\\', u'\\\\'),
+    (u'`',  u'\\`'),
+    (u'*',  u'\\*'),
+    (u'_',  u'\\_'),
+    (u'{',  u'\\{'),
+    (u'}',  u'\\}'),
+    (u'[',  u'\\['),
+    (u']',  u'\\]'),
+    (u'(',  u'\\('),
+    (u')',  u'\\)'),
+    (u'#',  u'\\#'),
+    (u'+',  u'\\+'),
+    (u'-',  u'\\-'),
+    (u'.',  u'\\.'),
+    (u'!',  u'\\!'),
+    (u'|',  u'\\|'),
+])
+def markdown_escape(text):
+    for target, sub in _md_escapes.iteritems():
+        text = text.replace(target, sub)
+    return text
 
 # BBCODE ========================================
 def color(colour, text):
     if colour:
-        return '[color=' + colour + ']' + text + '[/color]'
+        return u'[color=' + colour + u']' + text + u'[/color]'
     else:
         return text
 
 def font(daFont, text):
-    return '[font=' + daFont + ']' + text + '[/font]'
+    return u'[font=' + daFont + u']' + text + u'[/font]'
 
 def url(url_, title):
-    return '[url=' + url_ + ']' + title + '[/url]'
+    return u'[url=' + url_ + u']' + title + u'[/url]'
 
 def bold(text):
-    return '[b]' + text + '[/b]'
+    return u'[b]' + text + u'[/b]'
 
 def center(text):
-    return '[center]' + text + '[/center]'
+    return u'[center]' + text + u'[/center]'
 
 def strike(text):
-    return '[s]' + text + '[/s]'
+    return u'[s]' + text + u'[/s]'
 
 def li(text):
-    return '[*]' + text + '[/*]'
+    return u'[*]' + text + u'[/*]'
 
 def bbList(items, f=lambda x: x, *args):
-    yield '[LIST]'
+    yield u'[LIST]'
     if not args:
         for i in items:
             yield li(f(i))
     else:
         for i in items:
             yield li(f(i, *args))
-    yield '[/LIST]'
+    yield u'[/LIST]'
 
 def spoiler(text):
-    yield '[spoiler]'
+    yield u'[spoiler]'
     yield text
-    yield '[/spoiler]'
+    yield u'[/spoiler]'
 
 def size(num, text):
-    return '[size=' + str(num) + ']' + text + '[/size]'
+    return u'[size=' + str(num) + u']' + text + u'[/size]'
 
 # HTML ========================================
 def h3(text):
-    return '<h3>' + text + '</h3>'
+    return u'<h3>' + text + u'</h3>'
 
 def ul(items, f=lambda x: x):
-    yield '\n<ul>'
+    yield u'\n<ul>'
     for i in items:
-        yield '<li>' + f(i) + '</li>'
-    yield '</ul>'
+        yield u'<li>' + f(i) + u'</li>'
+    yield u'</ul>'
+
+def a(text, href):
+    return u'<a href="%s">%s</a>' % (href, text)
 
 def closedIssue(issue):
     """String representation of a closed issue with assignee."""
-    if issue.assignee:
-        assignee = issue.assignee
-        assignee = ' ' + '[' + assignee.login + ']'
-    else:
-        assignee = ''
-    return issue.title + assignee
+    assignees = u''
+    if issue.assignees:
+        assignees = u' [%s]' % u', '.join(
+            sorted(a.login for a in issue.assignees))
+    return u'#%u: ' % issue.number + issue.title + assignees
