@@ -68,7 +68,7 @@ def getRepo(orgName, repoName):
 
 def getMilestone(repo, milestoneTitle):
     """Returns the github.Milestone object for a specified milestone."""
-    for m in repo.get_milestones():
+    for m in repo.get_milestones(state=u'all'):
         if m.title == milestoneTitle:
             return m
     return None
