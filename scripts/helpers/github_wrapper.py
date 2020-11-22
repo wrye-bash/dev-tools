@@ -25,14 +25,12 @@
 """This module wraps github API calls. Features caching.
  Do not import from globals here !"""
 
-from __future__ import absolute_import, print_function
-
-from ConfigParser import ConfigParser, NoOptionError, NoSectionError
+from configparser import ConfigParser, NoOptionError, NoSectionError
 import os
 
 import github
 
-ALL_ISSUES = u'all'
+ALL_ISSUES = 'all'
 DEFAULT_ISSUE_STATE = ALL_ISSUES
 DEFAULT_MILESTONE = None
 
@@ -49,14 +47,14 @@ def get_repo(org_name, repo_name):
     try:
         # Look if we've got a token to use
         parser = ConfigParser()
-        parser.read(os.path.join(os.getcwdu(), u'github.ini'))
+        parser.read(os.path.join(os.getcwd(), 'github.ini'))
         token = parser.get('OAuth', 'token')
-        if token != u'CHANGEME':
+        if token != 'CHANGEME':
             access_token = token
     except (NoOptionError, NoSectionError, OSError):
         pass # File is invalid or could not be found, proceed without token
     git = github.Github(access_token)
-    repo = git.get_repo(org_name + u'/' + repo_name)
+    repo = git.get_repo(org_name + '/' + repo_name)
     try:
         # The github library returns a repo object even if the repo
         # doesn't exist.  Test to see if it's a valid repository by
@@ -70,7 +68,7 @@ def get_repo(org_name, repo_name):
 
 def get_milestone(repo, ms_title):
     """Returns the github.Milestone object for a specified milestone."""
-    for m in repo.get_milestones(state=u'all'):
+    for m in repo.get_milestones(state='all'):
         if m.title == ms_title:
             return m
     return None
@@ -94,10 +92,11 @@ class _IssueCache(object):
             return self._state
 
         def __key(self):  # http://stackoverflow.com/a/2909119/281545
-            return self.repo, self.milestone, self.state
+            return self.repo.full_name, self.milestone.title, self.state
 
         def __eq__(self, other):  # add `self is other` optimization ?
-            return type(other) is type(self) and self.__key() == other.__key()
+            return isinstance(other, type(self)) and (
+                    self.__key() == other.__key())
 
         def __ne__(self, other):  # needed ?
             return not self.__eq__(other)
@@ -120,7 +119,7 @@ class _IssueCache(object):
         if not current:
             # search in the cache for some superset of issues already fetched
             super_ = None
-            for key, issues in _IssueCache.CACHE.iteritems():
+            for key, issues in _IssueCache.CACHE.items():
                 if issue_filter < key:
                     super_ = issues
                     break
@@ -137,14 +136,14 @@ class _IssueCache(object):
                 return current
             # else fetch them...
             _IssueCache.counter += 1
-            print(u'Hitting github %u time(s)' % _IssueCache.counter)
+            print('Hitting github %u time(s)' % _IssueCache.counter)
             if milestone:  # FIXME - API won't let me specify None for all
                 # milestone=github.GithubObject.NotSet ...
                 current = repo.get_issues(milestone, state=issue_filter.state,
-                    sort=u'created', direction=u'desc')
+                    sort='created', direction='desc')
             else:
                 current = repo.get_issues(state=issue_filter.state,
-                    sort=u'created', direction=u'desc')
+                    sort='created', direction='desc')
             _IssueCache._update(repo, milestone, state, current)
         return current
 
@@ -170,13 +169,13 @@ def get_issues(repo, milestone=None, keep_labels=frozenset(), state=None):
     # return only issues that partake in keep_labels
     result = []
     for issue in current:
-        labels = set(x.name for x in issue.labels)
+        labels = {x.name for x in issue.labels}
         if keep_labels & labels:
             result.append(issue)
     return result
 
 # TODO move to globals.py
-def get_closed_issues(repo, milestone, keep_labels=frozenset([u'M-relnotes'])):
+def get_closed_issues(repo, milestone, keep_labels=frozenset(['M-relnotes'])):
     """Return a list of closed issues for the given milestone
         repo: github.Repository object
         milestone: github.Milestone object
@@ -184,4 +183,4 @@ def get_closed_issues(repo, milestone, keep_labels=frozenset([u'M-relnotes'])):
        return:
         issue fixed in this milestone."""
     return get_issues(repo, milestone, keep_labels=keep_labels,
-        state=u'closed')
+        state='closed')

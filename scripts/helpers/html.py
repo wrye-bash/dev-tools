@@ -30,71 +30,71 @@ from collections import OrderedDict
 # MARKDOWN ========================================
 def markdown_list(items, f=lambda x: x):
     for i in items:
-        yield u'- ' + f(i)
+        yield '- ' + f(i)
 
 def markdown_link(text, href):
-    return u'[%s](%s)' % (text, href)
+    return '[%s](%s)' % (text, href)
 
 # https://www.markdownguide.org/basic-syntax/#escaping-characters
 _md_escapes = OrderedDict([
-    (u'\\', u'\\\\'),
-    (u'`',  u'\\`'),
-    (u'*',  u'\\*'),
-    (u'_',  u'\\_'),
-    (u'{',  u'\\{'),
-    (u'}',  u'\\}'),
-    (u'[',  u'\\['),
-    (u']',  u'\\]'),
-    (u'(',  u'\\('),
-    (u')',  u'\\)'),
-    (u'#',  u'\\#'),
-    (u'+',  u'\\+'),
-    (u'-',  u'\\-'),
-    (u'.',  u'\\.'),
-    (u'!',  u'\\!'),
-    (u'|',  u'\\|'),
+    ('\\', '\\\\'),
+    ('`',  '\\`'),
+    ('*',  '\\*'),
+    ('_',  '\\_'),
+    ('{',  '\\{'),
+    ('}',  '\\}'),
+    ('[',  '\\['),
+    (']',  '\\]'),
+    ('(',  '\\('),
+    (')',  '\\)'),
+    ('#',  '\\#'),
+    ('+',  '\\+'),
+    ('-',  '\\-'),
+    ('.',  '\\.'),
+    ('!',  '\\!'),
+    ('|',  '\\|'),
 ])
 
 def markdown_escape(text):
-    for target, sub in _md_escapes.iteritems():
+    for target, sub in _md_escapes.items():
         text = text.replace(target, sub)
     return text
 
 # BBCODE ========================================
 def li(text):
-    return u'[*]' + text + u'[/*]'
+    return '[*]' + text + '[/*]'
 
 def bb_list(items):
-    yield u'[LIST]'
+    yield '[LIST]'
     for i in items:
         yield li(i)
-    yield u'[/LIST]'
+    yield '[/LIST]'
 
 def spoiler(text):
-    yield u'[spoiler]'
+    yield '[spoiler]'
     yield text
-    yield u'[/spoiler]'
+    yield '[/spoiler]'
 
 def size(num, text):
-    return u'[size=' + str(num) + u']' + text + u'[/size]'
+    return '[size=' + str(num) + ']' + text + '[/size]'
 
 # HTML ========================================
 def h3(text):
-    return u'<h3>' + text + u'</h3>'
+    return '<h3>' + text + '</h3>'
 
 def ul(items, f=lambda x: x):
-    yield u'\n<ul>'
+    yield '\n<ul>'
     for i in items:
-        yield u'<li>' + f(i) + u'</li>'
-    yield u'</ul>'
+        yield '<li>' + f(i) + '</li>'
+    yield '</ul>'
 
 def a(text, href):
-    return u'<a href="%s">%s</a>' % (href, text)
+    return '<a href="%s">%s</a>' % (href, text)
 
 def closed_issue(issue):
     """String representation of a closed issue with assignee."""
-    assignees = u''
+    assignees = ''
     if issue.assignees:
-        assignees = u' [%s]' % u', '.join(
+        assignees = ' [%s]' % ', '.join(
             sorted(assignee.login for assignee in issue.assignees))
-    return u'#%u: ' % issue.number + issue.title + assignees
+    return '#%u: ' % issue.number + issue.title + assignees

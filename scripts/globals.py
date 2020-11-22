@@ -28,16 +28,16 @@ the scripts are to be used for other repos too we need a repo factory here."""
 
 import os
 
-REPO_NAME = u'wrye-bash'
-ORG_NAME = u'wrye-bash'
+REPO_NAME = 'wrye-bash'
+ORG_NAME = 'wrye-bash'
 
-DEFAULT_MILESTONE_TITLE = u'Bug fixes and enhancements'
-DEFAULT_AUTHORS = u'Various community members'
+DEFAULT_MILESTONE_TITLE = 'Bug fixes and enhancements'
+DEFAULT_AUTHORS = 'Various community members'
 
 # OUTPUT & TEMPLATES DIRs =====================================================
-OUT_DIR = u'out'
+OUT_DIR = 'out'
 
-def out_path(dir_=OUT_DIR, name=u'out.txt'):
+def out_path(dir_=OUT_DIR, name='out.txt'):
     """Returns a path joining the dir_ and name parameters. Will create the
     dirs in dir_ if not existing.
 
