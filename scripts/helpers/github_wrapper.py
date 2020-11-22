@@ -49,7 +49,7 @@ def get_repo(org_name, repo_name):
     try:
         # Look if we've got a token to use
         parser = ConfigParser()
-        parser.read(os.path.join(os.getcwd(), u'github.ini'))
+        parser.read(os.path.join(os.getcwdu(), u'github.ini'))
         token = parser.get('OAuth', 'token')
         if token != u'CHANGEME':
             access_token = token

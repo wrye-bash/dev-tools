@@ -28,7 +28,7 @@ changelog for a milestone. It then copies the Wrye Bash Version History.html to
  the wrye-bash and wrye-bash.github.io repositories which are supposed to lie
  on the parent directory of the dir this script is run from."""
 
-from generate_changelog import writeChangelog
+from generate_changelog import write_changelog
 from globals import out_path
 from cli_parser import Parser
 
@@ -57,7 +57,7 @@ def writeVersionHistory(milestone, editor):
     ## from the user's local repo.  For a more reliable method, we
     ## can get the recent version from git itself.
     localSrc = u'Wrye Bash Version History.html'
-    mainSrc = os.path.join(os.path.dirname(os.getcwd()),
+    mainSrc = os.path.join(os.path.dirname(os.getcwdu()),
                            WRYE_BASH_REPO_DOCS_DIR,
                            localSrc)
     out_ = out_path(name=localSrc)
@@ -76,7 +76,7 @@ def writeVersionHistory(milestone, editor):
         print('Wrye Bash Version History.html is not present for editing.'
               '  The new changelog will be inserted into it.')
         return
-    lc = writeChangelog(None, milestone)
+    lc = write_changelog(None, milestone)
     if editor:
         print('Please review the changelog (mind the date): ' + str(lc))
         subprocess.call([editor, str(lc)])  # TODO call_check
@@ -99,11 +99,11 @@ def writeVersionHistory(milestone, editor):
             'It will then be copied to the main repository for you to commit')
         subprocess.call([editor, str(out_)])  # TODO call_check
     raw_input('Press Enter to copy the html to the main and io repos.')
-    docsDir = os.path.join(os.path.dirname(os.getcwd()),
+    docsDir = os.path.join(os.path.dirname(os.getcwdu()),
         WRYE_BASH_REPO_DOCS_DIR)
     print('Copying to ' + str(docsDir))
     shutil.copy(out_, docsDir)
-    docsDir = os.path.join(os.path.dirname(os.getcwd()),
+    docsDir = os.path.join(os.path.dirname(os.getcwdu()),
         IO_REPO_DOCS_DIR)
     # TODO: launch git gui & to inspect the diff - GitPython
     # TODO soft link instead of copying
