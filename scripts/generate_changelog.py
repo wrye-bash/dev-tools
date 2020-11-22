@@ -37,7 +37,7 @@ CHANGELOG_TITLE_SIZE = 5
 def _parseArgs():
     return Parser(description='Generate Changelog').editor().milestone(
         help_='Specify the milestone for latest release.').authors(
-    ).offline().overwrite().milestoneTitle().parse()
+    ).offline().overwrite().milestone_title().parse()
 
 from helpers.html import h3, ul, bbList, size, markdownList, spoiler, a, \
     markdown_link, markdown_escape
