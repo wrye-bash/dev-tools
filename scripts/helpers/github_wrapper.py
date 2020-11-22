@@ -153,54 +153,30 @@ class _IssueCache(object):
         issue_filter = _IssueCache.IssueFilter(repo, milestone, state)
         _IssueCache.CACHE[issue_filter] = issues
 
-def get_issues(repo, milestone=None, keep_labels=frozenset(),
-        skip_labels=frozenset(), state=None):
+def get_issues(repo, milestone=None, keep_labels=frozenset(), state=None):
     """Return a _list_ of applicable issues for the given game and milestone
         repo: github.Repository object
         milestone: github.Milestone object
         keep_labels: set of labels an issue must partake to, to be included
           in the results - by default all labels including no labels at all
-        skip_labels: set of labels to skip, by default empty - if an issue
-         has labels in this set it will be skipped
-            Keep/skip Labels example:
-                skip_labels = {"git"}
-                keep_labels = {"bug"}
-                issue.labels = ['enhancement'] // skipped
-                issue.labels = ['bug', 'git'] // skipped
-                issue.labels = ['bug'] // kept
-                issue.labels = [] // skipped
         state: open or closed - by default 'all'
        return: a list of issues
         :rtype: github.PaginatedList.PaginatedList[github.Issue.Issue]
     TODO: add sort, direction as needed, list comprehensions
     """
     current = _IssueCache.hit(repo, milestone, state)
-    if not keep_labels and not skip_labels:  # no label filters, return All
+    if not keep_labels: # no label filters, return All
         return current
-    # return only issues that partake in keep_labels, and not in skip_labels
+    # return only issues that partake in keep_labels
     result = []
-    if not keep_labels and skip_labels:
-        for issue in current:
-            labels = set(x.name for x in issue.labels)
-            if not skip_labels & labels:
-                result.append(issue)
-        return result
-    elif keep_labels and skip_labels:
-        keep_labels = keep_labels - skip_labels
-        for issue in current:
-            labels = set(x.name for x in issue.labels)
-            if keep_labels & labels and not skip_labels & labels:
-                result.append(issue)
-        return result
-    else:
-        for issue in current:
-            labels = set(x.name for x in issue.labels)
-            if keep_labels & labels:
-                result.append(issue)
-        return result
+    for issue in current:
+        labels = set(x.name for x in issue.labels)
+        if keep_labels & labels:
+            result.append(issue)
+    return result
 
-def get_closed_issues(repo, milestone, keep_labels=frozenset([u'M-relnotes']),
-        skip_labels=frozenset()): # TODO move to globals.py
+# TODO move to globals.py
+def get_closed_issues(repo, milestone, keep_labels=frozenset([u'M-relnotes'])):
     """Return a list of closed issues for the given milestone
         repo: github.Repository object
         milestone: github.Milestone object
@@ -208,4 +184,4 @@ def get_closed_issues(repo, milestone, keep_labels=frozenset([u'M-relnotes']),
        return:
         issue fixed in this milestone."""
     return get_issues(repo, milestone, keep_labels=keep_labels,
-        skip_labels=skip_labels, state=u'closed')
+        state=u'closed')

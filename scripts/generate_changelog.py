@@ -84,7 +84,7 @@ def _changelog_markdown(issues, title, outFile):
 
 # API =========================================================================
 import os.path
-from globals import SKIP_LABELS, outPath, DEFAULT_MILESTONE_TITLE
+from globals import out_path, DEFAULT_MILESTONE_TITLE
 import github_login
 from helpers.github_wrapper import get_closed_issues
 
@@ -97,7 +97,7 @@ def writeChangelog(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
     """Write 'Changelog - <milestone>.txt'"""
     if issue_list is None:
         issue_list, _ = __get_issue_list(num)
-    outFile = outPath(dir_=CHANGELOGS_DIR,
+    outFile = out_path(dir_=CHANGELOGS_DIR,
                       name=u'Changelog - ' + num + extension)
     print outFile
     if os.path.isfile(outFile) and not overwrite: return outFile
@@ -138,7 +138,7 @@ def __get_issue_list(milesNum, editor=None, opts=None):
         git_ = github_login.hub(milesNum)
         if git_ is not None:
             repo, milestone = git_[0], git_[1]
-            issues = get_closed_issues(repo, milestone, skip_labels=SKIP_LABELS)
+            issues = get_closed_issues(repo, milestone)
             issue_list = map(closed_issue, issues)
             issue_list = _dump_plain_issue_list(editor, issue_list, issue_list_txt)
     else: # work offline, if it blows on you you get a black star for not RTM
@@ -147,7 +147,7 @@ def __get_issue_list(milesNum, editor=None, opts=None):
     return issue_list, milestone
 
 def _dump_plain_issue_list(editor, issue_list, txt_):
-    with open(outPath(dir_=CHANGELOGS_DIR, name=txt_), 'w') as out:
+    with open(out_path(dir_=CHANGELOGS_DIR, name=txt_), 'w') as out:
         out.write("\n".join(issue_list))
     if editor:
         print('Please edit the issues as you want them to appear on '
@@ -158,7 +158,7 @@ def _dump_plain_issue_list(editor, issue_list, txt_):
     return issue_list
 
 def _read_plain_issue_list(txt_):
-    with open(outPath(dir_=CHANGELOGS_DIR, name=txt_), 'r') as in_:
+    with open(out_path(dir_=CHANGELOGS_DIR, name=txt_), 'r') as in_:
         return in_.read().splitlines()
 
 if __name__ == '__main__':

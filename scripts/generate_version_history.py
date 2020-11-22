@@ -29,7 +29,7 @@ changelog for a milestone. It then copies the Wrye Bash Version History.html to
  on the parent directory of the dir this script is run from."""
 
 from generate_changelog import writeChangelog
-from globals import outPath
+from globals import out_path
 from cli_parser import Parser
 
 # Functions ===================================================================
@@ -60,7 +60,7 @@ def writeVersionHistory(milestone, editor):
     mainSrc = os.path.join(os.path.dirname(os.getcwd()),
                            WRYE_BASH_REPO_DOCS_DIR,
                            localSrc)
-    out_ = outPath(name=localSrc)
+    out_ = out_path(name=localSrc)
     copied = False
     if not os.path.isfile(mainSrc):
         print('Wrye Bash Version History.html not found in the wrye-bash '

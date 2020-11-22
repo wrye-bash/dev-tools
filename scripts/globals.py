@@ -26,33 +26,24 @@
 posts. Those constants are special to the wrye-bash/wrye-bash repository. If
 the scripts are to be used for other repos too we need a repo factory here."""
 
+import os
+
 REPO_NAME = u'wrye-bash'
 ORG_NAME = u'wrye-bash'
 
-# GAMES =======================================================================
-MAIN_LABELS = {'bug', 'enhancement'}
-REJECTED_LABELS = {'R-duplicate', 'R-rejected', 'R-wont-fix', 'R-works-for-me',
-                   'R-invalid'}
-DEV_LABELS = {'C-discussion', 'C-goal', 'C-question', 'C-todo'}
-# unions
-SKIP_LABELS = DEV_LABELS | REJECTED_LABELS
-
-DEFAULT_MILESTONE_TITLE = 'Bug fixes and enhancements'
-DEFAULT_AUTHORS = 'Various community members'
+DEFAULT_MILESTONE_TITLE = u'Bug fixes and enhancements'
+DEFAULT_AUTHORS = u'Various community members'
 
 # OUTPUT & TEMPLATES DIRs =====================================================
-import os
-
 OUT_DIR = u'out'
 
-def outPath(dir_=OUT_DIR, subdir=u'', name=u"out.txt"):
+def out_path(dir_=OUT_DIR, name=u'out.txt'):
     """Returns a path joining the dir_ and name parameters. Will create the
     dirs in dir_ if not existing.
 
     :param dir_: a directory path
     :param name: a filename
     """
-    dir_ = os.path.join(dir_, subdir)
     if not os.path.exists(dir_):
         os.makedirs(dir_)
     return os.path.join(dir_, name)
