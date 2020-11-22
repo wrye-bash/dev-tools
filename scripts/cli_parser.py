@@ -139,6 +139,8 @@ class Parser(object):
         if not os.path.exists(check):
             print 'Specified editor does not exists, assuming --no-editor'
             args.no_editor = True
+        else:
+            args.editor = check
         if args.no_editor: args.editor = None
 
     def parse(self):
