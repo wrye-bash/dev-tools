@@ -39,7 +39,7 @@ def _parseArgs():
         help_='Specify the milestone for latest release.').authors(
     ).offline().overwrite().milestone_title().parse()
 
-from helpers.html import h3, ul, bbList, size, markdownList, spoiler, a, \
+from helpers.html import h3, ul, bb_list, size, markdown_list, spoiler, a, \
     markdown_link, markdown_escape
 
 def _title(title, authors=None):
@@ -47,12 +47,12 @@ def _title(title, authors=None):
     if not authors: return title
     return title + ' [' + ", ".join(authors) + ']'
 
-from helpers.html import closedIssue
+from helpers.html import closed_issue
 
 def _changelog_bbcode(issues, title, outFile):
     with open(outFile, u'w') as out:
         out.write(size(CHANGELOG_TITLE_SIZE, _title(title)))
-        out.write(u'\n'.join(spoiler('\n'.join(bbList(issues)))))
+        out.write(u'\n'.join(spoiler('\n'.join(bb_list(issues)))))
         out.write(u'\n')
     return outFile
 
@@ -78,7 +78,7 @@ def _changelog_markdown(issues, title, outFile):
     with open(outFile, u'w') as out:
         out.write(markdown_escape(_title(title)))
         out.write(u'\n\n')
-        out.write(u'\n'.join(markdownList(issues, f=add_link)))
+        out.write(u'\n'.join(markdown_list(issues, f=add_link)))
         out.write(u'\n')
     return outFile
 
@@ -139,7 +139,7 @@ def __get_issue_list(milesNum, editor=None, opts=None):
         if git_ is not None:
             repo, milestone = git_[0], git_[1]
             issues = get_closed_issues(repo, milestone, skip_labels=SKIP_LABELS)
-            issue_list = map(closedIssue, issues)
+            issue_list = map(closed_issue, issues)
             issue_list = _dump_plain_issue_list(editor, issue_list, issue_list_txt)
     else: # work offline, if it blows on you you get a black star for not RTM
         issue_list = _read_plain_issue_list(issue_list_txt)
