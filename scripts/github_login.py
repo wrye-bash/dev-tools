@@ -21,28 +21,30 @@
 #  https://github.com/wrye-bash
 #
 # =============================================================================
+from __future__ import absolute_import, print_function
+
 from globals import ORG_NAME, REPO_NAME
 from helpers import github_wrapper
 
-def _getRepo():
-    print "Getting repository..."
+def _get_repo():
+    print(u'Getting repository...')
     repo = github_wrapper.get_repo(ORG_NAME, REPO_NAME)
     if not repo:
-        print 'Could not find repository:', REPO_NAME, ' - aborting'
+        print(u'Could not find repository: %s - aborting' % REPO_NAME)
     return repo
 
-def _getMiles(milestoneNum, repo):
-    print "Getting Milestone..."
-    milestone = github_wrapper.get_milestone(repo, milestoneNum)
+def _get_miles(milestone_num, repo):
+    print(u'Getting Milestone...')
+    milestone = github_wrapper.get_milestone(repo, milestone_num)
     if not milestone:
-        print 'Could not find milestone:', milestoneNum, ' - aborting'
+        print(u'Could not find milestone: %s - aborting' % milestone_num)
     return milestone
 
-def hub(milestoneNum=None):
-    repo = _getRepo()
+def hub(milestone_num=None):
+    repo = _get_repo()
     if not repo: return
     milestone = None
-    if milestoneNum:
-        milestone = _getMiles(milestoneNum, repo)
+    if milestone_num:
+        milestone = _get_miles(milestone_num, repo)
         if not milestone: return
     return repo, milestone
