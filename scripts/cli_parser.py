@@ -26,14 +26,15 @@
 """This module's Parse class is responsible for parsing the command line
 arguments to the scripts. Default behavior of the scripts is defined in this
 class"""
+
 import argparse
 import os
+
 from globals import DEFAULT_MILESTONE_TITLE, DEFAULT_AUTHORS
 
 PROMPT = 'PROMPT'
 
 class Parser(object):
-
     def __init__(self, description, add_h=True):
         self.parser = argparse.ArgumentParser(description=description,
                         add_help=add_h,
@@ -43,71 +44,51 @@ class Parser(object):
 
     def milestone(self, help_='Specify the milestone for latest release.'):
         action = self.parser.add_argument('-m', '--milestone',
-                                          dest='milestone',
-                                          default=PROMPT,
-                                          type=str,
-                                          help=help_)
+            dest='milestone', default=PROMPT, type=str, help=help_)
         self.actions.append(action)
         return self
 
-    def milestoneTitle(self,
-                       help_='Specify a title for the milestone changelog.'):
-        action = self.parser.add_argument('-t', '--title',
-                                          dest='title',
-                                          default=DEFAULT_MILESTONE_TITLE,
-                                          type=str,
-                                          help=help_)
+    def milestone_title(self,
+            help_='Specify a title for the milestone changelog.'):
+        action = self.parser.add_argument('-t', '--title', dest='title',
+            default=DEFAULT_MILESTONE_TITLE, type=str, help=help_)
         self.actions.append(action)
         return self
 
     def overwrite(self):
-        self.parser.add_argument('-o', '--overwrite',
-                                 dest='overwrite',
-                                 action='store_false',
-                                 help='Do NOT overwrite existing file(s)')
+        self.parser.add_argument('-o', '--overwrite', dest='overwrite',
+            action='store_false', help='Do NOT overwrite existing file(s)')
         return self
 
     def offline(self):
-        self.parser.add_argument('--offline',
-                                 dest='offline',
-                                 action='store_true',
-                                 help='Do not hit github - you must have the '
-                                      'issue list available offline')
+        self.parser.add_argument('--offline', dest='offline',
+            action='store_true', help='Do not hit github - you must have '
+                                       'the issue list available offline')
         return self
 
     def editor(self, help_='Path to editor executable to launch.',
-               helpNoEditor='Never launch an editor'):
-        editorGroup = self.parser.add_mutually_exclusive_group()
-        editorGroup.add_argument('-e', '--editor',
-                                 dest='editor',
-                                 default=os.path.expandvars(
-                                     os.path.join(
-                                         u'%PROGRAMFILES%', u'Notepad++',
-                                         u'notepad++.exe')),
-                                 type=str,
-                                 help=help_)
-        editorGroup.add_argument('-ne', '--no-editor',
-                                 dest='no_editor',
-                                 action='store_true',
-                                 default=False,
-                                 help=helpNoEditor)
+               help_no_editor='Never launch an editor'):
+        editor_group = self.parser.add_mutually_exclusive_group()
+        editor_group.add_argument('-e', '--editor', dest='editor',
+            default=os.path.expandvars(os.path.join(
+                '%PROGRAMFILES%', 'Notepad++', 'notepad++.exe')),
+            type=str, help=help_)
+        editor_group.add_argument('-ne', '--no-editor', dest='no_editor',
+            action='store_true', default=False, help=help_no_editor)
         return self
 
     def authors(self, help_='Specify the authors (comma separated strings as '
                             'in: Me,"Some Others".'):
-        action = self.parser.add_argument('--authors',
-                                          dest='authors',
-                                          default=DEFAULT_AUTHORS,
-                                          type=str,
-                                          help=help_)
+        action = self.parser.add_argument('--authors', dest='authors',
+            default=DEFAULT_AUTHORS, type=str, help=help_)
         self.actions.append(action)
         return self
 
     @staticmethod
-    def getEditor(args):
+    def get_editor(args):
         """Handles default fallbacks for the --editor option"""
         if not hasattr(args, 'editor'):
-            if  hasattr(args, 'no_editor'):
+            if hasattr(args, 'no_editor'):
                 args.editor = None
             return
         if os.path.exists(args.editor):
@@ -118,9 +99,9 @@ class Parser(object):
         parts = path.split(os.path.sep)
         # If 'Program Files' was in the path, try 'Program Files (x86)',
         # and vice versa
-        part1 = os.path.normcase(u'Program Files')
-        part2 = os.path.normcase(u'Program Files (x86)')
-        check = u''
+        part1 = os.path.normcase('Program Files')
+        part2 = os.path.normcase('Program Files (x86)')
+        check = ''
         if part1 in parts:
             idex = parts.index(part1)
             parts[idex] = part2
@@ -132,16 +113,17 @@ class Parser(object):
         if check and os.path.exists(check):
             args.editor = check
             return
-        print 'Specified editor does not exist, please enter a valid path:'
-        check = raw_input('>')
+        print('Specified editor does not exist, please enter a valid path:')
+        check = input('>')
         if not check:
             args.no_editor = True
         if not os.path.exists(check):
-            print 'Specified editor does not exists, assuming --no-editor'
+            print('Specified editor does not exists, assuming --no-editor')
             args.no_editor = True
         else:
             args.editor = check
-        if args.no_editor: args.editor = None
+        if args.no_editor:
+            args.editor = None
 
     def parse(self):
         """
@@ -154,9 +136,9 @@ class Parser(object):
         # see: http://stackoverflow.com/a/21588198/281545
         for a in self.actions:
             if getattr(args, a.dest) == a.default and a.default == PROMPT:
-                print 'Please specify', a.dest
-                values = raw_input('>')
+                print('Please specify %s' % a.dest)
+                values = input('>')
                 setattr(args, a.dest, values)
         # Special handler for --editor:
-        Parser.getEditor(args)
+        Parser.get_editor(args)
         return args

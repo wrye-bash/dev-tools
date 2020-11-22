@@ -28,97 +28,73 @@ are generating."""
 from collections import OrderedDict
 
 # MARKDOWN ========================================
-def markdownList(items, f=lambda x: x):
+def markdown_list(items, f=lambda x: x):
     for i in items:
-        yield u'- ' + f(i)
+        yield '- ' + f(i)
 
 def markdown_link(text, href):
-    return u'[%s](%s)' % (text, href)
+    return '[%s](%s)' % (text, href)
 
- # https://www.markdownguide.org/basic-syntax/#escaping-characters
+# https://www.markdownguide.org/basic-syntax/#escaping-characters
 _md_escapes = OrderedDict([
-    (u'\\', u'\\\\'),
-    (u'`',  u'\\`'),
-    (u'*',  u'\\*'),
-    (u'_',  u'\\_'),
-    (u'{',  u'\\{'),
-    (u'}',  u'\\}'),
-    (u'[',  u'\\['),
-    (u']',  u'\\]'),
-    (u'(',  u'\\('),
-    (u')',  u'\\)'),
-    (u'#',  u'\\#'),
-    (u'+',  u'\\+'),
-    (u'-',  u'\\-'),
-    (u'.',  u'\\.'),
-    (u'!',  u'\\!'),
-    (u'|',  u'\\|'),
+    ('\\', '\\\\'),
+    ('`',  '\\`'),
+    ('*',  '\\*'),
+    ('_',  '\\_'),
+    ('{',  '\\{'),
+    ('}',  '\\}'),
+    ('[',  '\\['),
+    (']',  '\\]'),
+    ('(',  '\\('),
+    (')',  '\\)'),
+    ('#',  '\\#'),
+    ('+',  '\\+'),
+    ('-',  '\\-'),
+    ('.',  '\\.'),
+    ('!',  '\\!'),
+    ('|',  '\\|'),
 ])
+
 def markdown_escape(text):
-    for target, sub in _md_escapes.iteritems():
+    for target, sub in _md_escapes.items():
         text = text.replace(target, sub)
     return text
 
 # BBCODE ========================================
-def color(colour, text):
-    if colour:
-        return u'[color=' + colour + u']' + text + u'[/color]'
-    else:
-        return text
-
-def font(daFont, text):
-    return u'[font=' + daFont + u']' + text + u'[/font]'
-
-def url(url_, title):
-    return u'[url=' + url_ + u']' + title + u'[/url]'
-
-def bold(text):
-    return u'[b]' + text + u'[/b]'
-
-def center(text):
-    return u'[center]' + text + u'[/center]'
-
-def strike(text):
-    return u'[s]' + text + u'[/s]'
-
 def li(text):
-    return u'[*]' + text + u'[/*]'
+    return '[*]' + text + '[/*]'
 
-def bbList(items, f=lambda x: x, *args):
-    yield u'[LIST]'
-    if not args:
-        for i in items:
-            yield li(f(i))
-    else:
-        for i in items:
-            yield li(f(i, *args))
-    yield u'[/LIST]'
+def bb_list(items):
+    yield '[LIST]'
+    for i in items:
+        yield li(i)
+    yield '[/LIST]'
 
 def spoiler(text):
-    yield u'[spoiler]'
+    yield '[spoiler]'
     yield text
-    yield u'[/spoiler]'
+    yield '[/spoiler]'
 
 def size(num, text):
-    return u'[size=' + str(num) + u']' + text + u'[/size]'
+    return '[size=' + str(num) + ']' + text + '[/size]'
 
 # HTML ========================================
 def h3(text):
-    return u'<h3>' + text + u'</h3>'
+    return '<h3>' + text + '</h3>'
 
 def ul(items, f=lambda x: x):
-    yield u'\n<ul>'
+    yield '\n<ul>'
     for i in items:
-        yield u'<li>' + f(i) + u'</li>'
-    yield u'</ul>'
+        yield '<li>' + f(i) + '</li>'
+    yield '</ul>'
 
 def a(text, href):
-    return u'<a href="%s">%s</a>' % (href, text)
+    return '<a href="%s">%s</a>' % (href, text)
 
-def closedIssue(issue):
+def closed_issue(issue):
     """String representation of a closed issue with assignee."""
-    assignees = u''
+    assignees = ''
     if issue.assignees:
-        assignees = u' [%s]' % u', '.join(
-            sorted(a.login for a in issue.assignees))
-    return u'#%u: ' % issue.number + issue.title + assignees
+        assignees = ' [%s]' % ', '.join(
+            sorted(assignee.login for assignee in issue.assignees))
+    return '#%u: ' % issue.number + issue.title + assignees
