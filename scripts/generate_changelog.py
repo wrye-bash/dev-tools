@@ -86,9 +86,7 @@ def _changelog_markdown(issues, title, outFile):
 import os.path
 from globals import SKIP_LABELS, outPath, DEFAULT_MILESTONE_TITLE
 import github_login
-from helpers.github_wrapper import getClosedIssues
-
-# def getClosedIssues(*args, **kwargs): return () # testing, don't hit github
+from helpers.github_wrapper import get_closed_issues
 
 CHANGELOGS_DIR = os.path.join(os.getcwd(), u'ChangeLogs')
 print(u'Current working directory is %s' % os.getcwd())
@@ -140,7 +138,7 @@ def __get_issue_list(milesNum, editor=None, opts=None):
         git_ = github_login.hub(milesNum)
         if git_ is not None:
             repo, milestone = git_[0], git_[1]
-            issues = getClosedIssues(repo, milestone, skip_labels=SKIP_LABELS)
+            issues = get_closed_issues(repo, milestone, skip_labels=SKIP_LABELS)
             issue_list = map(closedIssue, issues)
             issue_list = _dump_plain_issue_list(editor, issue_list, issue_list_txt)
     else: # work offline, if it blows on you you get a black star for not RTM

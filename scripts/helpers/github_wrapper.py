@@ -25,16 +25,18 @@
 """This module wraps github API calls. Features caching.
  Do not import from globals here !"""
 
+from __future__ import absolute_import, print_function
+
 from ConfigParser import ConfigParser, NoOptionError, NoSectionError
 import os
 
 import github
 
-ALL_ISSUES = 'all'
+ALL_ISSUES = u'all'
 DEFAULT_ISSUE_STATE = ALL_ISSUES
 DEFAULT_MILESTONE = None
 
-def getRepo(orgName, repoName):
+def get_repo(org_name, repo_name):
     """Get a githubapi repository object for the specified repository.
         git: github.Github object for the user
         orgName: display name of the orginizations for the repository
@@ -54,7 +56,7 @@ def getRepo(orgName, repoName):
     except (NoOptionError, NoSectionError, OSError):
         pass # File is invalid or could not be found, proceed without token
     git = github.Github(access_token)
-    repo = git.get_repo(orgName + '/' + repoName)
+    repo = git.get_repo(org_name + u'/' + repo_name)
     try:
         # The github library returns a repo object even if the repo
         # doesn't exist.  Test to see if it's a valid repository by
@@ -66,17 +68,17 @@ def getRepo(orgName, repoName):
     except github.UnknownObjectException:
         return None
 
-def getMilestone(repo, milestoneTitle):
+def get_milestone(repo, ms_title):
     """Returns the github.Milestone object for a specified milestone."""
     for m in repo.get_milestones(state=u'all'):
-        if m.title == milestoneTitle:
+        if m.title == ms_title:
             return m
     return None
 
 class _IssueCache(object):
-    CACHE = {}  # key: an IssueFilter --> value: a list of issues
-    ALL_LABELS = {}  # key is an IssueFilter (but only Repo matters, TODO) and
-    # value a list of issue labels for this repo - should be a set probably
+    CACHE = {} # key: an IssueFilter --> value: a list of issues
+    ALL_LABELS = {} # key is an IssueFilter (TODO but only Repo matters)
+    # and value a list of issue labels for this repo - should be a set probably
     counter = 0
 
     class IssueFilter(object):
@@ -113,13 +115,13 @@ class _IssueCache(object):
 
     @staticmethod
     def hit(repo, milestone, state):
-        issueFilter = _IssueCache.IssueFilter(repo, milestone, state)
-        current = _IssueCache.CACHE.get(issueFilter)
+        issue_filter = _IssueCache.IssueFilter(repo, milestone, state)
+        current = _IssueCache.CACHE.get(issue_filter)
         if not current:
             # search in the cache for some superset of issues already fetched
             super_ = None
-            for key,issues in _IssueCache.CACHE.iteritems():
-                if issueFilter < key:
+            for key, issues in _IssueCache.CACHE.iteritems():
+                if issue_filter < key:
                     super_ = issues
                     break
             if super_:
@@ -135,35 +137,24 @@ class _IssueCache(object):
                 return current
             # else fetch them...
             _IssueCache.counter += 1
-            print "Hitting github for", _IssueCache.counter, "time"
+            print(u'Hitting github %u time(s)' % _IssueCache.counter)
             if milestone:  # FIXME - API won't let me specify None for all
                 # milestone=github.GithubObject.NotSet ...
-                current = repo.get_issues(milestone,
-                                          state=issueFilter.state,
-                                          sort='created',
-                                          direction='desc')
+                current = repo.get_issues(milestone, state=issue_filter.state,
+                    sort=u'created', direction=u'desc')
             else:
-                current = repo.get_issues(state=issueFilter.state,
-                                          sort='created',
-                                          direction='desc')
+                current = repo.get_issues(state=issue_filter.state,
+                    sort=u'created', direction=u'desc')
             _IssueCache._update(repo, milestone, state, current)
         return current
 
     @staticmethod
     def _update(repo, milestone, state, issues):  # not thread safe
-        issueFilter = _IssueCache.IssueFilter(repo, milestone, state)
-        _IssueCache.CACHE[issueFilter] = issues
+        issue_filter = _IssueCache.IssueFilter(repo, milestone, state)
+        _IssueCache.CACHE[issue_filter] = issues
 
-    @staticmethod
-    def allLabels(repo):
-        issueFilter = _IssueCache.IssueFilter(repo)
-        all_ = _IssueCache.ALL_LABELS.get(issueFilter)
-        if not all_:
-            all_ = _IssueCache.ALL_LABELS[issueFilter] = repo.get_labels()
-        return set(all_)
-
-def getIssues(repo, milestone=None, keep_labels=set(), skip_labels=set(),
-              state=None):
+def get_issues(repo, milestone=None, keep_labels=frozenset(),
+        skip_labels=frozenset(), state=None):
     """Return a _list_ of applicable issues for the given game and milestone
         repo: github.Repository object
         milestone: github.Milestone object
@@ -208,27 +199,13 @@ def getIssues(repo, milestone=None, keep_labels=set(), skip_labels=set(),
                 result.append(issue)
         return result
 
-def getUnlabeledIssues(repo, milestone=None, state=DEFAULT_ISSUE_STATE):
-    return getIssues(repo, milestone, state=state,
-                     skip_labels=_IssueCache.allLabels(repo))
-
-def getClosedIssues(repo, milestone, keep_labels={'C-bug', 'C-enhancement'},
-                    skip_labels=set()): # TODO move to globals.py
+def get_closed_issues(repo, milestone, keep_labels=frozenset([u'M-relnotes']),
+        skip_labels=frozenset()): # TODO move to globals.py
     """Return a list of closed issues for the given milestone
         repo: github.Repository object
         milestone: github.Milestone object
         keep_labels: set of labels for result to partake
        return:
         issue fixed in this milestone."""
-    return getIssues(repo, milestone, keep_labels=keep_labels,
-                     skip_labels=skip_labels,
-                     state='closed')
-
-def allLabels(repo):
-    return _IssueCache.allLabels(repo)
-
-class GithubApiException(Exception):
-    def __init__(self, message):
-        # Call the base class constructor with the parameters it needs
-        Exception.__init__(self, message)
-        self.message = message
+    return get_issues(repo, milestone, keep_labels=keep_labels,
+        skip_labels=skip_labels, state=u'closed')

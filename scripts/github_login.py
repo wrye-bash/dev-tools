@@ -26,14 +26,14 @@ from helpers import github_wrapper
 
 def _getRepo():
     print "Getting repository..."
-    repo = github_wrapper.getRepo(ORG_NAME, REPO_NAME)
+    repo = github_wrapper.get_repo(ORG_NAME, REPO_NAME)
     if not repo:
         print 'Could not find repository:', REPO_NAME, ' - aborting'
     return repo
 
 def _getMiles(milestoneNum, repo):
     print "Getting Milestone..."
-    milestone = github_wrapper.getMilestone(repo, milestoneNum)
+    milestone = github_wrapper.get_milestone(repo, milestoneNum)
     if not milestone:
         print 'Could not find milestone:', milestoneNum, ' - aborting'
     return milestone
