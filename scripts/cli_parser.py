@@ -1,4 +1,4 @@
-#!/usr/env/bin python2-32
+#!/usr/env/bin python3
 # -*- coding: utf-8 -*-
 #
 # GPL License and Copyright Notice ============================================
