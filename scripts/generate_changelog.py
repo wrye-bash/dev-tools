@@ -24,6 +24,8 @@
 
 """This module generates the changelog for a milestone reading its metadata."""
 
+import base64
+import io
 import os.path
 import subprocess
 import sys
@@ -54,45 +56,45 @@ def _title(title, authors=None):
     if not authors: return title
     return title + ' [' + ', '.join(authors) + ']'
 
-def _changelog_bbcode(issues, title, out_file):
-    with open(out_file, 'w') as out:
-        out.write(size(CHANGELOG_TITLE_SIZE, _title(title)))
-        out.write('\n'.join(spoiler('\n'.join(bb_list(issues)))))
-        out.write('\n')
-    return out_file
+def _changelog_bbcode(issues, title, out):
+    out.write(size(CHANGELOG_TITLE_SIZE, _title(title)))
+    out.write('\n'.join(spoiler('\n'.join(bb_list(issues)))))
+    out.write('\n')
 
-def _changelog_txt(issues, title, out_file):
+def _changelog_txt(issues, title, out):
     issue_template = 'https://github.com/wrye-bash/wrye-bash/issues/%u'
     def add_link(issue_line):
         issue_num, issue_rest = issue_line.split(':', 1)
         issue_link = a(issue_num, href=issue_template % int(issue_num[1:]))
         return issue_link + ':' + html_escape(issue_rest)
-    with open(out_file, 'w') as out:
-        out.write(h3(html_escape(_title(title))))
-        out.write('\n'.join(ul(issues, f=add_link)))
-        out.write('\n\n')  # needs blank line for Version History.html
-    return out_file
+    out.write(h3(html_escape(_title(title))))
+    out.write('\n'.join(ul(issues, f=add_link)))
+    out.write('\n\n')  # needs blank line for Version History.html
 
-def _changelog_markdown(issues, title, out_file):
+def _changelog_markdown(issues, title, out):
     issue_template = 'https://github.com/wrye-bash/wrye-bash/issues/%u'
     def add_link(issue_line):
         issue_num, issue_rest = issue_line.split(':', 1)
         issue_link = markdown_link(issue_num,
             href=issue_template % int(issue_num[1:]))
         return issue_link + ':' + markdown_escape(issue_rest)
-    with open(out_file, 'w') as out:
-        out.write(markdown_escape(_title(title)))
-        out.write('\n\n')
-        out.write('\n'.join(markdown_list(issues, f=add_link)))
-        out.write('\n')
-    return out_file
+    out.write(markdown_escape(_title(title)))
+    out.write('\n\n')
+    out.write('\n'.join(markdown_list(issues, f=add_link)))
+    out.write('\n')
+
+def _changelog_b64(issues, title, out):
+    temp_out = io.StringIO()
+    _changelog_txt(issues, title, temp_out)
+    b64_encoded = base64.b64encode(temp_out.getvalue().encode('utf-8'))
+    out.write(b64_encoded.decode('utf-8'))
 
 # API =========================================================================
 CHANGELOGS_DIR = os.path.join(os.getcwd(), 'ChangeLogs')
 print('Current working directory is %s' % os.getcwd())
 print('Changelogs will be placed in %s' % CHANGELOGS_DIR)
 
-def write_changelog(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
+def _write_changelog(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
         overwrite=False, extension='.txt', logic=_changelog_txt):
     """Write 'Changelog - <milestone>.txt'"""
     if issue_list is None:
@@ -100,21 +102,28 @@ def write_changelog(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
     out_file = out_path(dir_=CHANGELOGS_DIR,
         name='Changelog - ' + num + extension)
     print(out_file)
-    if os.path.isfile(out_file) and not overwrite: return out_file
+    if os.path.isfile(out_file) and not overwrite: return
     title = num + ' ' + title + ' ' if title else num
-    return logic(issue_list, title, out_file)
+    with open(out_file, 'w', encoding='utf-8') as out:
+        logic(issue_list, title, out)
 
-def write_changelog_bbcode(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
+def _write_changelog_bbcode(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
         overwrite=False):
     """Write 'Changelog - <milestone>.bbcode.txt'"""
-    return write_changelog(issue_list, num, title, overwrite,
+    return _write_changelog(issue_list, num, title, overwrite,
         extension='.bbcode.txt', logic=_changelog_bbcode)
 
-def write_changelog_markdown(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
+def _write_changelog_markdown(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
         overwrite=False):
-    """Write 'Changelog - <milestone>.markdown.txt'"""
-    return write_changelog(issue_list, num, title, overwrite, extension='.md',
+    """Write 'Changelog - <milestone>.md'"""
+    return _write_changelog(issue_list, num, title, overwrite, extension='.md',
         logic=_changelog_markdown)
+
+def _write_changelog_b64(issue_list, num, title=DEFAULT_MILESTONE_TITLE,
+        overwrite=False):
+    """Write 'Changelog - <milestone>.b64'"""
+    return _write_changelog(issue_list, num, title, overwrite,
+        extension='.b64', logic=_changelog_b64)
 
 def main():
     opts = _parse_args()  # TODO per game # if opts.game:...
@@ -124,9 +133,10 @@ def main():
     num = milestone.title if milestone else opts.milestone
     print('Writing changelogs')
     globals()['_title'] = partial(_title, authors=(opts.authors.split(',')))
-    write_changelog(issue_list, num, opts.title, opts.overwrite)
-    write_changelog_markdown(issue_list, num, opts.title, opts.overwrite)
-    write_changelog_bbcode(issue_list, num, opts.title, opts.overwrite)
+    _write_changelog(issue_list, num, opts.title, opts.overwrite)
+    _write_changelog_markdown(issue_list, num, opts.title, opts.overwrite)
+    _write_changelog_bbcode(issue_list, num, opts.title, opts.overwrite)
+    _write_changelog_b64(issue_list, num, opts.title, opts.overwrite)
     print('Changelogs generated.')
 
 def __get_issue_list(miles_num, editor=None, opts=None):
